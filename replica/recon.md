@@ -1,6 +1,6 @@
 # Recon map: Opsis (web)
 
-Scope: whole product: multi-source email / username / domain search with streamed results, saved Profiles, single-platform lookup tools, plans and credits, and a public API. Per the user: no FAQ page and no suppression ("Remove my data") request system.
+Scope: whole product: multi-source email / username / domain search with streamed results, saved Profiles, single-platform lookup tools, plans and credits, and a public API. Per the user: no FAQ page and no suppression ("Remove my data") request system. **Free and unlimited: no paywalls, plans or credits** (user, 2026-10-09). Extra standalone OSINT tools added beyond the original (see features.csv, original = no).
 For: the user's own product, to sell (commercial).
 Date: 2026-10-09
 
@@ -162,7 +162,7 @@ Relationships: User 1-1 Subscription, User 1-1 ApiCredits, User 1-n ApiKey, User
 
 ## Feature matrix
 
-See `features.csv`. Must: 22, should: 14, could: 7, skip: 9.
+See `features.csv`. Must: 19, should: 18, could: 11, skip: 16 (billing rows skipped: free product).
 
 ## Out of scope (cannot or should not be cloned)
 

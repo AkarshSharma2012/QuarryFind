@@ -16,29 +16,29 @@ Search history list,history,must,yes,no,90-day retention
 Auto-purge results after hours,privacy,must,yes,no,
 Save finding to a Profile,profiles,must,yes,no,snapshot survives purge
 Profiles list and detail with delete,profiles,must,yes,no,
-Plans: Starter Basic Pro with monthly credits,billing,must,yes,no,Stripe subscriptions
-Credit charge 1 per search 2 per premium,billing,must,yes,no,charged once; no charge on plan_required
-Monthly credit reset,billing,must,yes,no,
-Out of credits and plan required states,billing,must,yes,no,
-Marketing landing page with pricing,marketing,must,yes,no,original copy and design
-Premium username search (extra slower modules),search,should,yes,no,no CAPTCHA solving; official-API modules only
+Plans: Starter Basic Pro with monthly credits,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
+Credit charge 1 per search 2 per premium,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
+Monthly credit reset,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
+Out of credits and plan required states,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
+Marketing landing page,marketing,must,yes,no,original copy and design; no pricing (free)
+Deep username search (extra slower modules),search,should,yes,no,free for all; no CAPTCHA solving; official-API modules only
 Filter and sort results by category confidence,results,should,yes,no,
 Module health checks with positive and negative fixtures,engine,should,yes,no,
-Billing page with Stripe customer portal,billing,should,yes,no,
-API keys page: create shown once revoke,api,should,yes,no,Pro only
+Billing page with Stripe customer portal,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
+API keys page: create shown once revoke,api,should,yes,no,free for every user
 Public API POST/GET /v1/searches with stream wait async,api,should,yes,no,
 API /v1/me /v1/credits /v1/health /v1/capabilities,api,should,yes,no,
 OpenAPI spec and API reference page,api,should,yes,no,
-API rate limiting,api,should,yes,no,120/min searches
+API rate limiting,api,must,yes,no,"abuse protection only, not a paywall: 10 searches/min web, 60/min API, 3 concurrent runs"
 Reverse WHOIS for domain search,search,should,yes,no,needs a paid data source; ask before buying
 GitHub single-platform lookup: profile repos languages activity,tools,should,yes,no,official GitHub API; free account
 Reddit single-platform lookup: karma communities activity hours,tools,should,yes,no,official Reddit API
 Terms and privacy pages,legal,should,yes,no,original text
 Product pages and docs hub,marketing,should,yes,no,
-Prepaid API credit top-ups and subscription fallback toggle,api,could,yes,no,
+Prepaid API credit top-ups and subscription fallback toggle,api,skip,yes,skip,"user: everything free and unlimited, no paywalls"
 Instagram public profile snapshot with anonymous preview,tools,could,yes,no,official access is limited; may ship as link-out only
 Inferred timezone from activity times,tools,could,yes,no,GitHub/Reddit tools
-AI analysis of a profile (credit based),tools,could,yes,no,
+AI analysis of a profile (credit based),tools,skip,yes,skip,"user: everything free and unlimited, no paywalls"
 Guides and methodology articles,marketing,could,yes,no,SEO; original writing
 Status indicator in footer,marketing,could,yes,no,
 Export results (CSV/JSON),results,could,no,no,not seen in original; cheap win
@@ -51,3 +51,15 @@ Reddit deleted/removed comments,tools,skip,yes,skip,archive no longer publicly a
 FAQ page,marketing,skip,yes,skip,user asked not to build it
 Suppression / Remove my data request system,privacy,skip,yes,skip,user asked not to build it; recommend a simple opt-out before public launch (GDPR Art. 21)
 As seen on listings and brand,marketing,skip,yes,skip,belongs to Opsis
+IP address lookup: geolocation ASN reverse DNS,tools,should,no,no,new; ipapi.is/ip-api free tiers or RDAP for IP + DoH PTR
+Subdomain finder from certificate transparency,tools,should,no,no,new; crt.sh public JSON
+Wayback Machine snapshots for a URL or domain,tools,should,no,no,new; archive.org CDX API
+DNS and WHOIS standalone tool,tools,should,no,no,"new; same modules as domain search, no account needed"
+Photo metadata (EXIF/GPS) viewer in the browser,tools,should,no,no,"new; parsed client-side, file never uploaded"
+Username variations generator,tools,could,no,no,new; client-side permutations -> one-click search
+Search dork builder for a target,tools,could,no,no,new; client-side; opens search engines with crafted queries
+Phone number parser: country region type format,tools,could,no,no,new; libphonenumber-js offline; no carrier/owner lookup
+HTTP headers and tech fingerprint for a URL,tools,could,no,no,"new; server fetch of public homepage, security headers + common tech signals"
+Email header analyzer (paste raw headers),tools,could,no,no,"new; client-side hop trace, SPF/DKIM/DMARC results parsed"
+Hash identifier and breach password check (k-anonymity),tools,could,no,no,new; HIBP Pwned Passwords range API is free; breach-by-email API is paid -> not used
+Tools hub page listing every tool,tools,should,no,no,new
