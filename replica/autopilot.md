@@ -11,8 +11,12 @@
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 3 replica-design ✅ (tokens.json 0 AA failures, tokens.css via scripts/tokens.mjs, components.md, primitives at /design, build passes)
-- Next: 4 replica-build (engine started in supabase/functions/_shared/engine)
+- Stage reached: 4 replica-build ✅ (build-log.md; core flow runs on local dev API; UI pass with ui-ux-pro-max done)
+- Next: 5 replica-backend (Supabase: auth, migrations, edge functions search-start/search-batch/tools/v1/api-keys, Realtime data layer)
+
+## How to run locally
+- `npm run dev:api` (port 8787) + `npm --prefix web run dev` (port 3000); or launch.json configs dev-api / web-dev
+- Tests: `npx vitest run`; live sources: `npm run fixtures`
 
 ## Decisions in force
 - Clean-room, public sources only: the Opsis Terms forbid reverse engineering, so no Opsis account is used
@@ -22,3 +26,6 @@
 
 ## Open questions for user (batch)
 - Brand name (stage 9)
+- OK to import WhatsMyName site list (CC BY-SA 4.0, ~600 sites) into modules?
+- OK to pull Supabase local Docker images (several GB) for backend dev?
+- Reverse WHOIS needs a paid source: skip?

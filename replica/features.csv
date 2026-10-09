@@ -1,47 +1,47 @@
 feature,area,priority,original,clone,notes
-Sign up / sign in with GitHub Google or email,auth,must,yes,no,
-Search type switch: email username domain,search,must,yes,no,S06
-Query validation per type,search,must,yes,no,400 invalid_request equivalent
-Username search across many platform modules,search,must,yes,no,own modules; seed from WhatsMyName dataset with attribution
-Email search from public signals,search,must,yes,no,"Gravatar, GitHub commit search, PGP keyservers, MX check, local-part as username lead"
-Domain search: WHOIS DNS records,search,must,yes,no,RDAP + DNS-over-HTTPS
-Live streamed results as modules resolve,search,must,yes,no,SSE
-Progress counters: modules total completed with hits,search,must,yes,no,
-Hit vs absent vs inconclusive per module,search,must,yes,no,methodology: blocked/timeout is not a negative
-Coverage summary at end of run,search,must,yes,no,partial coverage flagged
-Rich result card: avatar name handle bio stats link,results,must,yes,no,
-Checked with no match list,results,must,yes,no,
-Resume a running search by run id,search,must,yes,no,reconnect after stream timeout
-Search history list,history,must,yes,no,90-day retention
-Auto-purge results after hours,privacy,must,yes,no,
-Save finding to a Profile,profiles,must,yes,no,snapshot survives purge
-Profiles list and detail with delete,profiles,must,yes,no,
+Sign up / sign in with GitHub Google or email,auth,must,yes,partial,UI + local session; real Supabase auth in replica-backend
+Search type switch: email username domain,search,must,yes,yes,S06
+Query validation per type,search,must,yes,yes,400 invalid_request equivalent; client + engine
+Username search across many platform modules,search,must,yes,yes,"own modules; seed from WhatsMyName dataset with attribution; 47 modules, 45 pass live fixtures; WhatsMyName import pending user OK"
+Email search from public signals,search,must,yes,yes,"Gravatar, GitHub commit search, PGP keyservers, MX check, local-part as username lead; Gravatar, Libravatar, GitHub commits, OpenPGP, mail domain, local-part lead"
+Domain search: WHOIS DNS records,search,must,yes,yes,"RDAP + DNS-over-HTTPS; RDAP, DoH DNS, mail security, crt.sh, Wayback, HTTP"
+Live streamed results as modules resolve,search,must,yes,yes,SSE; SSE on dev API; Supabase Realtime in backend
+Progress counters: modules total completed with hits,search,must,yes,yes,
+Hit vs absent vs inconclusive per module,search,must,yes,yes,methodology: blocked/timeout is not a negative; incl. bot-challenge detection
+Coverage summary at end of run,search,must,yes,yes,partial coverage flagged; partial coverage badge + explanation
+Rich result card: avatar name handle bio stats link,results,must,yes,yes,
+Checked with no match list,results,must,yes,yes,
+Resume a running search by run id,search,must,yes,yes,reconnect after stream timeout; run page reattaches to stream
+Search history list,history,must,yes,partial,90-day retention; UI done; 90-day retention needs backend
+Auto-purge results after hours,privacy,must,yes,partial,pg_cron job written; needs backend
+Save finding to a Profile,profiles,must,yes,yes,snapshot survives purge; named Cases; snapshot copy
+Profiles list and detail with delete,profiles,must,yes,yes,Cases with notes + export
 Plans: Starter Basic Pro with monthly credits,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
 Credit charge 1 per search 2 per premium,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
 Monthly credit reset,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
 Out of credits and plan required states,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
-Marketing landing page,marketing,must,yes,no,original copy and design; no pricing (free)
-Deep username search (extra slower modules),search,should,yes,no,free for all; no CAPTCHA solving; official-API modules only
-Filter and sort results by category confidence,results,should,yes,no,
-Module health checks with positive and negative fixtures,engine,should,yes,no,
+Marketing landing page,marketing,must,yes,yes,original copy and design; no pricing (free)
+Deep username search (extra slower modules),search,should,yes,yes,free for all; no CAPTCHA solving; official-API modules only; 5 deep modules
+Filter and sort results by category confidence,results,should,yes,yes,plus cards/table view
+Module health checks with positive and negative fixtures,engine,should,yes,partial,scripts/fixtures.ts works; daily Action + DB write in backend
 Billing page with Stripe customer portal,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
-API keys page: create shown once revoke,api,should,yes,no,free for every user
-Public API POST/GET /v1/searches with stream wait async,api,should,yes,no,
-API /v1/me /v1/credits /v1/health /v1/capabilities,api,should,yes,no,
-OpenAPI spec and API reference page,api,should,yes,no,
-API rate limiting,api,must,yes,no,"abuse protection only, not a paywall: 10 searches/min web, 60/min API, 3 concurrent runs"
-Reverse WHOIS for domain search,search,should,yes,no,needs a paid data source; ask before buying
-GitHub single-platform lookup: profile repos languages activity,tools,should,yes,no,official GitHub API; free account
-Reddit single-platform lookup: karma communities activity hours,tools,should,yes,no,official Reddit API
-Terms and privacy pages,legal,should,yes,no,original text
-Product pages and docs hub,marketing,should,yes,no,
+API keys page: create shown once revoke,api,should,yes,partial,free for every user; UI + local store; hashing/storage in backend
+Public API POST/GET /v1/searches with stream wait async,api,should,yes,no,backend stage
+API /v1/me /v1/credits /v1/health /v1/capabilities,api,should,yes,no,backend stage
+OpenAPI spec and API reference page,api,should,yes,partial,reference page done; openapi.json in backend
+API rate limiting,api,must,yes,partial,"abuse protection only, not a paywall: 10 searches/min web, 60/min API, 3 concurrent runs; SQL function written; enforced once backend runs"
+Reverse WHOIS for domain search,search,should,yes,no,needs a paid data source; ask before buying; needs a paid data source; ask user
+GitHub single-platform lookup: profile repos languages activity,tools,should,yes,yes,"official GitHub API; free account; + commit identities, timezone guess"
+Reddit single-platform lookup: karma communities activity hours,tools,should,yes,yes,official Reddit API; Reddit often blocks datacenter IPs (shows as did not answer)
+Terms and privacy pages,legal,should,yes,yes,original text; drafts; need legal review
+Product pages and docs hub,marketing,should,yes,yes,
 Prepaid API credit top-ups and subscription fallback toggle,api,skip,yes,skip,"user: everything free and unlimited, no paywalls"
-Instagram public profile snapshot with anonymous preview,tools,could,yes,no,official access is limited; may ship as link-out only
-Inferred timezone from activity times,tools,could,yes,no,GitHub/Reddit tools
+Instagram public profile snapshot with anonymous preview,tools,could,yes,no,official access is limited; may ship as link-out only; no reliable official public access
+Inferred timezone from activity times,tools,could,yes,yes,GitHub/Reddit tools
 AI analysis of a profile (credit based),tools,skip,yes,skip,"user: everything free and unlimited, no paywalls"
-Guides and methodology articles,marketing,could,yes,no,SEO; original writing
+Guides and methodology articles,marketing,could,yes,partial,SEO; original writing; methodology page done; guides not written
 Status indicator in footer,marketing,could,yes,no,
-Export results (CSV/JSON),results,could,no,no,not seen in original; cheap win
+Export results (CSV/JSON),results,could,no,yes,not seen in original; cheap win; formula-injection safe
 Opsis's 700+ maintained module library,engine,skip,yes,skip,their asset; we build our own modules
 CAPTCHA/solver-backed premium platforms,search,skip,yes,skip,bypassing bot protection is off-limits
 Email checks via signup/password-reset endpoints,search,skip,yes,skip,abuses third-party endpoints and leaks private data
@@ -51,15 +51,15 @@ Reddit deleted/removed comments,tools,skip,yes,skip,archive no longer publicly a
 FAQ page,marketing,skip,yes,skip,user asked not to build it
 Suppression / Remove my data request system,privacy,skip,yes,skip,user asked not to build it; recommend a simple opt-out before public launch (GDPR Art. 21)
 As seen on listings and brand,marketing,skip,yes,skip,belongs to Opsis
-IP address lookup: geolocation ASN reverse DNS,tools,should,no,no,new; ipapi.is/ip-api free tiers or RDAP for IP + DoH PTR
-Subdomain finder from certificate transparency,tools,should,no,no,new; crt.sh public JSON
-Wayback Machine snapshots for a URL or domain,tools,should,no,no,new; archive.org CDX API
-DNS and WHOIS standalone tool,tools,should,no,no,"new; same modules as domain search, no account needed"
-Photo metadata (EXIF/GPS) viewer in the browser,tools,should,no,no,"new; parsed client-side, file never uploaded"
-Username variations generator,tools,could,no,no,new; client-side permutations -> one-click search
-Search dork builder for a target,tools,could,no,no,new; client-side; opens search engines with crafted queries
-Phone number parser: country region type format,tools,could,no,no,new; libphonenumber-js offline; no carrier/owner lookup
-HTTP headers and tech fingerprint for a URL,tools,could,no,no,"new; server fetch of public homepage, security headers + common tech signals"
-Email header analyzer (paste raw headers),tools,could,no,no,"new; client-side hop trace, SPF/DKIM/DMARC results parsed"
-Hash identifier and breach password check (k-anonymity),tools,could,no,no,new; HIBP Pwned Passwords range API is free; breach-by-email API is paid -> not used
-Tools hub page listing every tool,tools,should,no,no,new
+IP address lookup: geolocation ASN reverse DNS,tools,should,no,yes,new; ipapi.is/ip-api free tiers or RDAP for IP + DoH PTR; ASN via Team Cymru DNS + RDAP (no geolocation API)
+Subdomain finder from certificate transparency,tools,should,no,yes,new; crt.sh public JSON
+Wayback Machine snapshots for a URL or domain,tools,should,no,yes,new; archive.org CDX API
+DNS and WHOIS standalone tool,tools,should,no,yes,"new; same modules as domain search, no account needed"
+Photo metadata (EXIF/GPS) viewer in the browser,tools,should,no,yes,"new; parsed client-side, file never uploaded"
+Username variations generator,tools,could,no,yes,new; client-side permutations -> one-click search
+Search dork builder for a target,tools,could,no,yes,new; client-side; opens search engines with crafted queries
+Phone number parser: country region type format,tools,could,no,yes,new; libphonenumber-js offline; no carrier/owner lookup
+HTTP headers and tech fingerprint for a URL,tools,could,no,yes,"new; server fetch of public homepage, security headers + common tech signals; SSRF-guarded"
+Email header analyzer (paste raw headers),tools,could,no,yes,"new; client-side hop trace, SPF/DKIM/DMARC results parsed"
+Hash identifier and breach password check (k-anonymity),tools,could,no,yes,new; HIBP Pwned Passwords range API is free; breach-by-email API is paid -> not used
+Tools hub page listing every tool,tools,should,no,yes,new
