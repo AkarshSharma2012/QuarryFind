@@ -11,14 +11,16 @@
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 4 replica-build ✅ (build-log.md; core flow runs on local dev API; UI pass with ui-ux-pro-max done)
-- Next: 5 replica-backend (Supabase: auth, migrations, edge functions search-start/search-batch/tools/v1/api-keys, Realtime data layer)
+- Stage reached: 5 replica-backend — code written & committed; NOT yet run (Docker engine not starting)
+- Next: get Docker running → `npx supabase start` → apply migrations → `npx supabase functions serve` → web/.env.local with NEXT_PUBLIC_BACKEND=supabase → run tests/rls.test.ts + click-through → then 6 replica-test
 
 ## How to run locally
 - `npm run dev:api` (port 8787) + `npm --prefix web run dev` (port 3000); or launch.json configs dev-api / web-dev
 - Tests: `npx vitest run`; live sources: `npm run fixtures`
 
 ## Decisions in force
+- WhatsMyName imported (261 verified sites, CC BY-SA 4.0, attributed) → 320 sources; reverse WHOIS skipped (paid)
+- Local Supabase in Docker for backend dev (user OK 2026-10-09)
 - Clean-room, public sources only: the Opsis Terms forbid reverse engineering, so no Opsis account is used
 - Free stack (Cloudflare, Supabase, Resend, Stripe); ask before any paid line item (e.g. a reverse-WHOIS data source)
 - Commit and push after every change
@@ -26,6 +28,4 @@
 
 ## Open questions for user (batch)
 - Brand name (stage 9)
-- OK to import WhatsMyName site list (CC BY-SA 4.0, ~600 sites) into modules?
-- OK to pull Supabase local Docker images (several GB) for backend dev?
-- Reverse WHOIS needs a paid source: skip?
+- Docker Desktop engine won't start: user to check the Docker Desktop window
