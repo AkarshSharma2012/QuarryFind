@@ -15,8 +15,9 @@ export function ToolShell({ slug, children }: { slug: string; children: ReactNod
     <div className="mx-auto flex max-w-3xl flex-col gap-8">
       <div>
         <Link href="/tools/" className="mb-4 inline-flex items-center gap-1 text-sm text-text-muted hover:text-text"><ArrowLeft className="size-4" aria-hidden /> All tools</Link>
-        <h1 className="text-xl text-text">{t.title}</h1>
-        <p className="mt-1 text-sm text-text-muted">{t.blurb}</p>
+        <p className="eyebrow mb-2">{t.group}</p>
+        <h1 className="text-2xl font-semibold text-text">{t.title}</h1>
+        <p className="mt-2 max-w-[60ch] text-sm leading-6 text-text-muted">{t.blurb}</p>
       </div>
       {children}
     </div>

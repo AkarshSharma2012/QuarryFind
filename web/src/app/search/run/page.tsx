@@ -4,14 +4,14 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import clsx from "clsx";
-import { CircleAlert, Download, RotateCcw, SearchX } from "lucide-react";
+import { CircleAlert, Download, ExternalLink, LayoutGrid, Rows3, RotateCcw, SearchX } from "lucide-react";
 import { data, DataError, type RunSnapshot } from "@/lib/data";
 import type { ModuleStatus, SearchResult, SearchRun } from "@/lib/types";
 import { Page, RequireUser } from "@/components/shell";
-import { ResultCard } from "@/components/result-card";
+import { Confidence, ResultCard, resultName, resultUrl, statText } from "@/components/result-card";
 import { SaveDialog } from "@/components/save-dialog";
 import { Button, LinkButton } from "@/components/ui/button";
-import { Badge, Card, EmptyState, ProgressBar, Skeleton, StatTile } from "@/components/ui/primitives";
+import { Badge, Card, EmptyState, ProgressBar, SegmentedControl, Skeleton, StatTile } from "@/components/ui/primitives";
 import { useToast } from "@/components/ui/toast";
 import { download, fileSlug, resultsCsv } from "@/lib/export";
 
@@ -28,6 +28,9 @@ function RunView({ id }: { id: string }) {
   const [error, setError] = useState<string | null>(null);
   const [category, setCategory] = useState("all");
   const [sort, setSort] = useState<Sort>("confidence");
+  const [view, setView] = useState<"cards" | "table">("cards");
+  useEffect(() => { try { const v = localStorage.getItem("os.view"); if (v === "table" || v === "cards") setView(v); } catch { /* ignore */ } }, []);
+  const changeView = (v: "cards" | "table") => { setView(v); try { localStorage.setItem("os.view", v); } catch { /* ignore */ } };
   const [saving, setSaving] = useState<SearchResult | null>(null);
   const [saved, setSaved] = useState<Set<string>>(new Set());
   const [announce, setAnnounce] = useState("");
@@ -96,8 +99,8 @@ function RunView({ id }: { id: string }) {
       <header className="flex flex-col gap-4">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="text-xs uppercase tracking-wide text-text-subtle">{run.type} search{run.deep ? " · deep" : ""}</p>
-            <h1 className="truncate font-mono text-xl text-text" title={run.query}>{run.query}</h1>
+            <p className="eyebrow mb-1">{run.type} search{run.deep ? " · deep" : ""}</p>
+            <h1 className="truncate font-mono text-2xl font-medium text-text" title={run.query}>{run.query}</h1>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button variant="secondary" size="sm" icon={<Download className="size-4" aria-hidden />} disabled={!results.length}
@@ -147,11 +150,53 @@ function RunView({ id }: { id: string }) {
                 <option value="platform">Platform A–Z</option>
                 <option value="newest">Newest first</option>
               </select>
+              <SegmentedControl label="Layout" value={view} onChange={changeView} options={[
+                { value: "cards", label: "Cards", icon: <LayoutGrid className="size-3.5" aria-hidden /> },
+                { value: "table", label: "Table", icon: <Rows3 className="size-3.5" aria-hidden /> },
+              ]} />
             </div>
           </div>
           {shown.length === 0 ? (
             running ? <div className="grid gap-4 md:grid-cols-3">{[0, 1, 2].map((i) => <Skeleton key={i} className="h-44" />)}</div>
               : <Card><EmptyState icon={<SearchX className="size-8" />} title="Nothing found" body={unavailable.length ? "No source reported a match, but some didn’t answer. Try again later, or try a variation of the query." : "No source reported a match for this query. Try a variation, or a different identifier."} action={<LinkButton href={`/tools/variations/?q=${encodeURIComponent(run.query)}`} variant="secondary" size="sm">Generate variations</LinkButton>} /></Card>
+          ) : view === "table" ? (
+            <Card className="overflow-x-auto">
+              <table className="w-full min-w-[640px] text-left text-sm">
+                <thead className="eyebrow border-b border-border">
+                  <tr>
+                    <th scope="col" className="px-4 py-2.5 font-normal">Source</th>
+                    <th scope="col" className="px-4 py-2.5 font-normal">Profile</th>
+                    <th scope="col" className="px-4 py-2.5 font-normal">Details</th>
+                    <th scope="col" className="px-4 py-2.5 font-normal">Match</th>
+                    <th scope="col" className="px-4 py-2.5 font-normal"><span className="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {shown.map((r) => {
+                    const url = resultUrl(r);
+                    const k = `${r.source}|${r.value}`;
+                    const details = [...(r.metadata?.stats ?? []).filter((s) => s.value !== 0).slice(0, 2).map(statText), ...(r.metadata?.records ?? []).slice(0, 2).map((x) => `${x.name}: ${x.value}`)].join(" · ");
+                    return (
+                      <tr key={r.seq} className="border-b border-border align-top last:border-0 hover:bg-surface-2/60">
+                        <td className="whitespace-nowrap px-4 py-2.5 text-text-muted">{r.platform ?? r.source}</td>
+                        <td className="max-w-[240px] px-4 py-2.5">
+                          {url ? <a href={url} target="_blank" rel="noopener noreferrer" className="inline-flex max-w-full items-center gap-1 text-text hover:text-accent"><span className="truncate">{resultName(r)}</span><ExternalLink className="size-3 shrink-0 text-text-subtle" aria-hidden /></a> : <span className="text-text">{resultName(r)}</span>}
+                        </td>
+                        <td className="max-w-[320px] truncate px-4 py-2.5 text-text-subtle" title={details}>{details || "—"}</td>
+                        <td className="px-4 py-2.5"><Confidence r={r} /></td>
+                        <td className="px-4 py-2.5 text-right">
+                          {r.type === "lead" ? (
+                            <Button size="sm" variant="ghost" onClick={async () => { try { router.push(`/search/run/?id=${await data.startSearch("username", r.value!, false)}`); } catch (e) { toast((e as Error).message, "error"); } }}>Search</Button>
+                          ) : (
+                            <Button size="sm" variant="ghost" aria-pressed={saved.has(k)} onClick={() => setSaving(r)}>{saved.has(k) ? "Saved" : "Save"}</Button>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </Card>
           ) : (
             <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {shown.map((r) => (

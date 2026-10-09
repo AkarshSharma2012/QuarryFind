@@ -155,7 +155,7 @@ export const richModules: Module[] = [
     map: (d) => ({
       value: `https://huggingface.co/${d.user}`,
       metadata: {
-        url: `https://huggingface.co/${d.user}`, avatar: d.avatarUrl, display_name: clean(d.fullname), handle: d.user,
+        url: `https://huggingface.co/${d.user}`, avatar: String(d.avatarUrl ?? "").startsWith("/") ? `https://huggingface.co${d.avatarUrl}` : d.avatarUrl, display_name: clean(d.fullname), handle: d.user,
         stats: [...stat("Models", d.numModels), ...stat("Followers", d.numFollowers)],
       },
     }),

@@ -26,8 +26,8 @@ const publicLinks = [
 
 export function Logo() {
   return (
-    <Link href="/" className="inline-flex items-center gap-2 text-base font-semibold text-text">
-      <Radar className="size-5 text-accent" aria-hidden />
+    <Link href="/" className="inline-flex items-center gap-2 text-[15px] font-semibold tracking-tight text-text">
+      <Radar className="size-[18px] text-accent" strokeWidth={2.25} aria-hidden />
       {PRODUCT}
     </Link>
   );
@@ -42,15 +42,19 @@ export function SiteNav() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-bg/85 backdrop-blur">
-      <nav aria-label="Main" className="mx-auto flex h-14 max-w-[1200px] items-center gap-6 px-4">
+      <nav aria-label="Main" className="mx-auto flex h-14 max-w-[1200px] items-center gap-8 px-4 sm:px-6">
         <Logo />
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center md:flex">
           {links.map((l) => (
             <li key={l.href}>
               <Link
                 href={l.href}
                 aria-current={path?.startsWith(l.href) ? "page" : undefined}
-                className={clsx("rounded-sm px-3 py-1.5 text-sm transition-colors", path?.startsWith(l.href) ? "text-text" : "text-text-muted hover:text-text")}
+                className={clsx(
+                  "relative flex h-14 items-center px-3 text-sm transition-colors",
+                  "after:absolute after:inset-x-3 after:bottom-0 after:h-px after:transition-colors",
+                  path?.startsWith(l.href) ? "text-text after:bg-text" : "text-text-muted after:bg-transparent hover:text-text",
+                )}
               >
                 {l.label}
               </Link>
@@ -104,7 +108,7 @@ export function Footer() {
     { title: "Legal", links: [["Terms", "/terms/"], ["Privacy", "/privacy/"]] },
   ];
   return (
-    <footer className="mt-24 border-t border-border">
+    <footer className="mt-24 border-t border-border bg-surface/40">
       <div className="mx-auto grid max-w-[1200px] gap-8 px-4 py-12 sm:grid-cols-4">
         <div className="flex flex-col gap-2">
           <Logo />
@@ -112,7 +116,7 @@ export function Footer() {
         </div>
         {cols.map((c) => (
           <div key={c.title}>
-            <h2 className="mb-2 text-xs uppercase tracking-wide text-text-subtle">{c.title}</h2>
+            <h2 className="eyebrow mb-3">{c.title}</h2>
             <ul className="flex flex-col gap-1.5">
               {c.links.map(([l, h]) => <li key={h}><Link href={h} className="text-sm text-text-muted hover:text-text">{l}</Link></li>)}
             </ul>
@@ -127,8 +131,9 @@ export function Footer() {
 export function Page({ children, narrow, className }: { children: ReactNode; narrow?: boolean; className?: string }) {
   return (
     <>
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:text-on-primary">Skip to content</a>
       <SiteNav />
-      <main id="main" className={clsx("mx-auto w-full px-4 py-10", narrow ? "max-w-3xl" : "max-w-[1200px]", className)}>{children}</main>
+      <main id="main" tabIndex={-1} className={clsx("mx-auto w-full px-4 py-10 outline-none sm:px-6", narrow ? "max-w-3xl" : "max-w-[1200px]", className)}>{children}</main>
       <Footer />
     </>
   );
@@ -156,10 +161,10 @@ export function RequireUser({ children, what = "this page" }: { children: ReactN
 
 export function PageHeader({ title, sub, actions }: { title: string; sub?: ReactNode; actions?: ReactNode }) {
   return (
-    <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+    <div className="mb-10 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-6">
       <div>
-        <h1 className="text-xl text-text">{title}</h1>
-        {sub && <p className="mt-1 text-sm text-text-muted">{sub}</p>}
+        <h1 className="text-2xl font-semibold text-text">{title}</h1>
+        {sub && <p className="mt-2 max-w-[65ch] text-sm leading-6 text-text-muted">{sub}</p>}
       </div>
       {actions}
     </div>

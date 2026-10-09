@@ -1,0 +1,533 @@
+[
+  {
+    "name": "github",
+    "platform": "GitHub",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "gitlab",
+    "platform": "GitLab",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "codeberg",
+    "platform": "Codeberg",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "hackernews",
+    "platform": "Hacker News",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "devto",
+    "platform": "DEV Community",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "keybase",
+    "platform": "Keybase",
+    "category": "identity",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "chesscom",
+    "platform": "Chess.com",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "lichess",
+    "platform": "Lichess",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "dockerhub",
+    "platform": "Docker Hub",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "huggingface",
+    "platform": "Hugging Face",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "bluesky",
+    "platform": "Bluesky",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "mastodon-social",
+    "platform": "Mastodon (mastodon.social)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "codewars",
+    "platform": "Codewars",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "speedrun",
+    "platform": "Speedrun.com",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "minecraft",
+    "platform": "Minecraft",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wikipedia",
+    "platform": "Wikipedia (en)",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "duolingo",
+    "platform": "Duolingo",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "roblox",
+    "platform": "Roblox",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "reddit",
+    "platform": "Reddit",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "npm",
+    "platform": "npm",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "crates",
+    "platform": "crates.io",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "rubygems",
+    "platform": "RubyGems",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "packagist",
+    "platform": "Packagist",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "bitbucket",
+    "platform": "Bitbucket",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "sourcehut",
+    "platform": "SourceHut",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "kaggle",
+    "platform": "Kaggle",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "hackerone",
+    "platform": "HackerOne",
+    "category": "security",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "telegram",
+    "platform": "Telegram",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "steam",
+    "platform": "Steam",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "itchio",
+    "platform": "itch.io",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "soundcloud",
+    "platform": "SoundCloud",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "dailymotion",
+    "platform": "Dailymotion",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": true
+  },
+  {
+    "name": "twitch",
+    "platform": "Twitch",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": true
+  },
+  {
+    "name": "flickr",
+    "platform": "Flickr",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "dribbble",
+    "platform": "Dribbble",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "deviantart",
+    "platform": "DeviantArt",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": true
+  },
+  {
+    "name": "patreon",
+    "platform": "Patreon",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "linktree",
+    "platform": "Linktree",
+    "category": "identity",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "aboutme",
+    "platform": "about.me",
+    "category": "identity",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "gravatar-user",
+    "platform": "Gravatar",
+    "category": "identity",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "medium",
+    "platform": "Medium",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": true
+  },
+  {
+    "name": "substack",
+    "platform": "Substack",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "tumblr",
+    "platform": "Tumblr",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "pastebin",
+    "platform": "Pastebin",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": true
+  },
+  {
+    "name": "trello",
+    "platform": "Trello",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "myanimelist",
+    "platform": "MyAnimeList",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "goodreads",
+    "platform": "Goodreads",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": true
+  },
+  {
+    "name": "gravatar",
+    "platform": "Gravatar",
+    "category": "identity",
+    "types": [
+      "email"
+    ],
+    "deep": false
+  },
+  {
+    "name": "libravatar",
+    "platform": "Libravatar",
+    "category": "identity",
+    "types": [
+      "email"
+    ],
+    "deep": false
+  },
+  {
+    "name": "github-email",
+    "platform": "GitHub (commit author)",
+    "category": "dev",
+    "types": [
+      "email"
+    ],
+    "deep": false
+  },
+  {
+    "name": "openpgp",
+    "platform": "keys.openpgp.org",
+    "category": "identity",
+    "types": [
+      "email"
+    ],
+    "deep": false
+  },
+  {
+    "name": "email-domain",
+    "platform": "Mail domain",
+    "category": "email",
+    "types": [
+      "email"
+    ],
+    "deep": false
+  },
+  {
+    "name": "email-localpart",
+    "platform": "Username lead",
+    "category": "identity",
+    "types": [
+      "email"
+    ],
+    "deep": false
+  },
+  {
+    "name": "rdap",
+    "platform": "WHOIS (RDAP)",
+    "category": "whois",
+    "types": [
+      "domain"
+    ],
+    "deep": false
+  },
+  {
+    "name": "dns",
+    "platform": "DNS records",
+    "category": "dns",
+    "types": [
+      "domain"
+    ],
+    "deep": false
+  },
+  {
+    "name": "mail-security",
+    "platform": "Mail security",
+    "category": "email",
+    "types": [
+      "domain"
+    ],
+    "deep": false
+  },
+  {
+    "name": "crtsh",
+    "platform": "Subdomains",
+    "category": "dns",
+    "types": [
+      "domain"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wayback",
+    "platform": "Wayback Machine",
+    "category": "archive",
+    "types": [
+      "domain"
+    ],
+    "deep": false
+  },
+  {
+    "name": "http",
+    "platform": "Website",
+    "category": "web",
+    "types": [
+      "domain"
+    ],
+    "deep": false
+  }
+]

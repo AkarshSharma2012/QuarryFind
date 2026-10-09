@@ -8,19 +8,20 @@ type Size = "sm" | "md" | "lg";
 
 const base =
   "inline-flex items-center justify-center gap-2 rounded-md font-medium whitespace-nowrap select-none " +
-  "transition-colors duration-[var(--motion-fast)] disabled:pointer-events-none disabled:opacity-50 " +
+  "transition-[background-color,border-color,color,transform] duration-[var(--motion-fast)] ease-[var(--ease-brand)] active:translate-y-px " +
+  "disabled:pointer-events-none disabled:opacity-50 " +
   "aria-disabled:pointer-events-none aria-disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-primary text-on-primary hover:bg-primary/85",
-  accent: "bg-accent text-on-accent hover:bg-accent/85",
+  primary: "bg-primary text-on-primary hover:bg-primary/90 shadow-[inset_0_-1px_0_rgba(0,0,0,.12)]",
+  accent: "bg-accent text-on-accent hover:bg-accent/90",
   secondary: "border border-border bg-surface text-text hover:bg-surface-2 hover:border-border-input",
   ghost: "text-text-muted hover:text-text hover:bg-surface-2",
   danger: "bg-danger/15 text-danger border border-danger/30 hover:bg-danger/25",
 };
 
 const sizes: Record<Size, string> = {
-  sm: "h-8 px-3 text-sm",
+  sm: "h-8 px-3 text-[13px]",
   md: "h-10 px-4 text-sm",
   lg: "h-12 px-6 text-base",
 };
