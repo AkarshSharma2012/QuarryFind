@@ -12,7 +12,7 @@ export function isIp(s: string) {
   return IPV4.test(s) || (s.includes(":") && IPV6.test(s));
 }
 
-function isPrivate(ip: string) {
+export function isPrivate(ip: string) {
   return /^(10\.|127\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|0\.|::1$|fc|fd|fe80)/i.test(ip);
 }
 

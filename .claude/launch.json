@@ -2,15 +2,38 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "dev-api",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "--disable-warning=ExperimentalWarning",
+        "scripts/dev-api.ts"
+      ],
+      "port": 8787
+    },
+    {
       "name": "web-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "web", "run", "dev", "--", "-p", "3000"],
+      "runtimeArgs": [
+        "--prefix",
+        "web",
+        "run",
+        "dev",
+        "--",
+        "-p",
+        "3000"
+      ],
       "port": 3000
     },
     {
       "name": "web-static",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "4317", "-d", "web/out"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4317",
+        "-d",
+        "web/out"
+      ],
       "port": 4317
     }
   ]

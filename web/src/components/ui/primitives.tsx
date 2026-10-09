@@ -58,7 +58,7 @@ export function Input({ label, hideLabel, prefix, error, hint, inputSize = "md",
       </label>
       <div
         className={clsx(
-          "flex items-center rounded-md border bg-surface transition-colors focus-within:border-focus",
+          "flex items-center rounded-md border bg-surface transition-colors focus-within:border-focus focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus has-[button:focus-visible]:outline-none",
           error ? "border-danger" : "border-border-input",
           inputSize === "lg" ? "h-13 pl-4 pr-1.5 text-base" : "h-10 px-3 text-sm",
         )}
@@ -68,7 +68,7 @@ export function Input({ label, hideLabel, prefix, error, hint, inputSize = "md",
           id={inputId}
           aria-invalid={error ? true : undefined}
           aria-describedby={error || hint ? msgId : undefined}
-          className="h-full min-w-0 flex-1 bg-transparent text-text placeholder:text-text-subtle focus:outline-none"
+          className="h-full min-w-0 flex-1 bg-transparent text-text placeholder:text-text-subtle focus-visible:outline-none"
           {...rest}
         />
         {trailing}
