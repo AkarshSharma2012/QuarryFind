@@ -1,0 +1,53 @@
+feature,area,priority,original,clone,notes
+Sign up / sign in with GitHub Google or email,auth,must,yes,no,
+Search type switch: email username domain,search,must,yes,no,S06
+Query validation per type,search,must,yes,no,400 invalid_request equivalent
+Username search across many platform modules,search,must,yes,no,own modules; seed from WhatsMyName dataset with attribution
+Email search from public signals,search,must,yes,no,"Gravatar, GitHub commit search, PGP keyservers, MX check, local-part as username lead"
+Domain search: WHOIS DNS records,search,must,yes,no,RDAP + DNS-over-HTTPS
+Live streamed results as modules resolve,search,must,yes,no,SSE
+Progress counters: modules total completed with hits,search,must,yes,no,
+Hit vs absent vs inconclusive per module,search,must,yes,no,methodology: blocked/timeout is not a negative
+Coverage summary at end of run,search,must,yes,no,partial coverage flagged
+Rich result card: avatar name handle bio stats link,results,must,yes,no,
+Checked with no match list,results,must,yes,no,
+Resume a running search by run id,search,must,yes,no,reconnect after stream timeout
+Search history list,history,must,yes,no,90-day retention
+Auto-purge results after hours,privacy,must,yes,no,
+Save finding to a Profile,profiles,must,yes,no,snapshot survives purge
+Profiles list and detail with delete,profiles,must,yes,no,
+Plans: Starter Basic Pro with monthly credits,billing,must,yes,no,Stripe subscriptions
+Credit charge 1 per search 2 per premium,billing,must,yes,no,charged once; no charge on plan_required
+Monthly credit reset,billing,must,yes,no,
+Out of credits and plan required states,billing,must,yes,no,
+Marketing landing page with pricing,marketing,must,yes,no,original copy and design
+Premium username search (extra slower modules),search,should,yes,no,no CAPTCHA solving; official-API modules only
+Filter and sort results by category confidence,results,should,yes,no,
+Module health checks with positive and negative fixtures,engine,should,yes,no,
+Billing page with Stripe customer portal,billing,should,yes,no,
+API keys page: create shown once revoke,api,should,yes,no,Pro only
+Public API POST/GET /v1/searches with stream wait async,api,should,yes,no,
+API /v1/me /v1/credits /v1/health /v1/capabilities,api,should,yes,no,
+OpenAPI spec and API reference page,api,should,yes,no,
+API rate limiting,api,should,yes,no,120/min searches
+Reverse WHOIS for domain search,search,should,yes,no,needs a paid data source; ask before buying
+GitHub single-platform lookup: profile repos languages activity,tools,should,yes,no,official GitHub API; free account
+Reddit single-platform lookup: karma communities activity hours,tools,should,yes,no,official Reddit API
+Terms and privacy pages,legal,should,yes,no,original text
+Product pages and docs hub,marketing,should,yes,no,
+Prepaid API credit top-ups and subscription fallback toggle,api,could,yes,no,
+Instagram public profile snapshot with anonymous preview,tools,could,yes,no,official access is limited; may ship as link-out only
+Inferred timezone from activity times,tools,could,yes,no,GitHub/Reddit tools
+AI analysis of a profile (credit based),tools,could,yes,no,
+Guides and methodology articles,marketing,could,yes,no,SEO; original writing
+Status indicator in footer,marketing,could,yes,no,
+Export results (CSV/JSON),results,could,no,no,not seen in original; cheap win
+Opsis's 700+ maintained module library,engine,skip,yes,skip,their asset; we build our own modules
+CAPTCHA/solver-backed premium platforms,search,skip,yes,skip,bypassing bot protection is off-limits
+Email checks via signup/password-reset endpoints,search,skip,yes,skip,abuses third-party endpoints and leaks private data
+Instagram recovery hints,tools,skip,yes,skip,leaks partial private contact info
+GitHub secret scanner on others' code,tools,skip,yes,skip,harvesting other people's credentials
+Reddit deleted/removed comments,tools,skip,yes,skip,archive no longer publicly available
+FAQ page,marketing,skip,yes,skip,user asked not to build it
+Suppression / Remove my data request system,privacy,skip,yes,skip,user asked not to build it; recommend a simple opt-out before public launch (GDPR Art. 21)
+As seen on listings and brand,marketing,skip,yes,skip,belongs to Opsis
