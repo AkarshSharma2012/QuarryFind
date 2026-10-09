@@ -6,13 +6,13 @@
 - Official URL: https://useopsis.com/ (API: https://api.useopsis.com)
 - Store links: none (web only)
 - Platform: web
-- Scope: whole product, minus the FAQ page and the suppression request system (user, 2026-10-09)
+- Scope: whole product, minus FAQ page + suppression system; FREE and UNLIMITED (no plans/credits/Stripe); extra OSINT tools added (user, 2026-10-09)
 - Confirmed: user supplied the link; the page names a single product
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 2 replica-architect ✅ (architecture.md, supabase/migrations/20261009000000_init.sql — SQL not yet run against Postgres)
-- Next: 3 replica-design
+- Stage reached: 3 replica-design ✅ (tokens.json 0 AA failures, tokens.css via scripts/tokens.mjs, components.md, primitives at /design, build passes)
+- Next: 4 replica-build (engine started in supabase/functions/_shared/engine)
 
 ## Decisions in force
 - Clean-room, public sources only: the Opsis Terms forbid reverse engineering, so no Opsis account is used

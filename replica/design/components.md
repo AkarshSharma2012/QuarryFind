@@ -33,10 +33,10 @@ SegmentedControl (search type: email / username / domain)
   a11y      role=radiogroup, arrow keys move selection, each option role=radio aria-checked
   used on   S06
 
-Switch (premium, subscription fallback)
-  states    on, off, disabled (plan-gated with reason in tooltip text below)
+Switch (deep search)
+  states    on, off, disabled (while a search runs)
   a11y      <button role=switch aria-checked>, label clickable
-  used on   S06, S13
+  used on   S06
 
 Card / Surface
   variants  default (surface + border), raised (surface-2), interactive (hover border)
@@ -63,15 +63,6 @@ StatTile
   parts     value (lg/600), label (xs muted)
   used on   S01, S07, S16, S17, S11
 
-CreditMeter
-  states    normal, low (≤ 20%, warning), empty (danger + upgrade CTA)
-  a11y      role=meter with aria-valuenow/min/max, text "12 of 75 left"
-  used on   app header, S06, S11
-
-PricingCard
-  variants  default, featured (accent border + badge)
-  used on   S01/S04, S11
-
 DataTable
   states    loading (skeleton rows), empty (message + CTA), filled
   a11y      real <table>, <th scope>, row actions are buttons with labels
@@ -97,7 +88,7 @@ EmptyState
   used on   S07 (no hits), S08, S09, S12
 
 Nav
-  variants  marketing (logo, links, sign in, primary CTA), app (logo, Search, History, Cases, Tools, credit meter, account menu)
+  variants  marketing (logo, links, sign in, primary CTA), app (logo, Search, History, Cases, Tools, account menu)
   states    mobile: links collapse to a disclosure menu (button aria-expanded)
   used on   all
 
@@ -105,4 +96,4 @@ Footer
   marketing only; product, resources, company, legal columns
 ```
 
-Not built (out of scope): FAQ accordion page, suppression form.
+Not built (out of scope): FAQ accordion page, suppression form, pricing cards and credit meter (product is free).
