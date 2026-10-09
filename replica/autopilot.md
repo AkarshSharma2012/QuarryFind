@@ -11,8 +11,8 @@
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 1 replica-recon ✅ (recon.md, features.csv)
-- Next: 2 replica-architect
+- Stage reached: 2 replica-architect ✅ (architecture.md, supabase/migrations/20261009000000_init.sql — SQL not yet run against Postgres)
+- Next: 3 replica-design
 
 ## Decisions in force
 - Clean-room, public sources only: the Opsis Terms forbid reverse engineering, so no Opsis account is used
