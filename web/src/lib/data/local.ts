@@ -49,6 +49,10 @@ export const localData: DataLayer = {
     const u = { id: "local-user", email: `dev@${provider}.local`, name: "Dev user" };
     store("os.user", u); emitAuth(u);
   },
+  async deleteAccount() {
+    try { for (const k of ["os.user", "os.cases", "os.caseItems", "os.keys"]) localStorage.removeItem(k); } catch { /* ignore */ }
+    emitAuth(null);
+  },
   async signOut() { try { localStorage.removeItem("os.user"); } catch { /* ignore */ } emitAuth(null); },
 
   async startSearch(type, query, deep) {

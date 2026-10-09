@@ -33,6 +33,7 @@ export interface DataLayer {
   signUp(email: string, password: string): Promise<{ needsConfirmation: boolean }>;
   signInWithOAuth(provider: "github" | "google"): Promise<void>;
   signOut(): Promise<void>;
+  deleteAccount(): Promise<void>;
   // searches
   startSearch(type: SearchType, query: string, deep: boolean): Promise<string>;
   getRun(id: string): Promise<RunSnapshot | null>;

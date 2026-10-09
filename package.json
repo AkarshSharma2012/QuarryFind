@@ -1,0 +1,16 @@
+{
+  "name": "osintset",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "fixtures": "node --disable-warning=ExperimentalWarning scripts/fixtures.ts",
+    "dev:api": "node --disable-warning=ExperimentalWarning scripts/dev-api.ts",
+    "tokens": "node scripts/tokens.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "vitest": "^3.2.7"
+  }
+}

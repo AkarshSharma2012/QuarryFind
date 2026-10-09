@@ -60,7 +60,7 @@ export function SiteNav() {
         <div className="ml-auto hidden items-center gap-2 md:flex">
           {user === undefined ? <Skeleton className="h-8 w-28" /> : user ? (
             <>
-              <span className="max-w-48 truncate text-sm text-text-muted" title={user.email}>{user.email}</span>
+              <Link href="/settings/" className="max-w-48 truncate text-sm text-text-muted hover:text-text" title={`Settings for ${user.email}`}>{user.email}</Link>
               <button type="button" onClick={async () => { await data.signOut(); router.push("/"); }} className="inline-flex items-center gap-1 rounded-sm px-2 py-1 text-sm text-text-muted hover:text-text">
                 <LogOut className="size-4" aria-hidden /> Sign out
               </button>
@@ -85,7 +85,7 @@ export function SiteNav() {
             ))}
             <li className="mt-2 border-t border-border pt-2">
               {user ? (
-                <button type="button" onClick={async () => { await data.signOut(); setOpen(false); router.push("/"); }} className="px-2 py-2 text-text-muted">Sign out</button>
+                <><Link href="/settings/" onClick={() => setOpen(false)} className="block px-2 py-2 text-text-muted">Settings</Link><button type="button" onClick={async () => { await data.signOut(); setOpen(false); router.push("/"); }} className="px-2 py-2 text-text-muted">Sign out</button></>
               ) : (
                 <div className="flex gap-2"><LinkButton href="/sign-in/" variant="secondary" size="sm">Sign in</LinkButton><LinkButton href="/sign-up/" size="sm">Create free account</LinkButton></div>
               )}

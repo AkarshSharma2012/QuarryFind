@@ -27,13 +27,12 @@ export function activityProfile(timestamps: (string | number)[]): ActivityProfil
   }
   const samples = hours.reduce((a, b) => a + b, 0);
   if (samples < 20) return { hours, weekdays, samples };
-  let best = 0, bestSum = Infinity;
-  for (let s = 0; s < 24; s++) {
-    let sum = 0;
-    for (let k = 0; k < 6; k++) sum += hours[(s + k) % 24];
-    if (sum < bestSum) { bestSum = sum; best = s; }
-  }
-  let off = 2 - best;               // quiet window should start at 02:00 local
+  const sums = Array.from({ length: 24 }, (_, s) => { let t = 0; for (let k = 0; k < 6; k++) t += hours[(s + k) % 24]; return t; });
+  const min = Math.min(...sums);
+  // Ties (a long quiet stretch): take the middle candidate, not the first.
+  const cands = sums.map((v, s) => (v === min ? s : -1)).filter((s) => s >= 0);
+  const best = cands[Math.floor(cands.length / 2)];
+  let off = 2 - best;               // quiet window should run 02:00–08:00 local
   if (off > 12) off -= 24;
   if (off < -11) off += 24;
   return { hours, weekdays, samples, likelyUtcOffset: off };
