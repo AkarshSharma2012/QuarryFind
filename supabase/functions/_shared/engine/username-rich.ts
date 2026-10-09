@@ -212,15 +212,6 @@ export const richModules: Module[] = [
     fixtures: { positive: "Notch", negative: "zq8x7k2m9vplw3" },
   }),
   jsonModule({
-    name: "gitee", platform: "Gitee", category: "dev",
-    url: (u) => `https://gitee.com/api/v5/users/${encodeURIComponent(u)}`,
-    map: (d) => ({
-      value: d.html_url,
-      metadata: { url: d.html_url, avatar: d.avatar_url, display_name: clean(d.name), handle: d.login, bio: clean(d.bio), stats: [...stat("Repos", d.public_repos), ...stat("Followers", d.followers)] },
-    }),
-    fixtures: { positive: "oschina", negative: "zq8x7k2m9vplw3" },
-  }),
-  jsonModule({
     name: "wikipedia", platform: "Wikipedia (en)", category: "community",
     url: (u) => `https://en.wikipedia.org/w/api.php?action=query&list=users&ususers=${encodeURIComponent(u)}&usprop=editcount|registration&format=json`,
     isMissing: (d) => { const x = d.query?.users?.[0]; return !x || "missing" in x || "invalid" in x; },
