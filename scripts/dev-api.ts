@@ -53,7 +53,7 @@ async function start(type: SearchType, query: string, deep: boolean) {
     if (r.outcome === "inconclusive" || r.outcome === "error") run.modules_failed++;
     emit(run.id, "status", st);
     emit(run.id, "run", run);
-  }).then(() => {
+  }, 24).then(() => {
     run.status = "completed"; run.completed_at = new Date().toISOString();
     emit(run.id, "run", run);
     emit(run.id, "done", run);

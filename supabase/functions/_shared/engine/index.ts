@@ -3,12 +3,17 @@ import { richModules } from "./username-rich.ts";
 import { siteModules } from "./username-sites.ts";
 import { emailModules } from "./email.ts";
 import { domainModules } from "./domain.ts";
+import { wmnModule, type WmnSite } from "./wmn.ts";
+import wmn from "./wmn-sites.json" with { type: "json" };
 import type { CheckResult, Ctx, Module, SearchType } from "./types.ts";
 
 export * from "./types.ts";
 export { normalise, guessType } from "./validate.ts";
 
-export const allModules: Module[] = [...richModules, ...siteModules, ...emailModules, ...domainModules];
+// WhatsMyName-derived sites (CC BY-SA 4.0), curated by scripts/wmn-import.ts.
+const wmnModules: Module[] = (wmn.sites as WmnSite[]).map(wmnModule);
+
+export const allModules: Module[] = [...richModules, ...siteModules, ...wmnModules, ...emailModules, ...domainModules];
 
 export function modulesFor(type: SearchType, deep = false, disabled: Set<string> = new Set()): Module[] {
   return allModules.filter((m) => m.types.includes(type) && (deep || !m.deep) && !disabled.has(m.name));

@@ -118,27 +118,23 @@ export default function Home() {
         <Link href="/how-it-works/" className="mt-6 inline-flex items-center gap-1 text-sm text-accent hover:underline">Read the full method <ArrowRight className="size-3.5" aria-hidden /></Link>
       </Section>
 
-      <Section id="h-sources" label="Coverage" title={`${SOURCES.length} sources, listed`} intro="No inflated counts. This is the complete list, generated from the code that runs your search.">
-        <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
-          {categories.map((c) => (
-            <div key={c}>
-              <h3 className="eyebrow mb-3">{CATEGORY_LABEL[c] ?? c}</h3>
-              <ul className="flex flex-col gap-1.5 text-sm text-text-muted">
-                {USERNAME.filter((s) => s.category === c).map((s) => (
-                  <li key={s.name} className="flex items-center justify-between gap-2"><span>{s.platform}</span>{s.deep && <span className="font-mono text-[11px] text-text-subtle">deep</span>}</li>
-                ))}
+      <Section id="h-sources" label="Coverage" title={`${SOURCES.length} sources, listed`} intro="Every count is generated from the code that runs your search. Open a category to see each source.">
+        <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 xl:grid-cols-4">
+          {[...categories.map((c) => [CATEGORY_LABEL[c] ?? c, USERNAME.filter((x) => x.category === c)] as const),
+            ["Email", byType("email")] as const, ["Domain", byType("domain")] as const].map(([label, list]) => (
+            <details key={label} className="group bg-surface p-5 open:bg-surface-2/40">
+              <summary className="flex cursor-pointer list-none items-baseline justify-between gap-3 [&::-webkit-details-marker]:hidden">
+                <span className="text-sm text-text">{label}</span>
+                <span className="tabular font-mono text-2xl text-text">{list.length}</span>
+              </summary>
+              <ul className="mt-4 max-h-64 overflow-y-auto pr-2 text-[13px] leading-6 text-text-muted">
+                {list.map((s) => <li key={s.name} className="flex justify-between gap-2"><span className="truncate">{s.platform}</span>{s.deep && <span className="font-mono text-[11px] text-text-subtle">deep</span>}</li>)}
               </ul>
-            </div>
+              <span className="mt-3 block font-mono text-[11px] text-text-subtle group-open:hidden">show list</span>
+            </details>
           ))}
-          <div>
-            <h3 className="eyebrow mb-3">Email</h3>
-            <ul className="flex flex-col gap-1.5 text-sm text-text-muted">{byType("email").map((s) => <li key={s.name}>{s.platform}</li>)}</ul>
-          </div>
-          <div>
-            <h3 className="eyebrow mb-3">Domain</h3>
-            <ul className="flex flex-col gap-1.5 text-sm text-text-muted">{byType("domain").map((s) => <li key={s.name}>{s.platform}</li>)}</ul>
-          </div>
         </div>
+        <p className="mt-4 text-xs text-text-subtle">Includes {SOURCES.filter((s) => s.name.startsWith("wmn-")).length} sites derived from the <a className="underline hover:text-text" href="https://github.com/WebBreacher/WhatsMyName" target="_blank" rel="noopener noreferrer">WhatsMyName</a> project (CC BY-SA 4.0), each re-tested before inclusion.</p>
       </Section>
 
       <Section id="h-tools" label="Tools" title="One question at a time" intro="Focused utilities for the follow-up work. The ones marked local run entirely in your browser.">

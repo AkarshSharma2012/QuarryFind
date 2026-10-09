@@ -423,6 +423,2355 @@
     "deep": true
   },
   {
+    "name": "wmn-35photo",
+    "platform": "35photo",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-3dtoday",
+    "platform": "3dtoday",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-7dach",
+    "platform": "7dach",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-acf",
+    "platform": "ACF",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-alik",
+    "platform": "alik",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-alura",
+    "platform": "Alura",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-americanthinker",
+    "platform": "AmericanThinker",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-anilist",
+    "platform": "AniList",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-aparat",
+    "platform": "Aparat",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-arduino-forum",
+    "platform": "Arduino (Forum)",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-arduino-project-hub",
+    "platform": "Arduino (Project Hub)",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-artbreeder",
+    "platform": "Artbreeder",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-artstation",
+    "platform": "ArtStation",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-asciinema",
+    "platform": "asciinema",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-atcoder",
+    "platform": "AtCoder",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-au-ru",
+    "platform": "au.ru",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-audiojungle",
+    "platform": "Audiojungle",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-bandcamp",
+    "platform": "Bandcamp",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-bandlab",
+    "platform": "Bandlab",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-bdsmlr",
+    "platform": "BDSMLR",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-bimpos",
+    "platform": "Bimpos",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-bio-site",
+    "platform": "Bio Site",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-bitchute",
+    "platform": "Bitchute",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-blogi-pl",
+    "platform": "blogi.pl",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-blogspot",
+    "platform": "Blogspot",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-boardgamegeek",
+    "platform": "BoardGameGeek",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-boosty",
+    "platform": "Boosty",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-brickset",
+    "platform": "Brickset",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-bugcrowd",
+    "platform": "Bugcrowd",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-bunpro",
+    "platform": "Bunpro",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-calendy",
+    "platform": "Calendy",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-carbonmade",
+    "platform": "Carbonmade",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-career-habr",
+    "platform": "Career.habr",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-carrd-co",
+    "platform": "carrd.co",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-cent",
+    "platform": "Cent",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-cfx-re",
+    "platform": "cfx.re",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-chatango-com",
+    "platform": "chatango.com",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-cheezburger",
+    "platform": "CHEEZburger",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-chocolatey",
+    "platform": "Chocolatey",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-choko-link",
+    "platform": "Choko.Link",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-chomikuj-pl",
+    "platform": "Chomikuj.pl",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-clubhouse",
+    "platform": "Clubhouse",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-codechef",
+    "platform": "CodeChef",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-codeforces",
+    "platform": "Codeforces",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-codementor",
+    "platform": "codementor",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-coderwall",
+    "platform": "Coderwall",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-commudle",
+    "platform": "Commudle",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-crevado",
+    "platform": "crevado",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-cropty",
+    "platform": "Cropty",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-cytoid",
+    "platform": "Cytoid",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-datezone",
+    "platform": "datezone",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-devrant",
+    "platform": "devRant",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-diablo",
+    "platform": "Diablo",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-dibiz",
+    "platform": "DIBIZ",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-diigo",
+    "platform": "diigo",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-discord-invite",
+    "platform": "Discord (Invite)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-discord-user",
+    "platform": "Discord (User)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-discourse",
+    "platform": "Discourse",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-discuss-elastic-co",
+    "platform": "discuss.elastic.co",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-disqus",
+    "platform": "Disqus",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-donatello",
+    "platform": "Donatello",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-donatik",
+    "platform": "Donatik",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-donation-alerts",
+    "platform": "Donation Alerts",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-donationpay",
+    "platform": "DonationPay",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-dotafire",
+    "platform": "DOTAFire",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-dou",
+    "platform": "DOU",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-easyen",
+    "platform": "easyen",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-ebay-stores",
+    "platform": "ebay_stores",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-electrobel",
+    "platform": "Electrobel",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-evolution-cms",
+    "platform": "Evolution CMS",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-expressional-social-mastodon-instance",
+    "platform": "Expressional.social (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-fansly",
+    "platform": "Fansly",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-figma",
+    "platform": "Figma",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-filmweb",
+    "platform": "Filmweb",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-fl-ru",
+    "platform": "FL.ru",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-flowcode",
+    "platform": "flowcode",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-fosstodon-org-mastodon-instance",
+    "platform": "Fosstodon.org (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-fotka",
+    "platform": "fotka",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-freelance-ua",
+    "platform": "Freelance.ua",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-freelancer",
+    "platform": "Freelancer",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-freesound",
+    "platform": "freesound",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-gab",
+    "platform": "Gab",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-game-jolt",
+    "platform": "Game Jolt",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-garmin-connect",
+    "platform": "Garmin Connect",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-gdbrowser",
+    "platform": "GDBrowser",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-geeksforgeeks",
+    "platform": "GeeksForGeeks",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-geocaching",
+    "platform": "Geocaching",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-gettr",
+    "platform": "Gettr",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-gitea",
+    "platform": "Gitea",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-gnome-shell-extensions",
+    "platform": "GNOME (Shell Extensions)",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-gpodder-net",
+    "platform": "gpodder.net",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-graphics-social-mastodon-instance",
+    "platform": "Graphics.social (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-gumroad",
+    "platform": "gumroad",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-habbo-es",
+    "platform": "Habbo.es",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-habr-q-a",
+    "platform": "Habr (Q&A)",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-habr-user",
+    "platform": "Habr (User)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-habtium",
+    "platform": "Habtium",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-hackaday-io",
+    "platform": "Hackaday.io",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-hackadvisor",
+    "platform": "HackAdvisor",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-hackerrank",
+    "platform": "HackerRank",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-hackster",
+    "platform": "Hackster",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-hamaha",
+    "platform": "hamaha",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-hcommons-social-mastodon-instance",
+    "platform": "Hcommons.social (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-hihello",
+    "platform": "HiHello",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-holopin",
+    "platform": "Holopin",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-hometech-social-mastodon-instance",
+    "platform": "Hometech.social (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-hudsonrock",
+    "platform": "HudsonRock",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-icq-chat",
+    "platform": "icq-chat",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-ifttt",
+    "platform": "IFTTT",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-ilgm-growers-forum",
+    "platform": "ILGM Growers Forum",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-imageshack",
+    "platform": "ImageShack",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-imgur",
+    "platform": "Imgur",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-inaturalist",
+    "platform": "inaturalist",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-instructables",
+    "platform": "Instructables",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-internet-archive-user-contribution-search",
+    "platform": "Internet Archive User Contribution Search",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-internet-archive-username-mentions",
+    "platform": "Internet Archive Username Mentions",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-intigriti",
+    "platform": "Intigriti",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-jbzd",
+    "platform": "JBZD",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-justforfans",
+    "platform": "Justforfans",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-kashipara",
+    "platform": "kashipara",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-kik",
+    "platform": "kik",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-komi",
+    "platform": "komi",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-kwejk-pl",
+    "platform": "kwejk.pl",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-kwork",
+    "platform": "Kwork",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-leakix",
+    "platform": "LeakIX",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-learn-cw-online",
+    "platform": "Learn CW Online",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-leetcode",
+    "platform": "LeetCode",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-levelblue",
+    "platform": "LevelBlue",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-libretooth-gr-mastodon-instance",
+    "platform": "Libretooth.gr (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-linux-org-ru",
+    "platform": "linux.org.ru",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-livejasmin",
+    "platform": "LiveJasmin",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-livejournal",
+    "platform": "Livejournal",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-magnific",
+    "platform": "Magnific",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-malpedia-actors",
+    "platform": "Malpedia Actors",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mapstodon-space-mastodon-instance",
+    "platform": "Mapstodon.space (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-masto-ai",
+    "platform": "masto.ai",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-masto-nyc-mastodon-instance",
+    "platform": "Masto.nyc (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mastodon-101010-pl",
+    "platform": "Mastodon-101010.pl",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mastodon-c-im",
+    "platform": "Mastodon-C.IM",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mastodon-chaos-social",
+    "platform": "Mastodon-Chaos.social",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mastodon-defcon",
+    "platform": "Mastodon-Defcon",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mastodon-toot-community",
+    "platform": "Mastodon-Toot.Community",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-max",
+    "platform": "MAX",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-meta-wiki-wikimedia",
+    "platform": "Meta-Wiki (Wikimedia)",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-microsoft-learn",
+    "platform": "Microsoft Learn",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-minds",
+    "platform": "Minds",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-minecraft-list",
+    "platform": "Minecraft List",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mintme",
+    "platform": "mintme",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mixcloud",
+    "platform": "Mixcloud",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mixlr",
+    "platform": "Mixlr",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mobilegta-net",
+    "platform": "MobileGTA.net",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-monkeytype",
+    "platform": "Monkeytype",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mssg-me",
+    "platform": "mssg.me",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-muyzorras",
+    "platform": "MUYZORRAS",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mylot",
+    "platform": "MyLot",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-mym",
+    "platform": "MYM",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-myspace",
+    "platform": "MySpace",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-naija-planet",
+    "platform": "naija_planet",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-neocities",
+    "platform": "Neocities",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-nightbot",
+    "platform": "Nightbot",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-nih-buat-jajan",
+    "platform": "Nih Buat Jajan",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-nitecrew-mastodon-instance",
+    "platform": "Nitecrew (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-note",
+    "platform": "Note",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-oglaszamy24h-pl",
+    "platform": "oglaszamy24h.pl",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-ok-ru",
+    "platform": "ok.ru",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-openstreetmap",
+    "platform": "OpenStreetMap",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-openstreetmap-wiki",
+    "platform": "OpenStreetMap Wiki",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-oper-ru",
+    "platform": "Oper.ru",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-origins-habbo-com",
+    "platform": "Origins.Habbo.com",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-origins-habbo-com-br",
+    "platform": "Origins.Habbo.com.br",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-origins-habbo-es",
+    "platform": "Origins.Habbo.es",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-paragraph",
+    "platform": "Paragraph",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-patriots-win",
+    "platform": "Patriots Win",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-paypal-business",
+    "platform": "PayPal Business",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-paypal-me",
+    "platform": "PayPal.Me",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-peoople-influencer",
+    "platform": "Peoople (Influencer)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-peoople-star",
+    "platform": "Peoople (Star)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-peoople-unicorn",
+    "platform": "Peoople (Unicorn)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-periscope",
+    "platform": "Periscope",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-picsart",
+    "platform": "Picsart",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-pikabu",
+    "platform": "Pikabu",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-pillowfort",
+    "platform": "Pillowfort",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-poe-com",
+    "platform": "Poe.com",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-poll-everywhere",
+    "platform": "Poll Everywhere",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-poweredbygay-social-mastodon-instance",
+    "platform": "Poweredbygay.social (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-pronouny",
+    "platform": "Pronouny",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-redgifs",
+    "platform": "RedGIFs",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-resumes-actorsaccess",
+    "platform": "resumes_actorsaccess",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-revolut",
+    "platform": "Revolut",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-roberts-space-industries",
+    "platform": "Roberts Space Industries",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-rumblechannel",
+    "platform": "RumbleChannel",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-rumbleuser",
+    "platform": "RumbleUser",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-runescape",
+    "platform": "RuneScape",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-ruvoip-net",
+    "platform": "ruVoIP.net",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-scored",
+    "platform": "Scored",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-scratch",
+    "platform": "Scratch",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-searchengines",
+    "platform": "Searchengines",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-sepia-search-peertube",
+    "platform": "Sepia Search (PeerTube)",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-setlist-fm",
+    "platform": "setlist.fm",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-sfd",
+    "platform": "SFD",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-shikimori",
+    "platform": "Shikimori",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-slackholes",
+    "platform": "SlackHoles",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-slides",
+    "platform": "slides",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-smashrun",
+    "platform": "SmashRun",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-social-bund-de",
+    "platform": "social.bund.de",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-solo-to",
+    "platform": "solo.to",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-speaker-deck",
+    "platform": "Speaker Deck",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-sports-tracker",
+    "platform": "Sports Tracker",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-stats-fm",
+    "platform": "stats.fm",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-steemit",
+    "platform": "Steemit",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-streamelements",
+    "platform": "StreamElements",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-streamlabs",
+    "platform": "StreamLabs",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-stripchat",
+    "platform": "Stripchat",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-sukebei-nyaa-si",
+    "platform": "sukebei.nyaa.si",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-tanuki-pl",
+    "platform": "Tanuki.pl",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-teletype",
+    "platform": "Teletype",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-tenor",
+    "platform": "Tenor",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-tetr-io",
+    "platform": "TETR.IO",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-tiktok",
+    "platform": "TikTok",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-tilde-zone-mastodon-instance",
+    "platform": "Tilde.zone (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-tinder",
+    "platform": "Tinder",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-tipeeestream",
+    "platform": "TipeeeStream",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-tooting-ch-mastodon-instance",
+    "platform": "Tooting.ch (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-traktrain",
+    "platform": "TRAKTRAIN",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-truckersmp-ru",
+    "platform": "TruckersMP.Ru",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-twitcast",
+    "platform": "Twitcast",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-twpro",
+    "platform": "twpro",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-uef-connect",
+    "platform": "UEF CONNECT",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-ultimate-guitar",
+    "platform": "Ultimate Guitar",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-ultras-diary",
+    "platform": "Ultras Diary",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-unlisted-videos",
+    "platform": "Unlisted Videos",
+    "category": "archive",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-vine",
+    "platform": "Vine",
+    "category": "media",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-vip-blog",
+    "platform": "VIP-blog",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-vivino",
+    "platform": "Vivino",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-vkl-world-mastodon-instance",
+    "platform": "Vkl.world (Mastodon Instance)",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-vsetop",
+    "platform": "VseTop",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-wakatime",
+    "platform": "Wakatime",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-warmerise",
+    "platform": "Warmerise",
+    "category": "gaming",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-warriorforum",
+    "platform": "warriorforum",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-weasyl",
+    "platform": "Weasyl",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-weebly",
+    "platform": "weebly",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-wetransfer",
+    "platform": "WeTransfer",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-wikidot",
+    "platform": "Wikidot",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-wishlistr",
+    "platform": "Wishlistr",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-wordpress-com-deleted",
+    "platform": "WordPress.com (Deleted)",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-wordpress-com-private",
+    "platform": "WordPress.com (Private)",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-wordpress-com-public",
+    "platform": "WordPress.com (Public)",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-wordpress-org-forums",
+    "platform": "WordPress.org (Forums)",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-wordpress-org-profiles",
+    "platform": "WordPress.org (Profiles)",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-wykop",
+    "platform": "Wykop",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-x",
+    "platform": "X",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-xanga",
+    "platform": "Xanga",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-xvideos",
+    "platform": "XVideos",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-yeswehack",
+    "platform": "YesWeHack",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-younow",
+    "platform": "YouNow",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-youpic",
+    "platform": "youpic",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-zbiornik",
+    "platform": "Zbiornik",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-zepeto",
+    "platform": "Zepeto",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-zhihu",
+    "platform": "zhihu",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-zmarsa-com",
+    "platform": "zmarsa.com",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wmn-zomato",
+    "platform": "Zomato",
+    "category": "social",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
     "name": "gravatar",
     "platform": "Gravatar",
     "category": "identity",
