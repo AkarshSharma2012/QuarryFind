@@ -13,10 +13,16 @@ const CATEGORY_LABEL: Record<string, string> = {
   identity: "Identity", security: "Security",
 };
 
+const PROBLEMS: [string, string][] = [
+  ["“Found” when nothing is there", "Many username checkers count a page that loaded as an account, so login walls, soft 404s and bot checks show up as matches."],
+  ["Checks that quietly break", "Sites change their pages and APIs. A check that stopped working looks exactly like “no account”, and nobody tells you which is which."],
+];
+
 const PRINCIPLES: [string, string][] = [
-  ["Three outcomes, never two", "Every source ends as found, no match, or didn’t answer. A blocked, rate-limited or timed-out source is reported as unknown, so a short list never pretends to be a clean one."],
-  ["Evidence on the card", "Where a source publishes them, you get the display name, avatar, bio, counts and join date next to the link, so you can compare accounts before you connect them."],
-  ["Checked against fixtures", "Each source is tested daily with a known account and a made-up one. Sources that drift are switched off rather than left to produce false positives."],
+  ["Why this counts, on every result", "Each finding says what matched: the site’s own API, a marker that only real profiles have, or the site’s proper not-found answer. You can judge the evidence instead of trusting a checkmark."],
+  ["Checked daily, in public", "Every source is tested each day against an account that exists and a name that doesn’t. Sources that get it wrong are switched off, and the live status of all of them is on a public page."],
+  ["Didn’t answer is not “no account”", "Every source ends as found, no match, or didn’t answer. A blocked or timed-out source is reported as unknown, so a short list never pretends to be a clean one."],
+  ["Report a wrong result", "Spot a match that isn’t real, or a miss? One click sends it in, and that source is re-checked."],
   ["Short memory by design", "Findings are deleted six hours after a search; history after 90 days. What you need to keep goes into a private case, with your notes."],
 ];
 
@@ -91,11 +97,11 @@ export default function Home() {
         <section className="relative grid items-center gap-14 pb-20 pt-16 lg:grid-cols-[1fr_1.05fr] lg:pt-24">
           <div className="flex flex-col gap-7">
             <p className="eyebrow">Username · Email · Domain</p>
-            <h1 className="max-w-[19ch] text-[2.5rem] font-semibold leading-[1.08] text-text sm:text-[3.25rem]">
-              Find where an identifier lives online.
+            <h1 className="max-w-[24ch] text-[2.5rem] font-semibold leading-[1.08] text-text sm:text-[3.25rem]">
+              Find every account. See why each one counts.
             </h1>
             <p className="max-w-[52ch] text-base leading-7 text-text-muted">
-              Check a handle, email address or domain against {SOURCES.length} public sources at once. Results stream in live, with the evidence each source returns and an honest record of what it couldn’t check.
+              Check a handle, email address or domain against {SOURCES.length} public sources at once. Free, nothing to install, and every source is tested daily against a real account and a made-up one.
             </p>
             <div className="w-full max-w-xl"><SearchForm hero /></div>
             <ul className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-text-subtle">
@@ -106,7 +112,15 @@ export default function Home() {
         </section>
       </div>
 
-      <Section id="h-principles" label="Method" title="Built to be checked, not trusted" intro="A search tool is only as good as its misses. These are the rules every source follows.">
+      <Section id="h-problem" label="The problem" title="Most lookups can’t tell you how sure they are">
+        <dl className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2">
+          {PROBLEMS.map(([t, b]) => (
+            <div key={t} className="bg-surface p-6"><dt className="text-base font-medium text-text">{t}</dt><dd className="mt-2 text-sm leading-6 text-text-muted">{b}</dd></div>
+          ))}
+        </dl>
+      </Section>
+
+      <Section id="h-principles" label="What’s different" title="Built to be checked, not trusted" intro="A search tool is only as good as its misses. These are the rules every source follows.">
         <dl className="divide-y divide-border border-y border-border">
           {PRINCIPLES.map(([t, b]) => (
             <div key={t} className="grid gap-2 py-6 sm:grid-cols-[220px_1fr] sm:gap-8">
@@ -115,7 +129,10 @@ export default function Home() {
             </div>
           ))}
         </dl>
-        <Link href="/how-it-works/" className="mt-6 inline-flex items-center gap-1 text-sm text-accent hover:underline">Read the full method <ArrowRight className="size-3.5" aria-hidden /></Link>
+        <div className="mt-6 flex flex-wrap gap-6">
+          <Link href="/sources/" className="inline-flex items-center gap-1 text-sm text-accent hover:underline">See today’s source status <ArrowRight className="size-3.5" aria-hidden /></Link>
+          <Link href="/how-it-works/" className="inline-flex items-center gap-1 text-sm text-accent hover:underline">Read the full method <ArrowRight className="size-3.5" aria-hidden /></Link>
+        </div>
       </Section>
 
       <Section id="h-sources" label="Coverage" title={`${SOURCES.length} sources, listed`} intro="Every count is generated from the code that runs your search. Open a category to see each source.">
@@ -161,6 +178,10 @@ export default function Home() {
         <div className="mt-6 flex flex-wrap gap-3">
           <LinkButton href="/docs/api/" variant="secondary" icon={<ArrowUpRight className="size-4" aria-hidden />}>API reference</LinkButton>
         </div>
+      </Section>
+
+      <Section id="h-price" label="Price" title="Free. No plans, no credits, no trial.">
+        <p className="max-w-[60ch] text-sm leading-6 text-text-muted">Every search type, deep search, the API and every tool cost nothing. The only limits are there to stop abuse and keep sources from blocking us: 10 searches a minute, 3 running at once.</p>
       </Section>
 
       <section className="border-t border-border py-20">

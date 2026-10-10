@@ -11,8 +11,8 @@
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 9 replica-brand ✅ (QuarryFind; teal palette 0 AA failures; sweep clean; 49/49 e2e)
-- Next: 10 replica-launch → 11 deploy (needs user go + free Supabase/Cloudflare accounts; trademark checks still to run)
+- Stage reached: 10 replica-launch ✅ (landing on angle, pricing=free documented, listing.py 0 errors, launch plan)
+- Next: 11 replica-deploy: preflight here; going live needs user GO + free Supabase & Cloudflare accounts created by user
 
 ## How to run locally
 - e2e: `NEXT_DIST_DIR=.next-build npm --prefix web run build` then `npx playwright test` (serves web/.next-build on 4317). Only ONE Playwright run at a time.

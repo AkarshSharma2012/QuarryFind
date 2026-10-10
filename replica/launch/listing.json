@@ -1,0 +1,16 @@
+{
+  "avoid": ["Opsis", "Opsis LLC", "useopsis", "Opsis OSINT"],
+  "app_store": {
+    "name": "QuarryFind: OSINT Search",
+    "subtitle": "Usernames, emails, domains",
+    "promotional_text": "Every source is checked daily against a real account and a made-up one, and every result says why it counts.",
+    "description": "QuarryFind checks a username, email address or domain against 320 public sources at once and shows what each one returns, live.\n\nBuilt to be checked, not trusted:\n- Every result says why it counts: an official API, a profile marker, or the site's own not-found answer.\n- Sources are tested every day against a real account and a made-up name. Ones that get it wrong are switched off, and the live status of every source is public.\n- A source that blocks us or times out is listed as didn't answer, never as no account.\n- Spot a wrong result? Report it and the source is re-checked.\n\nWhat else is in it:\n- Domain search: WHOIS, DNS, mail security, subdomains, archive history, web stack.\n- Email search from public signals only.\n- Cases to keep findings with your notes, and CSV or JSON export.\n- 15 focused tools, including IP lookup, photo metadata and email header analysis.\n- A free API with streamed results.\n\nFree. No plans and no credits. Public sources only: no CAPTCHA solving, no logging in as anyone, no database of people. Use it only for investigations you are allowed to run.",
+    "keywords": "username,lookup,email,domain,whois,dns,investigation,footprint,security,profile,subdomain,exif",
+    "whats_new": "Report a wrong result from any card. Reports show on the public source status page."
+  },
+  "google_play": {
+    "title": "QuarryFind: OSINT Search",
+    "short_description": "Search a username, email or domain across 320 checked public sources.",
+    "full_description": "QuarryFind checks a username, email address or domain against 320 public sources at once and shows what each one returns, live.\n\nEvery result says why it counts. Every source is tested daily against a real account and a made-up name, and one that gets it wrong is switched off. Sources that block or time out are listed as didn't answer, never as no account.\n\nAlso: domain WHOIS, DNS, mail security and subdomains; email search from public signals; cases with notes; CSV and JSON export; 15 focused tools; a free API.\n\nFree. Public sources only. Use it only for investigations you are allowed to run."
+  }
+}
