@@ -50,7 +50,42 @@ Actual: 15 + 212 + 5 = 232 of 302; 70 events never arrived (reloading showed 24 
 Evidence: browser check during the backend stage; the database had all 302 rows.
 Status: fixed in c76c03d (re-sync from the database every 5 s while running and on completion); guarded by e2e F01-H2
 
+### BUG-004: Result card's "+N more" was a lone `<dd>` (invalid definition list)
+
+- Severity: S4 (accessibility markup)
+- Flow / case: F05 / F05-H1 (axe `definition-list`)
+- Screen: S07, S10
+- Build: bb09500  Browser / device: Chromium, 1440px
+
+Steps
+1. Run a domain search whose DNS record has more than 8 rows; open the card (or save it to a case and open the case).
+2. Run axe.
+
+Expected: valid `<dl>` (only dt/dd groups).
+Actual: a `<dd>` without a `<dt>` ("+N more in export"); axe flags it as serious.
+Status: fixed in 6d4bc2a (moved out of the list into a `<p>`)
+
+### BUG-005: Session revoked elsewhere: app still looks signed in, every action fails
+
+- Severity: S3
+- Flow / case: F01 / F01-E5
+- Screen: S06 (any app screen)
+- Build: bb09500  Browser / device: Chromium, 1440px
+
+Steps
+1. Sign in on two devices (or tabs with separate storage).
+2. On one, sign out (Supabase signs out every session by default).
+3. On the other, start a search.
+
+Expected: you're told the session ended and see the sign-in prompt.
+Actual: the nav still shows your email; the search fails with "Sign in to search." and there's no way back except signing out manually.
+Evidence: e2e F04-H1 failure screenshot (signed-in nav + "Sign in to search.").
+Status: fixed in 6d4bc2a (a 401 from an Edge Function clears the local session); guarded by e2e F01-E5 (written first and seen failing)
+
 ## Test-design issues found (not product bugs)
+
+- Concurrent Playwright runs (an earlier background run still going) shared users and output folders and clobbered each other. Only one run at a time from now on.
+- The auth spec's "sign out" revoked every session of the user the search spec reused. Each role now has its own user.
 
 - One test user ran more than 10 searches a minute and hit the product's own rate limit. Now each spec uses its own user.
 - Signing in through the form in every test tripped Auth's rate limit. Now there's one API sign-in per user in global setup, stored as Playwright storage state.

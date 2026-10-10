@@ -26,6 +26,29 @@ export async function getJson<T = unknown>(ctx: Ctx, url: string, init: RequestI
   return { status: res.status, data, res };
 }
 
+/**
+ * Reads at most `cap` bytes of a body, then cancels the rest (keeps CPU low).
+ * With `stopAt`, stops early as soon as any of those strings has appeared.
+ */
+export async function readText(res: Response, cap = 200_000, stopAt: string[] = []): Promise<string> {
+  if (!res.body) return "";
+  const reader = res.body.getReader();
+  const dec = new TextDecoder();
+  let out = "", size = 0;
+  try {
+    while (size < cap) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      out += dec.decode(value, { stream: true });
+      if (stopAt.length && stopAt.some((n) => n && out.includes(n))) break;
+    }
+  } finally {
+    reader.cancel().catch(() => {});
+  }
+  return out;
+}
+
 /** Status codes that mean "the source would not answer us", never "absent". */
 export function blocked(status: number) {
   return status === 401 || status === 403 || status === 429 || status === 503 || status >= 520;

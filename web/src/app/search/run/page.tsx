@@ -95,6 +95,9 @@ function RunView({ id }: { id: string }) {
 
   const absent = statuses.filter((s) => s.outcome === "absent");
   const unavailable = statuses.filter((s) => s.outcome === "inconclusive" || s.outcome === "error");
+  // Sources that never reported (their batch was cut off) count as "didn't answer".
+  const unreported = run && run.status !== "running" ? Math.max(0, run.modules_total - statuses.length) : 0;
+  const unavailableCount = unavailable.length + unreported;
 
   if (missing) {
     return <EmptyState icon={<SearchX className="size-8" />} title="Search not found" body="It may have been deleted after 90 days, or it belongs to another account." action={<LinkButton href="/search/">New search</LinkButton>} />;
@@ -107,7 +110,7 @@ function RunView({ id }: { id: string }) {
 
   const running = run.status === "running";
   const purged = !!run.results_purged_at;
-  const tone = running ? "accent" : unavailable.length ? "warning" : "success";
+  const tone = running ? "accent" : unavailableCount ? "warning" : "success";
 
   return (
     <div className="flex flex-col gap-8">
@@ -131,7 +134,7 @@ function RunView({ id }: { id: string }) {
           <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
             <span className="flex items-center gap-2">
               {running ? "Checking sources…" : run.status === "failed" ? "Search stopped early" : "Search complete"}
-              {!running && unavailable.length > 0 && <Badge tone="warning">Partial coverage</Badge>}
+              {!running && unavailableCount > 0 && <Badge tone="warning">Partial coverage</Badge>}
             </span>
             <span className="tabular-nums text-text-muted">{run.modules_completed} / {run.modules_total} sources</span>
           </div>
@@ -139,10 +142,10 @@ function RunView({ id }: { id: string }) {
           <div className="flex flex-wrap gap-8 pt-1">
             <StatTile value={results.filter((r) => r.type !== "lead").length} label="Found" />
             <StatTile value={absent.length} label="No match" />
-            <StatTile value={unavailable.length} label="Unavailable" />
+            <StatTile value={unavailableCount} label="Unavailable" />
           </div>
-          {!running && unavailable.length > 0 && (
-            <p className="text-xs text-text-muted">{unavailable.length} source{unavailable.length > 1 ? "s" : ""} didn’t answer (blocked, rate-limited or timed out). That is not the same as “no account”. Run again later to retry them.</p>
+          {!running && unavailableCount > 0 && (
+            <p className="text-xs text-text-muted">{unavailableCount} source{unavailableCount > 1 ? "s" : ""} didn’t answer (blocked, rate-limited or timed out). That is not the same as “no account”. Run again later to retry them.</p>
           )}
         </Card>
         {error && <p role="alert" className="text-sm text-danger">{error} Results so far are kept. <button className="underline" onClick={() => location.reload()}>Reconnect</button></p>}

@@ -78,6 +78,16 @@ describe.skipIf(!up)("row level security", () => {
     expect(blocked).toBe(true);
   });
 
+  it("BUG-006: a run whose batches died is closed by the sweep, with unreported sources counted as unavailable", async () => {
+    const { data: run } = await admin.rpc("start_search", { p_user: a.id, p_type: "username", p_query: "sweep", p_deep: false, p_via: "web" });
+    await admin.from("search_runs").update({ modules_total: 5, created_at: new Date(Date.now() - 5 * 60_000).toISOString() }).eq("id", run.id);
+    for (const m of ["m1", "m2"]) await admin.rpc("record_module", { p_run: run.id, p_module: m, p_platform: m, p_outcome: "absent", p_detail: null, p_latency: 1, p_results: [] });
+    const { error } = await admin.rpc("sweep_stuck_runs");
+    expect(error).toBeNull();
+    const { data: after } = await admin.from("search_runs").select("status, modules_completed, modules_failed").eq("id", run.id).single();
+    expect(after).toEqual({ status: "completed", modules_completed: 5, modules_failed: 3 });
+  });
+
   it("deleting a user cascades", async () => {
     await admin.auth.admin.deleteUser(a.id);
     expect((await admin.from("search_runs").select("id").eq("id", runId)).data).toEqual([]);

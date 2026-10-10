@@ -1,7 +1,7 @@
 // Username modules driven by data: a profile URL plus the signals that mean
 // "exists" and "does not exist". A plain HTTP 200 is never enough on its own
 // when the site serves soft-404 pages; those sites declare a body signal.
-import { absent, blocked, get, inconclusive } from "./http.ts";
+import { absent, blocked, get, inconclusive, readText } from "./http.ts";
 import type { Category, Module } from "./types.ts";
 
 export interface SiteDef {
@@ -73,7 +73,7 @@ export function siteModule(s: SiteDef): Module {
       const missing = s.missingStatus ?? [404, 410];
       if (missing.includes(res.status)) { await res.body?.cancel(); return absent(); }
       if (blocked(res.status) || res.status >= 400) { await res.body?.cancel(); return inconclusive(`HTTP ${res.status}`); }
-      const body = (await res.text()).slice(0, 400_000);
+      const body = await readText(res, 600_000, [s.existsText ?? "", s.missingText ?? ""].filter(Boolean));
       if (isChallenge(body)) return inconclusive("bot challenge page");
       if (s.missingText && body.includes(s.missingText)) return absent();
       if (s.existsText && !body.includes(s.existsText)) return absent("no profile marker");

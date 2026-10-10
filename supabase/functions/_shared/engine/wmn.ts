@@ -4,7 +4,7 @@
 // distributed under the same licence. Matching is strict: a hit needs the
 // "exists" status AND text; an absence needs the "missing" status AND text.
 // Anything else is inconclusive.
-import { absent, get, inconclusive } from "./http.ts";
+import { absent, get, inconclusive, readText } from "./http.ts";
 import { isChallenge } from "./username-sites.ts";
 import type { Category, Module } from "./types.ts";
 
@@ -49,8 +49,7 @@ export function wmnModule(s: WmnSite): Module {
         redirect: "manual",
         browser: true,
       });
-      const body = res.status >= 300 && res.status < 400 ? "" : (await res.text()).slice(0, 500_000);
-      if (res.status >= 300 && res.status < 400) await res.body?.cancel();
+      const body = res.status >= 300 && res.status < 400 ? (await res.body?.cancel(), "") : await readText(res, 600_000, [s.e_string, s.m_string]);
       if (body && isChallenge(body)) return inconclusive("bot challenge page");
       if (res.status === s.e_code && body.includes(s.e_string)) {
         const url = fill(s.uri_pretty ?? s.uri_check, u);

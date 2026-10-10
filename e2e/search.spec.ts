@@ -38,8 +38,7 @@ test.describe("F02-F06 searching", () => {
   });
 
   test("F02-E5 another user's search is invisible (RLS)", async ({ page, browser }) => {
-    await page.goto("/history/");
-    await page.getByRole("link", { name: "example.org" }).first().click();
+    await search(page, "Domain", "example.info");
     const url = page.url();
     const other = await browser.newContext({ storageState: asUser(1) });
     const p2 = await other.newPage();

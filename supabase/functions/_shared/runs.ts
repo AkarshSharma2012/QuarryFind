@@ -2,7 +2,8 @@
 import { makeCtx, modulesFor, runAll, type SearchType } from "./engine/index.ts";
 import { admin, envRecord, INTERNAL_SECRET, SUPABASE_URL } from "./server.ts";
 
-export const BATCH = 60;
+// Small batches keep each invocation well under the 2 s CPU limit (BUG-006).
+export const BATCH = 25;
 
 declare const EdgeRuntime: { waitUntil(p: Promise<unknown>): void } | undefined;
 
