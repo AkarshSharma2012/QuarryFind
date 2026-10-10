@@ -40,7 +40,7 @@ Instagram public profile snapshot with anonymous preview,tools,skip,yes,skip,no 
 Inferred timezone from activity times,tools,could,yes,yes,GitHub/Reddit tools
 AI analysis of a profile (credit based),tools,skip,yes,skip,"user: everything free and unlimited, no paywalls"
 Guides and methodology articles,marketing,could,yes,partial,SEO; original writing; methodology page done; guides not written
-Status indicator in footer,marketing,could,yes,no,
+Status indicator in footer,marketing,could,yes,yes,footer dot from /v1/health
 Export results (CSV/JSON),results,could,no,yes,not seen in original; cheap win; formula-injection safe
 Opsis's 700+ maintained module library,engine,skip,yes,skip,their asset; we build our own modules
 CAPTCHA/solver-backed premium platforms,search,skip,yes,skip,bypassing bot protection is off-limits

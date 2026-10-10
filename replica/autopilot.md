@@ -11,8 +11,8 @@
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 6 replica-test ✅ (46/46 e2e, 47 vitest, 7 bugs fixed, no open S1/S2)
-- Next: 7 replica-diff
+- Stage reached: 7 replica-diff ✅ (parity 97/100, must-haves 19/19, verdict shippable)
+- Next: 8 replica-entrepreneur
 
 ## How to run locally
 - e2e: `NEXT_DIST_DIR=.next-build npm --prefix web run build` then `npx playwright test` (serves web/.next-build on 4317). Only ONE Playwright run at a time.
