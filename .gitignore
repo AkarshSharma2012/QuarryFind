@@ -9,6 +9,7 @@ node_modules/
 .DS_Store
 test-results/
 playwright-report/
+playwright-report-live/
 /node_modules
 e2e/.auth/
 .env.test.local

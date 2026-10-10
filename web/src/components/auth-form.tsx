@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { data, DataError } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Card, Input } from "@/components/ui/primitives";
@@ -24,6 +24,8 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
+  const [providers, setProviders] = useState<("github" | "google")[]>([]);
+  useEffect(() => { data.oauthProviders().then(setProviders, () => setProviders([])); }, []);
   const signUp = mode === "sign-up";
 
   const submit = async (e: React.FormEvent) => {
@@ -67,11 +69,15 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
         <h1 className="text-lg">{signUp ? "Create your free account" : "Sign in"}</h1>
         <p className="mt-1 text-sm text-text-muted">{signUp ? "No card, no trial. Every feature is free." : "Welcome back."}</p>
       </div>
-      <div className="flex flex-col gap-2">
-        <Button variant="secondary" onClick={() => oauth("github")} loading={busy === "github"} disabled={!!busy} icon={<GithubMark />}>Continue with GitHub</Button>
-        <Button variant="secondary" onClick={() => oauth("google")} loading={busy === "google"} disabled={!!busy}>Continue with Google</Button>
-      </div>
-      <div className="flex items-center gap-3 text-xs text-text-subtle"><span className="h-px flex-1 bg-border" />or with email<span className="h-px flex-1 bg-border" /></div>
+      {providers.length > 0 && (
+        <>
+          <div className="flex flex-col gap-2">
+            {providers.includes("github") && <Button variant="secondary" onClick={() => oauth("github")} loading={busy === "github"} disabled={!!busy} icon={<GithubMark />}>Continue with GitHub</Button>}
+            {providers.includes("google") && <Button variant="secondary" onClick={() => oauth("google")} loading={busy === "google"} disabled={!!busy}>Continue with Google</Button>}
+          </div>
+          <div className="flex items-center gap-3 text-xs text-text-subtle"><span className="h-px flex-1 bg-border" />or with email<span className="h-px flex-1 bg-border" /></div>
+        </>
+      )}
       <form onSubmit={submit} className="flex flex-col gap-3" noValidate>
         <Input label="Email" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
         <Input

@@ -1,0 +1,42 @@
+name: Live smoke test
+# Tests the deployed site like real visitors: after every deploy, daily, or by hand.
+on:
+  workflow_run:
+    workflows: ["Deploy site to GitHub Pages"]
+    types: [completed]
+  schedule:
+    - cron: "40 6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: live-smoke
+  cancel-in-progress: false
+jobs:
+  smoke:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      LIVE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+      SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+      # Optional. Without it the signed-in tests are skipped.
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test -c playwright.live.config.ts
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-smoke-report
+          path: |
+            playwright-report-live
+            test-results
+          retention-days: 7

@@ -68,6 +68,13 @@ export const supabaseData: DataLayer = {
     const { error } = await sb.auth.signInWithOAuth({ provider, options: { redirectTo: `${location.origin}${BASE}${next.startsWith("/") ? next : "/search/"}` } });
     if (error) throw new DataError("oauth_failed", `${provider === "github" ? "GitHub" : "Google"} sign-in isn’t available right now.`);
   },
+  async oauthProviders() {
+    try {
+      const r = await fetch(`${URL_}/auth/v1/settings`, { headers: { apikey: ANON } });
+      const ext = ((await r.json()) as { external?: Record<string, boolean> }).external ?? {};
+      return (["github", "google"] as const).filter((p) => ext[p]);
+    } catch { return []; }
+  },
   async signOut() { await sb.auth.signOut(); },
   async deleteAccount() { await fn("account", { method: "DELETE" }); await sb.auth.signOut(); },
 
