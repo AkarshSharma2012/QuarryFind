@@ -12,7 +12,7 @@
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
 - Stage reached: 11 replica-deploy: PREFLIGHT PASSED (49/49 e2e, 47/47 vitest, parity 99.4, sweep clean, audit 0)
-- Next: user GO + creates free Supabase/Cloudflare/Resend accounts + domain choice → Claude runs link/db push/functions deploy (deploy.md §3)
+- Next: ON HOLD by user (2026-10-09): not going live yet; no domain yet (would use quarryfind.pages.dev). Resume with deploy.md §2-§3 when user says go.
 
 ## How to run locally
 - e2e: `NEXT_DIST_DIR=.next-build npm --prefix web run build` then `npx playwright test` (serves web/.next-build on 4317). Only ONE Playwright run at a time.
