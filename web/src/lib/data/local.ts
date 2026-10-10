@@ -117,7 +117,7 @@ export const localData: DataLayer = {
   async listApiKeys() { return load<ApiKey[]>("os.keys", []); },
   async createApiKey(name) {
     const bytes = crypto.getRandomValues(new Uint8Array(24));
-    const key = "osk_live_" + [...bytes].map((b) => b.toString(16).padStart(2, "0")).join("");
+    const key = "qf_live_" + [...bytes].map((b) => b.toString(16).padStart(2, "0")).join("");
     const record: ApiKey = { id: uid(), name: name.trim() || "Default", prefix: key.slice(0, 12), created_at: now(), last_used_at: null, revoked_at: null };
     store("os.keys", [record, ...load<ApiKey[]>("os.keys", [])]);
     return { key, record };

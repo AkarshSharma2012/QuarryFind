@@ -7,7 +7,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "OsintSet: username, email and domain search", template: "%s · OsintSet" },
+  title: { default: "QuarryFind: username, email and domain search", template: "%s · QuarryFind" },
   description: "Search a username, email address or domain across hundreds of public sources and see what each one returns, live.",
 };
 

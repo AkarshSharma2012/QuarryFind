@@ -10,7 +10,7 @@ test.describe("F08 API keys", () => {
     await create.getByRole("button", { name: "Create" }).click();
     const shown = page.getByRole("dialog", { name: "Your new API key" });
     const key = (await shown.locator("code").innerText()).trim();
-    expect(key).toMatch(/^osk_live_[0-9a-f]{48}$/);
+    expect(key).toMatch(/^qf_live_[0-9a-f]{48}$/);
     await shown.getByRole("button", { name: "I’ve stored it" }).click();
     await expect(page.getByRole("cell", { name: `${key.slice(0, 12)}…` })).toBeVisible();
     await a11y(page);

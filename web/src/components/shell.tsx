@@ -3,14 +3,14 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
-import { LogOut, Menu, Radar, X } from "lucide-react";
+import { LogOut, Menu, Pickaxe, X } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { data, useUser } from "@/lib/data";
 import { LinkButton } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/primitives";
 import { StatusDot } from "@/components/status-dot";
 
-export const PRODUCT = "OsintSet";
+export const PRODUCT = "QuarryFind";
 
 const appLinks = [
   { href: "/search/", label: "Search" },
@@ -28,7 +28,7 @@ const publicLinks = [
 export function Logo() {
   return (
     <Link href="/" className="inline-flex items-center gap-2 text-[15px] font-semibold tracking-tight text-text">
-      <Radar className="size-[18px] text-accent" strokeWidth={2.25} aria-hidden />
+      <Pickaxe className="size-[18px] text-accent" strokeWidth={2.25} aria-hidden />
       {PRODUCT}
     </Link>
   );

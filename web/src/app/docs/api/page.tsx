@@ -28,7 +28,7 @@ export default function ApiRef() {
 
           <H id="auth">Authentication</H>
           <p>Create a key on the <Link className="text-accent hover:underline" href="/settings/api-keys/">API keys</Link> page and send it as a bearer token (or in an <code className="font-mono">X-API-Key</code> header). Keys are shown once; we only store a hash.</p>
-          <CodeBlock lang="http" code={`Authorization: Bearer osk_live_...`} />
+          <CodeBlock lang="http" code={`Authorization: Bearer qf_live_...`} />
 
           <H id="start">Start a search</H>
           <p><code className="font-mono text-text">POST /v1/searches</code></p>

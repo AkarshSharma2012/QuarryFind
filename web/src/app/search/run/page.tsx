@@ -193,7 +193,7 @@ function RunView({ id }: { id: string }) {
             running ? <div className="grid gap-4 md:grid-cols-3">{[0, 1, 2].map((i) => <Skeleton key={i} className="h-44" />)}</div>
               : <Card><EmptyState icon={<SearchX className="size-8" />} title="Nothing found" body={unavailable.length ? "No source reported a match, but some didn’t answer. Try again later, or try a variation of the query." : "No source reported a match for this query. Try a variation, or a different identifier."} action={<LinkButton href={`/tools/variations/?q=${encodeURIComponent(run.query)}`} variant="secondary" size="sm">Generate variations</LinkButton>} /></Card>
           ) : view === "table" ? (
-            <Card className="overflow-x-auto">
+            <Card className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
               <table className="w-full min-w-[640px] text-left text-sm">
                 <thead className="eyebrow border-b border-border">
                   <tr>

@@ -31,7 +31,7 @@ function Keys() {
       {keys === null ? <Skeleton className="h-24" /> : keys.length === 0 ? (
         <Card><EmptyState icon={<KeyRound className="size-8" />} title="No API keys" body="Create a key to call the API from your own tools." /></Card>
       ) : (
-        <Card className="overflow-x-auto">
+        <Card className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
           <table className="w-full min-w-[520px] text-left text-sm">
             <thead className="border-b border-border text-xs uppercase tracking-wide text-text-subtle">
               <tr><th scope="col" className="px-4 py-3 font-medium">Name</th><th scope="col" className="px-4 py-3 font-medium">Key</th><th scope="col" className="px-4 py-3 font-medium">Created</th><th scope="col" className="px-4 py-3 font-medium">Last used</th><th scope="col" className="px-4 py-3"><span className="sr-only">Actions</span></th></tr>

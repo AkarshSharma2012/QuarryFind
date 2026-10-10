@@ -1,8 +1,8 @@
-# OsintSet
+# QuarryFind
 
-**Free OSINT search for usernames, email addresses and domains.** Enter one identifier and OsintSet checks **320 public sources** at once. It streams back every profile it finds, with the evidence for each match and an honest record of which sources didn't answer.
+**Free OSINT search for usernames, email addresses and domains.** Enter one identifier and QuarryFind checks **320 public sources** at once. It streams back every profile it finds, with the evidence for each match and an honest record of which sources didn't answer.
 
-No plans, no credits, no install. *(OsintSet is a working name.)*
+No plans, no credits, no install.
 
 ![Landing page](docs/screenshots/landing.png)
 
@@ -140,7 +140,7 @@ replica/                   product research, architecture, test plan, bug log, p
 
 ## Responsible use
 
-Only investigate people and organisations you're allowed to. A matching username is a lead, not proof that two accounts belong to the same person. OsintSet uses public sources only. It never solves CAPTCHAs, never probes sign-up or password-reset pages, never logs in as anyone, and never stores a database of people.
+Only investigate people and organisations you're allowed to. A matching username is a lead, not proof that two accounts belong to the same person. QuarryFind uses public sources only. It never solves CAPTCHAs, never probes sign-up or password-reset pages, never logs in as anyone, and never stores a database of people.
 
 ## Credits
 

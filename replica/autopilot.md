@@ -1,7 +1,7 @@
 # Autopilot checkpoint
 
 ## Target (pinned)
-- Name: Opsis, an OSINT search platform (email / username / domain)
+- Name: Opsis, an OSINT search platform (email / username / domain). OUR product name: QuarryFind
 - Maker: Opsis LLC
 - Official URL: https://useopsis.com/ (API: https://api.useopsis.com)
 - Store links: none (web only)
@@ -11,8 +11,8 @@
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 8 ✅ + fixes #1 #2 #3 #5 built (README with screenshots done)
-- Next: 9 replica-brand (user picks name) → 10 launch → 11 deploy (user go + accounts)
+- Stage reached: 9 replica-brand ✅ (QuarryFind; teal palette 0 AA failures; sweep clean; 49/49 e2e)
+- Next: 10 replica-launch → 11 deploy (needs user go + free Supabase/Cloudflare accounts; trademark checks still to run)
 
 ## How to run locally
 - e2e: `NEXT_DIST_DIR=.next-build npm --prefix web run build` then `npx playwright test` (serves web/.next-build on 4317). Only ONE Playwright run at a time.
@@ -31,4 +31,3 @@
 - Skip: CAPTCHA solving, reset-endpoint email checks, IG recovery hints, secret scanning of others' code
 
 ## Open questions for user (batch)
-- Brand name (stage 9)

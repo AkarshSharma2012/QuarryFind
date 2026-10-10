@@ -1,6 +1,6 @@
 import type { CheckResult, Ctx } from "./types.ts";
 
-export const UA = "Mozilla/5.0 (compatible; OsintSetBot/0.1; +https://github.com/AkarshSharma2012/OsintSet)";
+export const UA = "Mozilla/5.0 (compatible; QuarryFindBot/0.1; +https://github.com/AkarshSharma2012/OsintSet)";
 const BROWSER_UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36";
 

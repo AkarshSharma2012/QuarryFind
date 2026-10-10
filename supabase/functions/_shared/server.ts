@@ -42,10 +42,10 @@ export async function sha256Hex(s: string) {
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-/** API key from Authorization: Bearer osk_live_… or X-API-Key → owner id, or null. */
+/** API key from Authorization: Bearer qf_live_… or X-API-Key → owner id, or null. */
 export async function userFromApiKey(req: Request): Promise<string | null> {
   const raw = req.headers.get("x-api-key") ?? req.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ?? "";
-  if (!/^osk_live_[0-9a-f]{48}$/.test(raw)) return null;
+  if (!/^qf_live_[0-9a-f]{48}$/.test(raw)) return null;
   const { data } = await admin().rpc("api_key_owner", { p_hash: await sha256Hex(raw) });
   return (data as string | null) ?? null;
 }

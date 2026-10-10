@@ -59,7 +59,7 @@ describe.skipIf(!SERVICE)("backend end to end", () => {
 
   it("creates an API key, uses it, then revoking it locks it out", async () => {
     const created = await (await call("api-keys", { method: "POST", body: JSON.stringify({ name: "e2e" }) })).json();
-    expect(created.key).toMatch(/^osk_live_[0-9a-f]{48}$/);
+    expect(created.key).toMatch(/^qf_live_[0-9a-f]{48}$/);
     const { data: stored } = await admin.from("api_keys").select("key_hash, prefix").eq("id", created.record.id).single();
     expect(stored!.key_hash).not.toContain(created.key.slice(9)); // only a hash is stored
 

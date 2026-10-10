@@ -1,4 +1,4 @@
--- OsintSet initial schema. All times timestamptz (UTC).
+-- QuarryFind initial schema. All times timestamptz (UTC).
 -- Free and unlimited: no plans, credits or payments. Abuse protection is a
 -- per-minute rate limit only.
 -- Access: Postgres RLS. Users read their own rows; engine writes go through

@@ -124,6 +124,11 @@ Expected: horizontally scrollable code blocks can be focused and scrolled with t
 Actual: `<pre>` overflowed but couldn't take focus.
 Status: fixed (tabIndex=0 + aria-label on scrollable `<pre>`); X-1 green on desktop and mobile
 
+### BUG-008: Scrollable tables not keyboard-reachable on phones
+
+- Severity: S4 (axe `scrollable-region-focusable`), found by mobile X-1 on /sources/
+- Status: fixed (every horizontally scrolling table container is a focusable, labelled region)
+
 ## Test-design issues found (not product bugs)
 
 - Concurrent Playwright runs (an earlier background run still going) shared users and output folders and clobbered each other. Only one run at a time from now on.

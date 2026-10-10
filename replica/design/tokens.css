@@ -8,14 +8,14 @@
   --c-text: #eceef2;
   --c-text-muted: #9aa1ad;
   --c-text-subtle: #8a919e;
-  --c-accent: #8ea2ff;
-  --c-on-accent: #0c0d10;
+  --c-accent: #4fd1c5;
+  --c-on-accent: #0b1413;
   --c-primary: #eceef2;
   --c-on-primary: #0c0d10;
   --c-danger: #ff7b7b;
-  --c-success: #4ad295;
+  --c-success: #9bd65c;
   --c-warning: #f5c35b;
-  --c-focus: #8ea2ff;
+  --c-focus: #4fd1c5;
   --motion-fast: 120ms;
   --motion-base: 200ms;
   --header-h: 56px;

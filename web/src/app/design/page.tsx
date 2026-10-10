@@ -117,7 +117,7 @@ export default function DesignPage() {
         </Dialog>
         <Card><EmptyState icon={<Search className="size-8" />} title="No searches yet" body="Run a search and it shows up here for 90 days." action={<Button size="sm">New search</Button>} /></Card>
         <div className="flex flex-col gap-2"><Skeleton className="h-10" /><Skeleton className="h-10 w-2/3" /></div>
-        <CodeBlock lang="bash" code={`curl -N https://api.example.com/v1/searches \\\n  -H "Authorization: Bearer osk_live_..." \\\n  -d '{"type":"username","query":"sample","stream":true}'`} />
+        <CodeBlock lang="bash" code={`curl -N https://api.example.com/v1/searches \\\n  -H "Authorization: Bearer qf_live_..." \\\n  -d '{"type":"username","query":"sample","stream":true}'`} />
       </section>
     </main>
   );

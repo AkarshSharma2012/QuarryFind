@@ -40,7 +40,7 @@ export default function GithubTool() {
           <section aria-labelledby="h-ids">
             <h2 id="h-ids" className="mb-1 text-base">Identities in public commits</h2>
             <p className="mb-3 text-xs text-text-subtle">Name and email written into commits this account pushed recently. Git lets anyone type any name; corroborate before relying on it.</p>
-            <Card className="overflow-x-auto">
+            <Card className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
               <table className="w-full text-left text-sm">
                 <thead className="border-b border-border text-xs uppercase tracking-wide text-text-subtle"><tr><th scope="col" className="px-4 py-2 font-medium">Name</th><th scope="col" className="px-4 py-2 font-medium">Email</th><th scope="col" className="px-4 py-2 font-medium">Commits</th></tr></thead>
                 <tbody>{r.commit_identities.map((c) => <tr key={c.name + c.email} className="border-b border-border last:border-0"><td className="px-4 py-2 text-text">{c.name}</td><td className="break-all px-4 py-2 font-mono text-xs text-text-muted">{c.email}</td><td className="px-4 py-2 tabular-nums text-text-muted">{c.count}</td></tr>)}</tbody>

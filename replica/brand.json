@@ -1,0 +1,7 @@
+{
+  "name": "QuarryFind",
+  "avoid": ["Opsis", "Opsis LLC", "useopsis", "Opsis OSINT"],
+  "domains": ["useopsis.com", "api.useopsis.com"],
+  "colors": [],
+  "_colors_note": "The original's brand colours weren't measured reliably (its UI is mostly neutral greys plus white buttons), so none are listed. Our accent was moved from periwinkle blue to mineral teal to stay clear of its blue text accent."
+}

@@ -23,7 +23,7 @@ function HistoryList() {
         : runs === null ? <div className="flex flex-col gap-2">{[0, 1, 2, 3].map((i) => <Skeleton key={i} className="h-12" />)}</div>
           : runs.length === 0 ? <Card><EmptyState icon={<History className="size-8" />} title="No searches yet" body="Run a search and it shows up here for 90 days." action={<LinkButton href="/search/" size="sm">New search</LinkButton>} /></Card>
             : (
-              <Card className="overflow-x-auto">
+              <Card className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
                 <table className="w-full min-w-[560px] text-left text-sm">
                   <thead className="border-b border-border text-xs uppercase tracking-wide text-text-subtle">
                     <tr><th scope="col" className="px-4 py-3 font-medium">Query</th><th scope="col" className="px-4 py-3 font-medium">Type</th><th scope="col" className="px-4 py-3 font-medium">Found</th><th scope="col" className="px-4 py-3 font-medium">Status</th><th scope="col" className="px-4 py-3 font-medium">When</th></tr>

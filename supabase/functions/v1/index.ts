@@ -76,7 +76,7 @@ Deno.serve(async (req) => {
       modes: { async: "POST /v1/searches -> {run_id}; poll GET /v1/searches/{run_id}", sync: "POST /v1/searches with wait=true", stream: "POST /v1/searches with stream=true -> text/event-stream" },
       outcomes: ["hit", "absent", "inconclusive", "error"],
       limits: { searches_per_minute: 60, concurrent_searches: 3, sync_wait_seconds: 30, stream_timeout_seconds: STREAM_MS / 1000, results_retention_hours: 6, history_retention_days: 90 },
-      auth: { scheme: "bearer", header: "Authorization: Bearer osk_live_...", alt_header: "X-API-Key" },
+      auth: { scheme: "bearer", header: "Authorization: Bearer qf_live_...", alt_header: "X-API-Key" },
       price: "free",
     });
   }

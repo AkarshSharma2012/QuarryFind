@@ -30,7 +30,7 @@ interface CheckResult { outcome: string; detail?: string; findings?: { value?: s
 
 export function RecordsTable({ records }: { records: Rec[] }) {
   return (
-    <Card className="overflow-x-auto">
+    <Card className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
       <table className="w-full text-left text-sm">
         <tbody>
           {records.map((r, i) => (

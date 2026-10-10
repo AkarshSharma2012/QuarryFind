@@ -13,7 +13,7 @@ Deno.serve(async (req) => {
     const { count } = await db.from("api_keys").select("id", { count: "exact", head: true }).eq("user_id", user.id).is("revoked_at", null);
     if ((count ?? 0) >= 10) return err(req, 400, "too_many_keys", "You can have up to 10 active keys. Revoke one first.");
     const bytes = crypto.getRandomValues(new Uint8Array(24));
-    const key = "osk_live_" + [...bytes].map((x) => x.toString(16).padStart(2, "0")).join("");
+    const key = "qf_live_" + [...bytes].map((x) => x.toString(16).padStart(2, "0")).join("");
     const { data, error } = await db.from("api_keys")
       .insert({ user_id: user.id, name, prefix: key.slice(0, 12), key_hash: await sha256Hex(key) })
       .select("id, name, prefix, created_at, last_used_at, revoked_at").single();

@@ -53,7 +53,7 @@ export default function SourcesPage() {
         <Input label="Filter sources" hideLabel placeholder="Filter by name" value={q} onChange={(e) => setQ(e.target.value)} className="w-full sm:w-64" />
       </div>
       {health === null ? <Skeleton className="h-96" /> : (
-        <Card className="overflow-x-auto">
+        <Card className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
           <table className="w-full min-w-[560px] text-left text-sm">
             <thead className="eyebrow border-b border-border">
               <tr><th scope="col" className="px-4 py-2.5 font-normal">Source</th><th scope="col" className="px-4 py-2.5 font-normal">Searches</th><th scope="col" className="px-4 py-2.5 font-normal">Status</th><th scope="col" className="px-4 py-2.5 font-normal">Checked</th><th scope="col" className="px-4 py-2.5 text-right font-normal">Reports (30 days)</th></tr>
