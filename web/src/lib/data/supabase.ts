@@ -2,6 +2,7 @@
 // and Edge Functions for anything privileged. Same interface as local.ts.
 import { createClient, type RealtimeChannel } from "@supabase/supabase-js";
 import type { ModuleStatus, SearchResult, SearchRun } from "@/lib/types";
+import { signInMessage } from "./auth-errors";
 import { DataError, type ApiKey, type Case, type CaseItem, type DataLayer, type User } from "./types";
 
 const URL_ = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
@@ -47,7 +48,7 @@ export const supabaseData: DataLayer = {
   },
   async signInWithPassword(email, password) {
     const { error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) throw new DataError("invalid_credentials", error.message.includes("confirm") ? "Confirm your email first; check your inbox." : "Email or password is wrong.");
+    if (error) throw new DataError("sign_in_failed", signInMessage(error));
   },
   async signUp(email, password) {
     const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: `${location.origin}/search/` } });

@@ -39,6 +39,16 @@ select {
   outline-offset: 2px;
 }
 
+/* Links inside running text need more than colour to stand out (WCAG 1.4.1). */
+main p a,
+main li > a:not([class*="block"]):not([class*="grid"]):not([class*="flex"]),
+main dd a,
+footer p a {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 ::selection {
   background: color-mix(in oklab, var(--c-accent) 35%, transparent);
 }
