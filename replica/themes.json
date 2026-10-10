@@ -1,0 +1,175 @@
+{
+  "_about": "OSINT username-search category themes for OsintSet",
+  "request_patterns": [
+    "\\bi wish\\b",
+    "\\bplease add\\b",
+    "\\bwould be (nice|great|good|helpful)\\b",
+    "\\bwould love\\b",
+    "\\bneeds? (a|an|the|to|more)\\b",
+    "\\bno way to\\b",
+    "\\bthere'?s no (way|option)\\b",
+    "\\b(can'?t|cannot|unable to) (even )?(add|change|edit|set|choose|export|import|customi[sz]e|connect|undo|delete|turn off)\\b",
+    "\\b(missing|lacks|lacking)\\b",
+    "\\bdoesn'?t (have|support|let|allow)\\b",
+    "\\bif only\\b",
+    "\\bfeature request\\b",
+    "\\bwhy (can'?t|isn'?t|doesn'?t)\\b"
+  ],
+  "themes": [
+    {
+      "id": "false_pos",
+      "label": "False positives (says found when it isn't)",
+      "kind": "complaint",
+      "patterns": [
+        "false[- ]?positive",
+        "incorrect(ly)? (found|detect|report)",
+        "(found|detect)\\w* .*(doesn'?t|does not|not) exist",
+        "wrong(ly)? (result|match|found)",
+        "claims? (it )?(exists|found)"
+      ]
+    },
+    {
+      "id": "false_neg",
+      "label": "Misses real accounts (false negatives)",
+      "kind": "complaint",
+      "patterns": [
+        "false[- ]?negative",
+        "not (found|detected) .*(exist|real)",
+        "exists? but",
+        "missed",
+        "doesn'?t (find|detect)"
+      ]
+    },
+    {
+      "id": "broken_sites",
+      "label": "Sites broken / stale checks",
+      "kind": "complaint",
+      "patterns": [
+        "\\bbroken\\b",
+        "not working",
+        "no longer work",
+        "stopped working",
+        "outdated",
+        "changed (their|the) (site|api|url)",
+        "\\b(403|429|404|500)\\b",
+        "cloudflare",
+        "captcha",
+        "blocked"
+      ]
+    },
+    {
+      "id": "errors_install",
+      "label": "Errors, crashes, install trouble",
+      "kind": "complaint",
+      "patterns": [
+        "\\berror\\b",
+        "exception",
+        "traceback",
+        "crash",
+        "install",
+        "pip\\b",
+        "dependenc",
+        "python ?3",
+        "module not found"
+      ]
+    },
+    {
+      "id": "slow",
+      "label": "Slow / timeouts",
+      "kind": "complaint",
+      "patterns": [
+        "\\bslow\\b",
+        "timeout",
+        "timed out",
+        "takes (forever|too long)",
+        "hang"
+      ]
+    },
+    {
+      "id": "cli_only",
+      "label": "CLI only / hard for non-technical users",
+      "kind": "complaint",
+      "patterns": [
+        "\\bgui\\b",
+        "web (ui|interface|app)",
+        "command line",
+        "\\bcli\\b",
+        "non[- ]technical",
+        "user interface"
+      ]
+    },
+    {
+      "id": "profile_data",
+      "label": "Wants profile data, not just a link",
+      "kind": "request",
+      "patterns": [
+        "profile (data|info|picture|details)",
+        "avatar",
+        "extract",
+        "metadata",
+        "\\bbio\\b",
+        "display name"
+      ]
+    },
+    {
+      "id": "new_sites",
+      "label": "Add more sites",
+      "kind": "request",
+      "patterns": [
+        "add (site|support|a site|new site)",
+        "new site",
+        "site request",
+        "please add",
+        "support for"
+      ]
+    },
+    {
+      "id": "export",
+      "label": "Export / report output",
+      "kind": "request",
+      "patterns": [
+        "\\bexport",
+        "\\bto csv\\b",
+        "\\bcsv (file|output|export)",
+        "\\bjson (file|output|export)",
+        "\\bpdf\\b",
+        "\\bhtml (report|output)"
+      ]
+    },
+    {
+      "id": "email",
+      "label": "Email / other identifiers",
+      "kind": "request",
+      "patterns": [
+        "\\bemail",
+        "phone",
+        "domain"
+      ]
+    },
+    {
+      "id": "privacy_ethics",
+      "label": "Privacy, stalking, ethics worries",
+      "kind": "complaint",
+      "patterns": [
+        "stalk",
+        "privacy",
+        "dox",
+        "creepy",
+        "harass",
+        "ethic"
+      ]
+    },
+    {
+      "id": "rate_limits",
+      "label": "Rate limits / proxies",
+      "kind": "complaint",
+      "patterns": [
+        "rate[- ]?limit",
+        "proxy",
+        "\\btor\\b",
+        "ip ban",
+        "too many requests"
+      ]
+    }
+  ]
+}

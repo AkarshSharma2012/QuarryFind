@@ -11,8 +11,8 @@
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 7 replica-diff ✅ (parity 98.2/100, must-haves 19/19, verdict shippable)
-- Next: 8 replica-entrepreneur
+- Stage reached: 8 replica-entrepreneur ✅ (no public Opsis reviews exist; 104 category items from 4 sources; angle: verified, free, no install)
+- Next: build fixes #1 #5 (S) now, #2 #3 (M); then 9 replica-brand (user picks name)
 
 ## How to run locally
 - e2e: `NEXT_DIST_DIR=.next-build npm --prefix web run build` then `npx playwright test` (serves web/.next-build on 4317). Only ONE Playwright run at a time.
