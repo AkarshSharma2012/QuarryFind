@@ -110,17 +110,15 @@ export const supabaseData: DataLayer = {
   async updateCase(id, patch) { check(await sb.from("cases").update(patch).eq("id", id), "save the case"); },
   async deleteCase(id) { check(await sb.from("cases").delete().eq("id", id), "delete the case"); },
   async saveToCase(caseId, run, r) {
+    // Already saved? Return it instead of tripping the unique index.
+    const existing = await sb.from("case_items").select("*").eq("case_id", caseId).eq("source", r.source).eq("value", r.value ?? "").maybeSingle();
+    if (existing.data) return existing.data as CaseItem;
     const { data: s } = await sb.auth.getSession();
     const row = {
       case_id: caseId, user_id: s.session?.user.id, source_run_id: run.id, query_type: run.type, query: run.query,
       platform: r.platform, value: r.value, source: r.source, confidence: r.confidence, metadata: r.metadata,
     };
-    const res = await sb.from("case_items").insert(row).select("*").single();
-    if (res.error?.code === "23505") {
-      return check(await sb.from("case_items").select("*").eq("case_id", caseId).eq("source", r.source).eq("value", r.value ?? "").maybeSingle(), "save") as CaseItem;
-    }
-    const it = check(res, "save to the case") as CaseItem;
-    return it;
+    return check(await sb.from("case_items").insert(row).select("*").single(), "save to the case") as CaseItem;
   },
   async removeCaseItem(id) { check(await sb.from("case_items").delete().eq("id", id), "remove the finding"); },
   async updateCaseItem(id, note) { check(await sb.from("case_items").update({ note }).eq("id", id), "save the note"); },

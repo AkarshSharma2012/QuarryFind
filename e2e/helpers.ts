@@ -11,8 +11,9 @@ export const test = base.extend<{ guard: void }>({
     page.on("console", (m) => {
       if (m.type() !== "error") return;
       const t = m.text();
-      // Third-party avatars that refuse to load are expected (we fall back to initials).
-      if (/Failed to load resource.*(40[34]|ERR_)/.test(t) && !/localhost|127\.0\.0\.1/.test(m.location().url ?? "")) return;
+      // 4xx responses are expected error paths (wrong password, not found) and
+      // third-party avatars may refuse to load; 5xx is caught separately below.
+      if (/Failed to load resource: (the server responded with a status of 4\d\d|net::ERR_)/.test(t)) return;
       problems.push(`console: ${t}`);
     });
     page.on("response", (r) => {

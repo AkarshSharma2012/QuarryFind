@@ -17,7 +17,7 @@ test.describe("F05 cases", () => {
 
     await page.goto("/cases/");
     await page.getByRole("link", { name: /E2E case with a long name/ }).click();
-    await expect(page.getByText("1 saved finding")).toBeVisible();
+    await expect(page.getByText("1 saved finding", { exact: true })).toBeVisible();
     await a11y(page);
 
     await page.getByRole("textbox", { name: "Notes" }).fill("Confirmed via DNS. Registrant unknown.");
@@ -47,7 +47,7 @@ test.describe("F05 cases", () => {
     }
     await page.goto("/cases/");
     await page.getByRole("link", { name: /Dupes/ }).click();
-    await expect(page.getByText("1 saved finding")).toBeVisible();
+    await expect(page.getByText("1 saved finding", { exact: true })).toBeVisible();
   });
 
   test("F05-E2 empty case name can't be created", async ({ page }) => {
