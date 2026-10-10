@@ -17,7 +17,15 @@ const uid = () => crypto.randomUUID();
 const listeners = new Set<(u: User | null) => void>();
 const emitAuth = (u: User | null) => listeners.forEach((l) => l(u));
 
+/** Local mode only makes sense on a developer's machine; a public build without a backend says so plainly. */
+function notConnected(): DataError | null {
+  if (typeof location === "undefined" || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || process.env.NEXT_PUBLIC_DEV_API) return null;
+  return new DataError("not_configured", "Search isn’t connected on this site yet. The in-browser tools work; searches and accounts arrive when the backend is switched on.");
+}
+
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
+  const nc = notConnected();
+  if (nc) throw nc;
   let res: Response;
   try {
     res = await fetch(`${API}${path}`, { ...init, headers: { "content-type": "application/json", ...(init?.headers ?? {}) } });
@@ -35,17 +43,20 @@ export const localData: DataLayer = {
   async getUser() { return load<User | null>("os.user", null); },
   onAuthChange(cb) { listeners.add(cb); return () => listeners.delete(cb); },
   async signInWithPassword(email, password) {
+    const nc = notConnected(); if (nc) throw nc;
     if (!email.includes("@") || password.length < 8) throw new DataError("invalid_credentials", "Email or password is wrong.");
     const u = { id: "local-user", email };
     store("os.user", u); emitAuth(u);
   },
   async signUp(email, password) {
+    const nc = notConnected(); if (nc) throw nc;
     if (password.length < 8) throw new DataError("weak_password", "Use at least 8 characters.");
     const u = { id: "local-user", email };
     store("os.user", u); emitAuth(u);
     return { needsConfirmation: false };
   },
   async signInWithOAuth(provider) {
+    const nc = notConnected(); if (nc) throw nc;
     const u = { id: "local-user", email: `dev@${provider}.local`, name: "Dev user" };
     store("os.user", u); emitAuth(u);
   },

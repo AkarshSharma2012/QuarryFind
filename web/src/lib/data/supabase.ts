@@ -9,6 +9,7 @@ const URL_ = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 export const sb = createClient(URL_, ANON, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "pkce" } });
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const RUN_COLS = "id, type, query, deep, via, status, modules_total, modules_completed, modules_with_hits, modules_failed, results_purged_at, created_at, completed_at";
 
 function toUser(u: { id: string; email?: string; user_metadata?: Record<string, unknown> } | null | undefined): User | null {
@@ -57,13 +58,13 @@ export const supabaseData: DataLayer = {
     if (error) throw new DataError("sign_in_failed", signInMessage(error));
   },
   async signUp(email, password) {
-    const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: `${location.origin}/search/` } });
+    const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: `${location.origin}${BASE}/search/` } });
     if (error) throw new DataError("sign_up_failed", error.message);
     return { needsConfirmation: !data.session };
   },
   async signInWithOAuth(provider) {
     const next = new URLSearchParams(location.search).get("next") ?? "/search/";
-    const { error } = await sb.auth.signInWithOAuth({ provider, options: { redirectTo: `${location.origin}${next.startsWith("/") ? next : "/search/"}` } });
+    const { error } = await sb.auth.signInWithOAuth({ provider, options: { redirectTo: `${location.origin}${BASE}${next.startsWith("/") ? next : "/search/"}` } });
     if (error) throw new DataError("oauth_failed", `${provider === "github" ? "GitHub" : "Google"} sign-in isn’t available right now.`);
   },
   async signOut() { await sb.auth.signOut(); },
