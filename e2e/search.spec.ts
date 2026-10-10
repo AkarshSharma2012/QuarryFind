@@ -26,6 +26,12 @@ test.describe("F02-F06 searching", () => {
     await page.getByRole("button", { name: "CSV" }).click();
     expect((await dl).suggestedFilename()).toBe("example-org.csv");
     await page.getByRole("radio", { name: "Cards" }).click();
+    // Fix #2: report a wrong result.
+    await page.getByRole("button", { name: /Report a wrong result from DNS records/ }).click();
+    const d = page.getByRole("dialog", { name: /Report a result from DNS records/ });
+    await d.getByRole("radio", { name: /missed an account/ }).check();
+    await d.getByRole("button", { name: "Send report" }).click();
+    await expect(page.getByRole("status").filter({ hasText: "re-checked" })).toBeVisible();
   });
 
   test("F06-H1 history lists the search and re-opens it", async ({ page }) => {

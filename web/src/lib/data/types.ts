@@ -20,6 +20,9 @@ export interface RunHandlers {
   onError?: (message: string) => void;
 }
 
+export interface SourceHealth { module: string; state: "ok" | "degraded" | "broken" | "disabled"; checked_at: string; reports_30d: number }
+export type ReportKind = "not_this_account" | "account_missing" | "other";
+
 export class DataError extends Error {
   constructor(public code: string, message: string) { super(message); }
 }
@@ -54,6 +57,9 @@ export interface DataLayer {
   listApiKeys(): Promise<ApiKey[]>;
   createApiKey(name: string): Promise<{ key: string; record: ApiKey }>;
   revokeApiKey(id: string): Promise<void>;
+  // source status + result reports
+  listSourceHealth(): Promise<SourceHealth[]>;
+  reportResult(input: { module: string; kind: ReportKind; query_type: SearchType; note: string }): Promise<void>;
   // server tools
   tool<T = unknown>(tool: string, input: string): Promise<T>;
 }

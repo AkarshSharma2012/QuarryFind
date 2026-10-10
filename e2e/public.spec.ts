@@ -1,6 +1,6 @@
 import { test, expect, a11y } from "./helpers";
 
-const PAGES = ["/", "/tools/", "/docs/", "/docs/api/", "/how-it-works/", "/terms/", "/privacy/", "/about/", "/sign-in/", "/sign-up/"];
+const PAGES = ["/", "/sources/", "/tools/", "/docs/", "/docs/api/", "/how-it-works/", "/terms/", "/privacy/", "/about/", "/sign-in/", "/sign-up/"];
 
 test.describe("public pages", () => {
   for (const path of PAGES) {
@@ -42,6 +42,14 @@ test.describe("public pages", () => {
     await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
     await page.keyboard.press("Enter");
     await expect(page.locator("#main")).toBeFocused();
+  });
+
+  test("fix #3: source status lists every source with its health", async ({ page }) => {
+    await page.goto("/sources/");
+    await expect(page.getByRole("cell", { name: /^GitHub$/ })).toBeVisible();
+    await expect(page.getByText("working").first()).toBeVisible();
+    await page.getByRole("textbox", { name: "Filter sources" }).fill("lichess");
+    await expect(page.locator("tbody tr")).toHaveCount(1);
   });
 
   test("unknown route shows the 404 page", async ({ page }) => {

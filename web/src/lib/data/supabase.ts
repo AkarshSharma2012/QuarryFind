@@ -3,7 +3,7 @@
 import { createClient, type RealtimeChannel } from "@supabase/supabase-js";
 import type { ModuleStatus, SearchResult, SearchRun } from "@/lib/types";
 import { signInMessage } from "./auth-errors";
-import { DataError, type ApiKey, type Case, type CaseItem, type DataLayer, type User } from "./types";
+import { DataError, type SourceHealth, type ApiKey, type Case, type CaseItem, type DataLayer, type User } from "./types";
 
 const URL_ = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -162,6 +162,20 @@ export const supabaseData: DataLayer = {
   },
   async createApiKey(name) { return fn<{ key: string; record: ApiKey }>("api-keys", { method: "POST", body: JSON.stringify({ name }) }); },
   async revokeApiKey(id) { await fn("api-keys", { method: "DELETE", query: `?id=${id}` }); },
+
+  async listSourceHealth() {
+    const [h, c] = await Promise.all([
+      sb.from("module_health").select("module, state, checked_at"),
+      sb.from("module_report_counts").select("module, reports_30d"),
+    ]);
+    const counts = new Map(((c.data ?? []) as { module: string; reports_30d: number }[]).map((r) => [r.module, r.reports_30d]));
+    return ((check(h, "load source status") ?? []) as Omit<SourceHealth, "reports_30d">[]).map((r) => ({ ...r, reports_30d: counts.get(r.module) ?? 0 }));
+  },
+  async reportResult(input) {
+    const { data: s } = await sb.auth.getSession();
+    if (!s.session) throw new DataError("unauthorized", "Sign in to report a result.");
+    check(await sb.from("result_reports").insert({ ...input, note: input.note.slice(0, 500), user_id: s.session.user.id }), "send the report");
+  },
 
   async tool<T>(tool: string, input: string) {
     const r = await fn<{ ok: boolean; error?: string; result?: T }>("tools", { method: "POST", body: JSON.stringify({ tool, input }) });

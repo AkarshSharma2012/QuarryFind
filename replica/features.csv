@@ -23,7 +23,7 @@ Out of credits and plan required states,billing,skip,yes,skip,"user: everything 
 Marketing landing page,marketing,must,yes,yes,original copy and design; no pricing (free)
 Deep username search (extra slower modules),search,should,yes,yes,free for all; no CAPTCHA solving; official-API modules only; 5 deep modules
 Filter and sort results by category confidence,results,should,yes,yes,plus cards/table view
-Module health checks with positive and negative fixtures,engine,should,yes,partial,scripts/fixtures.ts --upload + daily GitHub Action written; goes live once repo secrets are set at deploy
+Module health checks with positive and negative fixtures,engine,should,yes,yes,"fixtures --upload verified locally (308 ok, 2 degraded); daily Action needs repo secrets at deploy"
 Billing page with Stripe customer portal,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
 API keys page: create shown once revoke,api,should,yes,yes,free for every user; hashing/storage in backend; sha256 only; tested
 Public API POST/GET /v1/searches with stream wait async,api,should,yes,yes,"; tested: wait, stream"
@@ -64,8 +64,8 @@ Email header analyzer (paste raw headers),tools,could,no,yes,"new; client-side h
 Hash identifier and breach password check (k-anonymity),tools,could,no,yes,new; HIBP Pwned Passwords range API is free; breach-by-email API is paid -> not used
 Tools hub page listing every tool,tools,should,no,yes,new
 """Why this counts"" evidence on each result",results,should,no,yes,fix #1: false positives 41/3
-Report a wrong result button feeding module health,results,should,no,no,fix #2
-Public source status page,engine,should,no,no,fix #3: stale checks 10/3
+Report a wrong result button feeding module health,results,should,no,yes,fix #2
+Public source status page,engine,should,no,yes,fix #3: stale checks 10/3
 Check my own accounts (footprint audit) mode,search,could,no,no,fix #4: thin evidence
 Sort results by most details,results,could,no,yes,fix #5: thin
 Batch search several username variations,search,could,no,no,fix #6

@@ -124,6 +124,9 @@ export const localData: DataLayer = {
   },
   async revokeApiKey(id) { store("os.keys", load<ApiKey[]>("os.keys", []).map((k) => (k.id === id ? { ...k, revoked_at: now() } : k))); },
 
+  async listSourceHealth() { return []; },
+  async reportResult() { /* the dev API keeps no reports */ },
+
   async tool<T>(tool: string, input: string) {
     const r = await api<{ ok: boolean; error?: string; result?: T }>("/tools", { method: "POST", body: JSON.stringify({ tool, input }) });
     if (!r.ok) throw new DataError("invalid_request", r.error ?? "That didn’t work.");

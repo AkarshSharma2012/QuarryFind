@@ -105,7 +105,7 @@ export function SiteNav() {
 export function Footer() {
   const cols = [
     { title: "Product", links: [["Search", "/search/"], ["Free tools", "/tools/"], ["API", "/docs/"], ["API reference", "/docs/api/"]] },
-    { title: "Learn", links: [["How it works", "/how-it-works/"], ["About", "/about/"]] },
+    { title: "Learn", links: [["How it works", "/how-it-works/"], ["Source status", "/sources/"], ["About", "/about/"]] },
     { title: "Legal", links: [["Terms", "/terms/"], ["Privacy", "/privacy/"]] },
   ];
   return (

@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { useState } from "react";
-import { Bookmark, BookmarkCheck, ExternalLink, Lightbulb } from "lucide-react";
+import { Bookmark, BookmarkCheck, ExternalLink, Flag, Lightbulb } from "lucide-react";
 import type { SearchResult } from "@/lib/types";
 import { Card } from "@/components/ui/primitives";
 import { Button } from "@/components/ui/button";
@@ -52,12 +52,13 @@ export function Avatar({ src, name, size = 40 }: { src?: string; name: string; s
   return <img src={src} alt="" width={size} height={size} className={clsx(cls, "object-cover")} style={{ width: size, height: size }} referrerPolicy="no-referrer" loading="lazy" onError={() => setFailed(true)} />;
 }
 
-export function ResultCard({ r, saved, saving, onSave, onSearchLead }: {
+export function ResultCard({ r, saved, saving, onSave, onSearchLead, onReport }: {
   r: SearchResult;
   saved?: boolean;
   saving?: boolean;
   onSave?: () => void;
   onSearchLead?: (value: string) => void;
+  onReport?: () => void;
 }) {
   const m = r.metadata ?? {};
   const name = resultName(r);
@@ -129,11 +130,16 @@ export function ResultCard({ r, saved, saving, onSave, onSearchLead }: {
             Open source <ExternalLink className="size-3.5" aria-hidden /><span className="sr-only"> on {r.platform} (new tab)</span>
           </a>
         ) : <span />}
+        <div className="-mr-2 flex items-center">
+        {onReport && !isLead && (
+          <Button size="sm" variant="ghost" onClick={onReport} aria-label={`Report a wrong result from ${r.platform ?? r.source}`} icon={<Flag className="size-3.5" aria-hidden />}>
+            <span className="sr-only sm:not-sr-only">Report</span>
+          </Button>
+        )}
         {onSave && !isLead && (
           <Button
             size="sm"
             variant="ghost"
-            className="-mr-2"
             loading={saving}
             onClick={onSave}
             aria-pressed={saved}
@@ -142,6 +148,7 @@ export function ResultCard({ r, saved, saving, onSave, onSearchLead }: {
             {saved ? "Saved" : "Save"}
           </Button>
         )}
+        </div>
       </footer>
     </Card>
   );

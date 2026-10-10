@@ -10,6 +10,7 @@ import type { ModuleStatus, SearchResult, SearchRun } from "@/lib/types";
 import { Page, RequireUser } from "@/components/shell";
 import { Confidence, ResultCard, resultName, resultUrl, statText } from "@/components/result-card";
 import { SaveDialog } from "@/components/save-dialog";
+import { ReportDialog } from "@/components/report-dialog";
 import { Button, LinkButton } from "@/components/ui/button";
 import { Badge, Card, EmptyState, ProgressBar, SegmentedControl, Skeleton, StatTile } from "@/components/ui/primitives";
 import { useToast } from "@/components/ui/toast";
@@ -38,6 +39,7 @@ function RunView({ id }: { id: string }) {
   useEffect(() => { try { const v = localStorage.getItem("os.view"); if (v === "table" || v === "cards") setView(v); } catch { /* ignore */ } }, []);
   const changeView = (v: "cards" | "table") => { setView(v); try { localStorage.setItem("os.view", v); } catch { /* ignore */ } };
   const [saving, setSaving] = useState<SearchResult | null>(null);
+  const [reporting, setReporting] = useState<SearchResult | null>(null);
   const [saved, setSaved] = useState<Set<string>>(new Set());
   const [announce, setAnnounce] = useState("");
   const lastAnnounce = useRef(0);
@@ -219,7 +221,7 @@ function RunView({ id }: { id: string }) {
                           {r.type === "lead" ? (
                             <Button size="sm" variant="ghost" onClick={async () => { try { router.push(`/search/run/?id=${await data.startSearch("username", r.value!, false)}`); } catch (e) { toast((e as Error).message, "error"); } }}>Search</Button>
                           ) : (
-                            <Button size="sm" variant="ghost" aria-pressed={saved.has(k)} onClick={() => setSaving(r)}>{saved.has(k) ? "Saved" : "Save"}</Button>
+                            <span className="inline-flex"><Button size="sm" variant="ghost" onClick={() => setReporting(r)} aria-label={`Report a wrong result from ${r.platform ?? r.source}`}>Report</Button><Button size="sm" variant="ghost" aria-pressed={saved.has(k)} onClick={() => setSaving(r)}>{saved.has(k) ? "Saved" : "Save"}</Button></span>
                           )}
                         </td>
                       </tr>
@@ -237,6 +239,7 @@ function RunView({ id }: { id: string }) {
                       r={r}
                       saved={saved.has(`${r.source}|${r.value}`)}
                       onSave={() => setSaving(r)}
+                      onReport={() => setReporting(r)}
                       onSearchLead={async (v) => { try { router.push(`/search/run/?id=${await data.startSearch("username", v, false)}`); } catch (e) { toast((e as Error).message, "error"); } }}
                     />
                   </div>
@@ -265,6 +268,7 @@ function RunView({ id }: { id: string }) {
         </section>
       )}
 
+      <ReportDialog result={reporting} queryType={run.type} onClose={() => setReporting(null)} />
       <SaveDialog run={run} result={saving} onClose={() => setSaving(null)} onSaved={(r) => setSaved((s) => new Set(s).add(`${r.source}|${r.value}`))} />
       <p className={clsx("text-xs text-text-subtle")}>A match means the source recognised this exact identifier. It does not prove two accounts belong to the same person. <Link href="/how-it-works/" className="underline">How results are checked</Link></p>
     </div>
