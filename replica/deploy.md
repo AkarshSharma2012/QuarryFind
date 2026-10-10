@@ -1,6 +1,8 @@
 # Deploy: QuarryFind
 
-Status: **site live on GitHub Pages** at https://akarshsharma2012.github.io/OsintSet/ (user's go: "launch it on a github.io domain", 2026-10-09). The in-browser tools work now; search and accounts switch on once the Supabase project exists (§2–3).
+Status: **site live on GitHub Pages** at https://akarshsharma2012.github.io/OsintSet/ (user's go: "launch it on a github.io domain", 2026-10-09). Backend connected 2026-10-10: Supabase project `manovzhsjhgiexdowhgj`.
+
+> **Network note:** this machine's network blocks Postgres ports 5432/6543, so `supabase db push` and `db query` time out. Apply new migrations by pasting them into the dashboard SQL editor (and insert their version into `supabase_migrations.schema_migrations`), or run `db push` from another network. `functions deploy --use-api` and `secrets set` work (HTTPS).
 
 ## 1. Preflight (2026-10-09)
 

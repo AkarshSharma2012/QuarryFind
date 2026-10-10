@@ -12,7 +12,7 @@
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
 - Stage reached: 11 replica-deploy: LIVE on GitHub Pages https://akarshsharma2012.github.io/OsintSet/ (user's go 2026-10-09; Pages workflow `.github/workflows/pages.yml`, base path /OsintSet). Preflight: 49/49 e2e, 47/47 vitest, parity 99.4, sweep clean, audit 0.
-- Next: backend is not connected (site says so; in-browser tools work). Waiting on user to create a free Supabase project + `npx supabase login`; then deploy.md §3 and set repo variables SUPABASE_URL / SUPABASE_ANON_KEY (§4). Ruled out: Cloudflare Pages (user asked for github.io).
+- Next: backend CONNECTED 2026-10-10 (project manovzhsjhgiexdowhgj: schema applied via dashboard SQL editor because user's network blocks 5432/6543; 6 functions deployed with --use-api; secrets ALLOWED_ORIGINS + INTERNAL_SECRET set; repo vars SUPABASE_URL/SUPABASE_ANON_KEY set). Waiting on user's live smoke test (sign up, search). Open: module-health repo secrets, Sentry, legal review. Ruled out: `supabase db push` from this network (ports blocked).
 
 ## How to run locally
 - e2e: `NEXT_DIST_DIR=.next-build npm --prefix web run build` then `npx playwright test` (serves web/.next-build on 4317). Only ONE Playwright run at a time.
