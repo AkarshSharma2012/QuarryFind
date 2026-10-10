@@ -4,7 +4,7 @@
 import { describe, expect, it, beforeAll } from "vitest";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-const URL_ = process.env.SUPABASE_URL ?? "http://127.0.0.1:54321";
+const URL_ = process.env.SUPABASE_URL ?? "http://127.0.0.1:55321";
 const ANON = process.env.SUPABASE_ANON_KEY ?? "";
 const SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
 const up = Boolean(ANON && SERVICE);
