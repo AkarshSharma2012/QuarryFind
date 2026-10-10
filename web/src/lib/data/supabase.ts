@@ -7,7 +7,8 @@ import { DataError, type SourceHealth, type ApiKey, type Case, type CaseItem, ty
 
 const URL_ = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
-export const sb = createClient(URL_, ANON, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "pkce" } });
+// Placeholders keep builds without a backend working (index.ts then picks the local layer, so sb is never called).
+export const sb = createClient(URL_ || "http://127.0.0.1", ANON || "unset", { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "pkce" } });
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const RUN_COLS = "id, type, query, deep, via, status, modules_total, modules_completed, modules_with_hits, modules_failed, results_purged_at, created_at, completed_at";

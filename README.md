@@ -4,6 +4,8 @@
 
 No plans, no credits, no install.
 
+**Live:** https://akarshsharma2012.github.io/OsintSet/ (the in-browser tools work now; search switches on once the backend is connected, see `replica/deploy.md`).
+
 ![Landing page](docs/screenshots/landing.png)
 
 ## What it does
@@ -55,7 +57,7 @@ GitHub Action (daily): every source's positive/negative fixture → module_healt
 
 - **Engine**: `supabase/functions/_shared/engine/`, plain TypeScript using `fetch`. The same code runs in Supabase Edge Functions (Deno), the local dev API and the tests (Node).
 - **Batches are driven by the client.** Each batch is an ordinary request with its own CPU budget. Failed batches are retried, and reopening a half-finished search resumes it.
-- **Stack** (free tiers): Next.js 15 static export on Cloudflare Pages, Supabase (Postgres, Auth, Realtime, Edge Functions, pg_cron), Tailwind CSS 4.
+- **Stack** (free tiers): Next.js 15 static export on GitHub Pages, Supabase (Postgres, Auth, Realtime, Edge Functions, pg_cron), Tailwind CSS 4.
 
 ## Run it locally
 

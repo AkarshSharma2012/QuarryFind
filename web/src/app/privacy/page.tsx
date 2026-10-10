@@ -24,7 +24,7 @@ export default function Privacy() {
       <h2>Who processes data for us</h2>
       <ul>
         <li><strong>Supabase</strong> (database, sign-in, server functions): your account, history and cases.</li>
-        <li><strong>Cloudflare</strong> (hosting, DNS, privacy-friendly analytics without cookies): standard request logs.</li>
+        <li><strong>GitHub Pages</strong> (hosting): standard request logs, including IP addresses.</li>
         <li><strong>Resend</strong> (sign-in and confirmation emails): your email address.</li>
         <li><strong>Sentry</strong> (error reports): technical details of errors, scrubbed of search queries.</li>
         <li><strong>GitHub or Google</strong>, only if you choose to sign in with them.</li>
