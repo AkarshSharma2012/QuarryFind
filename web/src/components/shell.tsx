@@ -8,6 +8,7 @@ import { useState, type ReactNode } from "react";
 import { data, useUser } from "@/lib/data";
 import { LinkButton } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/primitives";
+import { StatusDot } from "@/components/status-dot";
 
 export const PRODUCT = "OsintSet";
 
@@ -113,6 +114,7 @@ export function Footer() {
         <div className="flex flex-col gap-2">
           <Logo />
           <p className="text-sm text-text-muted">Free OSINT search for usernames, emails and domains. Public sources only.</p>
+          <StatusDot />
         </div>
         {cols.map((c) => (
           <div key={c.title}>

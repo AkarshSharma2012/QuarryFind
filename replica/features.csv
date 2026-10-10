@@ -23,20 +23,20 @@ Out of credits and plan required states,billing,skip,yes,skip,"user: everything 
 Marketing landing page,marketing,must,yes,yes,original copy and design; no pricing (free)
 Deep username search (extra slower modules),search,should,yes,yes,free for all; no CAPTCHA solving; official-API modules only; 5 deep modules
 Filter and sort results by category confidence,results,should,yes,yes,plus cards/table view
-Module health checks with positive and negative fixtures,engine,should,yes,partial,scripts/fixtures.ts works; daily Action + DB write in backend; GitHub Action ready; needs SUPABASE_URL + service key repo secrets
+Module health checks with positive and negative fixtures,engine,should,yes,partial,scripts/fixtures.ts --upload + daily GitHub Action written; goes live once repo secrets are set at deploy
 Billing page with Stripe customer portal,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
 API keys page: create shown once revoke,api,should,yes,yes,free for every user; hashing/storage in backend; sha256 only; tested
 Public API POST/GET /v1/searches with stream wait async,api,should,yes,yes,"; tested: wait, stream"
 API /v1/me /v1/credits /v1/health /v1/capabilities,api,should,yes,yes,; credits n/a (free)
 OpenAPI spec and API reference page,api,should,yes,yes,openapi.json in backend; /v1/openapi.json
 API rate limiting,api,must,yes,yes,"abuse protection only, not a paywall: 10 searches/min web, 60/min API, 3 concurrent runs; enforced once backend runs; tested: 11th search/min blocked"
-Reverse WHOIS for domain search,search,should,yes,no,needs a paid data source; ask before buying; needs a paid data source; ask user
+Reverse WHOIS for domain search,search,skip,yes,skip,user: skip (only paid data sources exist)
 GitHub single-platform lookup: profile repos languages activity,tools,should,yes,yes,"official GitHub API; free account; + commit identities, timezone guess"
 Reddit single-platform lookup: karma communities activity hours,tools,should,yes,yes,official Reddit API; Reddit often blocks datacenter IPs (shows as did not answer)
 Terms and privacy pages,legal,should,yes,yes,original text; drafts; need legal review
 Product pages and docs hub,marketing,should,yes,yes,
 Prepaid API credit top-ups and subscription fallback toggle,api,skip,yes,skip,"user: everything free and unlimited, no paywalls"
-Instagram public profile snapshot with anonymous preview,tools,could,yes,no,official access is limited; may ship as link-out only; no reliable official public access
+Instagram public profile snapshot with anonymous preview,tools,skip,yes,skip,no reliable public access without private endpoints
 Inferred timezone from activity times,tools,could,yes,yes,GitHub/Reddit tools
 AI analysis of a profile (credit based),tools,skip,yes,skip,"user: everything free and unlimited, no paywalls"
 Guides and methodology articles,marketing,could,yes,partial,SEO; original writing; methodology page done; guides not written

@@ -1,0 +1,48 @@
+{
+  "mode": "layout",
+  "original": {
+    "width": 1440,
+    "height": 900
+  },
+  "clone": {
+    "width": 1440,
+    "height": 900
+  },
+  "compared_at": {
+    "width": 480,
+    "height": 300
+  },
+  "height_delta_pct": 0.0,
+  "score": 24.9,
+  "verdict": "different",
+  "regions": [
+    {
+      "x": 120,
+      "y": 0,
+      "w": 1200,
+      "h": 900,
+      "cells": 52,
+      "where": "middle centre"
+    },
+    {
+      "x": 1080,
+      "y": 0,
+      "w": 120,
+      "h": 120,
+      "cells": 1,
+      "where": "top right"
+    },
+    {
+      "x": 1320,
+      "y": 0,
+      "w": 120,
+      "h": 120,
+      "cells": 1,
+      "where": "top right"
+    }
+  ],
+  "files": {
+    "original": "replica/screens/S01-landing.png",
+    "clone": "replica/clone-screens/S01.png"
+  }
+}
