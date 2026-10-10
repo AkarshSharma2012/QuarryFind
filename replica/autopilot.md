@@ -11,10 +11,12 @@
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 5 replica-backend ✅ (local Supabase running on 553xx; RLS 7/7, backend e2e 5/5, browser-verified)
-- Next: 6 replica-test (Playwright e2e against web-dev in supabase mode)
+- Stage reached: 6 replica-test ✅ (46/46 e2e, 47 vitest, 7 bugs fixed, no open S1/S2)
+- Next: 7 replica-diff
 
 ## How to run locally
+- e2e: `NEXT_DIST_DIR=.next-build npm --prefix web run build` then `npx playwright test` (serves web/.next-build on 4317). Only ONE Playwright run at a time.
+- Edge runtime policy is `oneshot` locally (per-request CPU budget like hosted); restart container after adding new files under supabase/functions.
 - Supabase: `npx supabase start` (ports 553xx; Studio http://127.0.0.1:55323); keys in web/.env.local, supabase/functions/.env, .env.test.local (all gitignored)
 - Integration tests: `set -a; . ./.env.test.local; set +a; npx vitest run`
 - `npm run dev:api` (port 8787) + `npm --prefix web run dev` (port 3000); or launch.json configs dev-api / web-dev

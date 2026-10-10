@@ -101,6 +101,29 @@ Status: fixed in 54fc50c:
 2. Batches of 25.
 3. Body reads are streamed and stop as soon as the marker is found (cap 600 KB). All 310 module fixtures were re-run: 305 ok; the rest are site drift or timeouts, which the health job handles.
 
+**BUG-006 follow-up (root cause).** The sweep and smaller batches weren't enough. `search-start` held every batch request open, so its own termination cancelled them; background `waitUntil` work also doesn't run in one-request-per-worker mode. Final design in 3e1c2b0..HEAD:
+1. **Client-driven batches.** The results page calls `search-batch` for each slice (4 in parallel, 15 sources each). Each batch is an ordinary request with its own 2 s CPU budget and answers when done.
+2. **Retry and resume.** The page retries failed batches with backoff, then asks for "remaining" sources until none are left. Reopening a half-finished search resumes it.
+3. **The API drives its own runs** in wait/stream mode.
+4. **Light imports.** `search-start` and `v1` load only a small manifest, not the engine.
+
+Verified: torvalds, 302/302 in 62 s with 9 sources that didn't answer; e2e F01-H2 green.
+
+### BUG-007: Scrollable code blocks not reachable by keyboard
+
+- Severity: S4 (accessibility, axe `scrollable-region-focusable`)
+- Flow / case: X-1 (mobile)
+- Screen: S01, S15
+- Build: 54fc50c  Browser / device: Pixel 7 emulation
+
+Steps
+1. Open / or /docs/api/ at phone width.
+2. Tab through the page.
+
+Expected: horizontally scrollable code blocks can be focused and scrolled with the keyboard.
+Actual: `<pre>` overflowed but couldn't take focus.
+Status: fixed (tabIndex=0 + aria-label on scrollable `<pre>`); X-1 green on desktop and mobile
+
 ## Test-design issues found (not product bugs)
 
 - Concurrent Playwright runs (an earlier background run still going) shared users and output folders and clobbered each other. Only one run at a time from now on.
@@ -114,3 +137,10 @@ Status: fixed in 54fc50c:
 ## To check (not reproduced)
 
 - Supabase Kong answered a CORS preflight with `access-control-allow-origin: *` locally. Confirm production sends only the configured origins.
+
+## Summary (2026-10-09)
+
+- Playwright: **46/46 passing** (desktop + mobile), with a console/5xx guard and axe on every screen.
+- Vitest: unit 33 + RLS 8 + backend integration 6, all passing.
+- Bugs: 7 found. S1: 0 · S2: 2 (BUG-003, BUG-006) · S3: 3 (BUG-001, BUG-002, BUG-005) · S4: 2 (BUG-004, BUG-007). **All fixed; no open S1/S2.**
+- Manual still to do at deploy: confirmation email delivery (production SMTP), GitHub/Google OAuth with your OAuth apps, hosted-runtime timing.

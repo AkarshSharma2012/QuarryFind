@@ -152,7 +152,7 @@ export default function Home() {
       </Section>
 
       <Section id="h-api" label="API" title="The same engine, as JSON" intro="Free keys for every account. Stream findings into your own pipeline as each source answers.">
-        <pre className="overflow-x-auto rounded-lg border border-border bg-surface p-5 font-mono text-[13px] leading-6 text-text-muted"><code>{`$ curl -N -X POST $API/v1/searches \\
+        <pre tabIndex={0} aria-label="Example API request and streamed response" className="overflow-x-auto rounded-lg border border-border bg-surface p-5 font-mono text-[13px] leading-6 text-text-muted"><code>{`$ curl -N -X POST $API/v1/searches \\
     -H "Authorization: Bearer $KEY" \\
     -d '{"type":"email","query":"sam@example.com","stream":true}'
 

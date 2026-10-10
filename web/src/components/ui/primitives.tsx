@@ -203,7 +203,7 @@ export function CodeBlock({ code, lang }: { code: string; lang?: string }) {
           <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
         </button>
       </div>
-      <pre className="overflow-x-auto p-3 font-mono text-xs leading-5 text-text"><code>{code}</code></pre>
+      <pre tabIndex={0} aria-label={`${lang ?? "Code"} example`} className="overflow-x-auto p-3 font-mono text-xs leading-5 text-text"><code>{code}</code></pre>
     </div>
   );
 }
