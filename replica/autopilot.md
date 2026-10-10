@@ -11,8 +11,8 @@
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 11 replica-deploy: PREFLIGHT PASSED (49/49 e2e, 47/47 vitest, parity 99.4, sweep clean, audit 0)
-- Next: ON HOLD by user (2026-10-09): not going live yet; no domain yet (would use quarryfind.pages.dev). Resume with deploy.md §2-§3 when user says go.
+- Stage reached: 11 replica-deploy: LIVE on GitHub Pages https://akarshsharma2012.github.io/OsintSet/ (user's go 2026-10-09; Pages workflow `.github/workflows/pages.yml`, base path /OsintSet). Preflight: 49/49 e2e, 47/47 vitest, parity 99.4, sweep clean, audit 0.
+- Next: backend is not connected (site says so; in-browser tools work). Waiting on user to create a free Supabase project + `npx supabase login`; then deploy.md §3 and set repo variables SUPABASE_URL / SUPABASE_ANON_KEY (§4). Ruled out: Cloudflare Pages (user asked for github.io).
 
 ## How to run locally
 - e2e: `NEXT_DIST_DIR=.next-build npm --prefix web run build` then `npx playwright test` (serves web/.next-build on 4317). Only ONE Playwright run at a time.

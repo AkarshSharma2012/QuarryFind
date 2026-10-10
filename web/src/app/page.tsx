@@ -94,7 +94,7 @@ export default function Home() {
     <Page className="py-0">
       <div className="relative">
         <div className="bg-grid pointer-events-none absolute inset-x-0 -top-14 h-[560px]" aria-hidden />
-        <section className="relative grid items-center gap-14 pb-20 pt-16 lg:grid-cols-[1fr_1.05fr] lg:pt-24">
+        <section className="relative grid grid-cols-[minmax(0,1fr)] items-center gap-14 pb-20 pt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:pt-24">
           <div className="flex flex-col gap-7">
             <p className="eyebrow">Username · Email · Domain</p>
             <h1 className="max-w-[24ch] text-[2.5rem] font-semibold leading-[1.08] text-text sm:text-[3.25rem]">
