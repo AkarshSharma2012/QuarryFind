@@ -75,7 +75,7 @@ Add a `CNAME` record for the domain pointing at `akarshsharma2012.github.io`, se
 ## 6. Repo secrets (daily source health)
 
 Under GitHub → Settings → Secrets → Actions, add:
-- `SUPABASE_URL`
+- `SUPABASE_URL` (already set as a repository variable)
 - `SUPABASE_SERVICE_ROLE_KEY` (the user pastes it; never commit it)
 - `FIXTURES_GITHUB_TOKEN` (optional)
 

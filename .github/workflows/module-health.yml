@@ -17,6 +17,6 @@ jobs:
       - name: Run every module's positive and negative fixture, upload results
         run: node --disable-warning=ExperimentalWarning scripts/fixtures.ts --upload > /dev/null
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           GITHUB_TOKEN: ${{ secrets.FIXTURES_GITHUB_TOKEN }}
