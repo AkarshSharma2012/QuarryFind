@@ -94,9 +94,9 @@ export function ResultCard({ r, saved, saving, onSave, onSearchLead }: {
                 <dd className="break-all text-text">{x.value}</dd>
               </div>
             ))}
-            {m.records.length > 8 && <dd className="col-span-2 text-text-subtle">+{m.records.length - 8} more in export</dd>}
           </dl>
         )}
+        {m.records && m.records.length > 8 && <p className="font-mono text-xs text-text-subtle">+{m.records.length - 8} more in the export</p>}
 
         {stats.length > 0 && (
           <dl className="mt-auto flex flex-wrap gap-x-5 gap-y-1 pt-1">

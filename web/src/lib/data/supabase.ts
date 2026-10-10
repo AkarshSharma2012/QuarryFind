@@ -29,6 +29,12 @@ async function fn<T>(name: string, init: RequestInit & { query?: string } = {}):
   }
   if (res.status === 204) return undefined as T;
   const body = await res.json().catch(() => ({}));
+  // Session revoked elsewhere (sign out everywhere, password change, deleted
+  // user): drop the stale local session so the app shows the sign-in prompt.
+  if (res.status === 401 && data.session) {
+    await sb.auth.signOut({ scope: "local" });
+    throw new DataError("session_ended", "Your session ended. Sign in again to continue.");
+  }
   if (!res.ok) throw new DataError(body.error ?? "error", body.message ?? `Request failed (${res.status}).`);
   return body as T;
 }

@@ -5,7 +5,8 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { randomBytes, randomUUID } from "node:crypto";
 
 export const BASE = "http://localhost:4317";
-const USERS = 4;
+// 0 search, 1 auth/next + RLS viewer, 2 cases, 3 keys, 4 sign-out, 5 revoked session
+const USERS = 6;
 
 function loadEnv() {
   try {
