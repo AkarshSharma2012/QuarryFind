@@ -6,7 +6,7 @@ Date: 2026-10-09 · Tools: `parity.py` (features), `imgdiff.py` (layout), manual
 
 | measure | score | note |
 | --- | --- | --- |
-| **Feature parity** | **97 / 100** | 33 features counted; **must-haves 19 / 19 done** |
+| **Feature parity** | **98.2 / 100** | 33 features counted; **must-haves 19 / 19 done** |
 | Layout, S01 landing (1440×900) | 24.9 "different" | Deliberate. Same macro structure (hero copy left, product panel right, sections below); different proportions, type, colour and content. That keeps us clear of Opsis's trade dress. Not chased. |
 | Open bugs | S1 0 · S2 0 | 7 found and fixed in replica-test |
 
@@ -34,7 +34,7 @@ Left out on purpose (not scored): plans, credits and billing (you chose free and
 
 ## Verdict
 
-**Shippable.** All must-haves are done, feature score is 97 (needs 80+), and there are no open S1 or S2 bugs. To reach **better than the original**, take the fixes from replica-entrepreneur (next).
+**Shippable.** All must-haves are done, feature score is 98.2 (needs 80+), and there are no open S1 or S2 bugs. To reach **better than the original**, take the fixes from replica-entrepreneur (next).
 
 ## Top five next
 

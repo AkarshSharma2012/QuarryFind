@@ -11,7 +11,7 @@
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 7 replica-diff ✅ (parity 97/100, must-haves 19/19, verdict shippable)
+- Stage reached: 7 replica-diff ✅ (parity 98.2/100, must-haves 19/19, verdict shippable)
 - Next: 8 replica-entrepreneur
 
 ## How to run locally
