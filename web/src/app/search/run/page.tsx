@@ -38,6 +38,11 @@ function RunView({ id }: { id: string }) {
 
   useEffect(() => {
     let off = () => {};
+    let poll: ReturnType<typeof setInterval> | undefined;
+    let live = true;
+    // Live events can be dropped under bursts, so the database snapshot is the
+    // source of truth: re-sync every 5 s while running and once at the end.
+    const resync = () => data.getRun(id).then((s) => { if (s && live) apply(s); }).catch(() => {});
     data.getRun(id).then((snap) => {
       if (!snap) { setMissing(true); return; }
       apply(snap);
@@ -46,14 +51,25 @@ function RunView({ id }: { id: string }) {
           onSnapshot: apply,
           onResult: (r) => setResults((xs) => (xs.some((x) => x.seq === r.seq) ? xs : [...xs, r])),
           onStatus: (s) => setStatuses((xs) => (xs.some((x) => x.module === s.module) ? xs : [...xs, s])),
-          onRun: setRun,
+          onRun: (r) => {
+            setRun(r);
+            if (r.status !== "running") { clearInterval(poll); resync(); }
+          },
           onError: setError,
         });
+        poll = setInterval(resync, 5000);
       }
     }).catch((e) => setError(e instanceof DataError ? e.message : "Couldn’t load this search."));
-    return () => off();
-    function apply(s: RunSnapshot) { setRun(s.run); setResults(s.results); setStatuses(s.statuses); }
+    return () => { live = false; off(); clearInterval(poll); };
+    function apply(s: RunSnapshot) {
+      setRun(s.run); setResults(s.results); setStatuses(s.statuses);
+      if (s.run.status !== "running") clearInterval(poll);
+    }
   }, [id]);
+
+  useEffect(() => {
+    if (run) document.title = `${run.status === "running" ? "… " : ""}${run.query} · Search results`;
+  }, [run]);
 
   // Screen-reader progress, at most every 5 seconds.
   useEffect(() => {
