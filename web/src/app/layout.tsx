@@ -7,6 +7,8 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  openGraph: { siteName: "QuarryFind", type: "website" },
   title: { default: "QuarryFind: username, email and domain search", template: "%s · QuarryFind" },
   description: "Search a username, email address or domain across hundreds of public sources and see what each one returns, live.",
 };
