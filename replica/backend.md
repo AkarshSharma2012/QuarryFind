@@ -6,15 +6,15 @@ Supabase (Postgres + Auth + Realtime + Edge Functions + pg_cron). No payments: t
 
 | piece | where | status |
 | --- | --- | --- |
-| Schema, RLS, jobs | `supabase/migrations/2026100900*.sql` | written; **not yet applied** (Docker engine not running) |
-| search-start / search-batch | `supabase/functions/search-*` | written |
-| tools (server tools, 30/min per IP) | `supabase/functions/tools` | written |
-| api-keys (sha256-hashed, shown once, max 10) | `supabase/functions/api-keys` | written |
-| account deletion (cascades from auth.users) | `supabase/functions/account` | written |
-| Public API v1 + OpenAPI | `supabase/functions/v1` | written |
-| Web data layer | `web/src/lib/data/supabase.ts` (`NEXT_PUBLIC_BACKEND=supabase`) | written, typechecks |
-| RLS second-user test | `tests/rls.test.ts` | written; runs once Supabase is up |
-| Module health job | GitHub Action (daily `npm run fixtures` → `module_health`) | to do |
+| Schema, RLS, jobs | `supabase/migrations/2026100900*.sql` | applied on local Supabase (ports 553xx; another project, Avela, uses 543xx) |
+| search-start / search-batch | `supabase/functions/search-*` | tested (tests/backend.test.ts) |
+| tools (server tools, 30/min per IP) | `supabase/functions/tools` | tested (tests/backend.test.ts) |
+| api-keys (sha256-hashed, shown once, max 10) | `supabase/functions/api-keys` | tested (tests/backend.test.ts) |
+| account deletion (cascades from auth.users) | `supabase/functions/account` | tested (tests/backend.test.ts) |
+| Public API v1 + OpenAPI | `supabase/functions/v1` | tested (tests/backend.test.ts) |
+| Web data layer | `web/src/lib/data/supabase.ts` (`NEXT_PUBLIC_BACKEND=supabase`) | verified in browser: sign-in, 302-source search streaming live |
+| RLS second-user test | `tests/rls.test.ts` | 7/7 passing |
+| Module health job | `.github/workflows/module-health.yml` | ready; add repo secrets SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY at deploy |
 
 ## Auth
 
@@ -42,3 +42,8 @@ Supabase (Postgres + Auth + Realtime + Edge Functions + pg_cron). No payments: t
 - [x] no user data in URLs: queries go in POST bodies; run ids in URLs are random UUIDs
 - [ ] `npm audit`: run before launch
 - [x] privacy policy lists processing; add Supabase, Cloudflare, Resend by name before launch
+
+## Found while wiring it up
+
+- **Realtime drops events in bursts.** About 300 module rows land in a few seconds and some `postgres_changes` events never arrive. The results page now re-syncs from the database every 5 s while running and once at completion, so the final view always matches the database.
+- **Port clash.** Another local project (Avela) runs Supabase on the default ports, so OsintSet uses 553xx (`supabase/config.toml`).

@@ -1,5 +1,5 @@
 feature,area,priority,original,clone,notes
-Sign up / sign in with GitHub Google or email,auth,must,yes,partial,UI + local session; real Supabase auth in replica-backend
+Sign up / sign in with GitHub Google or email,auth,must,yes,yes,real Supabase auth in replica-backend; email+password verified locally; GitHub/Google need user OAuth apps
 Search type switch: email username domain,search,must,yes,yes,S06
 Query validation per type,search,must,yes,yes,400 invalid_request equivalent; client + engine
 Username search across many platform modules,search,must,yes,yes,"own modules; seed from WhatsMyName dataset with attribution; 47 modules, 45 pass live fixtures; WhatsMyName import pending user OK"
@@ -12,8 +12,8 @@ Coverage summary at end of run,search,must,yes,yes,partial coverage flagged; par
 Rich result card: avatar name handle bio stats link,results,must,yes,yes,
 Checked with no match list,results,must,yes,yes,
 Resume a running search by run id,search,must,yes,yes,reconnect after stream timeout; run page reattaches to stream
-Search history list,history,must,yes,partial,90-day retention; UI done; 90-day retention needs backend
-Auto-purge results after hours,privacy,must,yes,partial,pg_cron job written; needs backend
+Search history list,history,must,yes,yes,90-day retention; UI done; 90-day retention needs backend
+Auto-purge results after hours,privacy,must,yes,yes,needs backend; pg_cron jobs installed
 Save finding to a Profile,profiles,must,yes,yes,snapshot survives purge; named Cases; snapshot copy
 Profiles list and detail with delete,profiles,must,yes,yes,Cases with notes + export
 Plans: Starter Basic Pro with monthly credits,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
@@ -23,13 +23,13 @@ Out of credits and plan required states,billing,skip,yes,skip,"user: everything 
 Marketing landing page,marketing,must,yes,yes,original copy and design; no pricing (free)
 Deep username search (extra slower modules),search,should,yes,yes,free for all; no CAPTCHA solving; official-API modules only; 5 deep modules
 Filter and sort results by category confidence,results,should,yes,yes,plus cards/table view
-Module health checks with positive and negative fixtures,engine,should,yes,partial,scripts/fixtures.ts works; daily Action + DB write in backend
+Module health checks with positive and negative fixtures,engine,should,yes,partial,scripts/fixtures.ts works; daily Action + DB write in backend; GitHub Action ready; needs SUPABASE_URL + service key repo secrets
 Billing page with Stripe customer portal,billing,skip,yes,skip,"user: everything free and unlimited, no paywalls"
-API keys page: create shown once revoke,api,should,yes,partial,free for every user; UI + local store; hashing/storage in backend
-Public API POST/GET /v1/searches with stream wait async,api,should,yes,no,backend stage
-API /v1/me /v1/credits /v1/health /v1/capabilities,api,should,yes,no,backend stage
-OpenAPI spec and API reference page,api,should,yes,partial,reference page done; openapi.json in backend
-API rate limiting,api,must,yes,partial,"abuse protection only, not a paywall: 10 searches/min web, 60/min API, 3 concurrent runs; SQL function written; enforced once backend runs"
+API keys page: create shown once revoke,api,should,yes,yes,free for every user; hashing/storage in backend; sha256 only; tested
+Public API POST/GET /v1/searches with stream wait async,api,should,yes,yes,"; tested: wait, stream"
+API /v1/me /v1/credits /v1/health /v1/capabilities,api,should,yes,yes,; credits n/a (free)
+OpenAPI spec and API reference page,api,should,yes,yes,openapi.json in backend; /v1/openapi.json
+API rate limiting,api,must,yes,yes,"abuse protection only, not a paywall: 10 searches/min web, 60/min API, 3 concurrent runs; enforced once backend runs; tested: 11th search/min blocked"
 Reverse WHOIS for domain search,search,should,yes,no,needs a paid data source; ask before buying; needs a paid data source; ask user
 GitHub single-platform lookup: profile repos languages activity,tools,should,yes,yes,"official GitHub API; free account; + commit identities, timezone guess"
 Reddit single-platform lookup: karma communities activity hours,tools,should,yes,yes,official Reddit API; Reddit often blocks datacenter IPs (shows as did not answer)

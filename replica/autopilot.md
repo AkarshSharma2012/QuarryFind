@@ -11,10 +11,12 @@
 
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
-- Stage reached: 5 replica-backend — code written & committed; NOT yet run (Docker engine not starting)
-- Next: get Docker running → `npx supabase start` → apply migrations → `npx supabase functions serve` → web/.env.local with NEXT_PUBLIC_BACKEND=supabase → run tests/rls.test.ts + click-through → then 6 replica-test
+- Stage reached: 5 replica-backend ✅ (local Supabase running on 553xx; RLS 7/7, backend e2e 5/5, browser-verified)
+- Next: 6 replica-test (Playwright e2e against web-dev in supabase mode)
 
 ## How to run locally
+- Supabase: `npx supabase start` (ports 553xx; Studio http://127.0.0.1:55323); keys in web/.env.local, supabase/functions/.env, .env.test.local (all gitignored)
+- Integration tests: `set -a; . ./.env.test.local; set +a; npx vitest run`
 - `npm run dev:api` (port 8787) + `npm --prefix web run dev` (port 3000); or launch.json configs dev-api / web-dev
 - Tests: `npx vitest run`; live sources: `npm run fixtures`
 
@@ -28,4 +30,3 @@
 
 ## Open questions for user (batch)
 - Brand name (stage 9)
-- Docker Desktop engine won't start: user to check the Docker Desktop window
