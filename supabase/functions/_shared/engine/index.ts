@@ -31,7 +31,9 @@ export async function runModule(m: Module, query: string, ctx: Ctx): Promise<Mod
     const r = await m.check(query, ctx);
     return { ...r, module: m, latency_ms: Date.now() - t0 };
   } catch (e) {
-    const outcome = e instanceof Inconclusive ? "inconclusive" : "error";
+    // Timeouts can also fire while reading a body, after get() returned.
+    const name = (e as Error)?.name;
+    const outcome = e instanceof Inconclusive || name === "TimeoutError" || name === "AbortError" ? "inconclusive" : "error";
     return { outcome, detail: String((e as Error)?.message ?? e).slice(0, 200), module: m, latency_ms: Date.now() - t0 };
   }
 }

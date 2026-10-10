@@ -14,10 +14,12 @@ export const test = base.extend<{ guard: void }>({
       // 4xx responses are expected error paths (wrong password, not found) and
       // third-party avatars may refuse to load; 5xx is caught separately below.
       if (/Failed to load resource: (the server responded with a status of 4\d\d|net::ERR_)/.test(t)) return;
+      if (/status of 503/.test(t) && (m.location().url ?? "").includes("/search-batch")) return; // retried by the page
       problems.push(`console: ${t}`);
     });
     page.on("response", (r) => {
-      if (r.status() >= 500 && /localhost|127\.0\.0\.1/.test(r.url())) problems.push(`${r.status()} ${r.url()}`);
+      // search-batch 503 = a cold worker didn't boot in time; the page retries it.
+      if (r.status() >= 500 && /localhost|127\.0\.0\.1/.test(r.url()) && !(r.status() === 503 && r.url().includes("/search-batch"))) problems.push(`${r.status()} ${r.url()}`);
     });
     await use();
     expect(problems, problems.join("\n")).toEqual([]);
@@ -45,11 +47,11 @@ export async function a11y(page: Page) {
 }
 
 /** Starts a search from the search page and waits for it to finish. */
-export async function search(page: Page, type: "Username" | "Email" | "Domain", query: string) {
+export async function search(page: Page, type: "Username" | "Email" | "Domain", query: string, timeout = 100_000) {
   await page.goto("/search/");
   await page.getByRole("radio", { name: type }).click();
   await page.getByRole("textbox").first().fill(query);
   await page.getByRole("button", { name: "Search", exact: true }).click();
   await expect(page).toHaveURL(/\/search\/run\/\?id=/);
-  await expect(page.getByText(/Search complete|Search stopped early/)).toBeVisible({ timeout: 100_000 });
+  await expect(page.getByText(/Search complete|Search stopped early/)).toBeVisible({ timeout });
 }

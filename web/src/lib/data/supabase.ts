@@ -93,6 +93,34 @@ export const supabaseData: DataLayer = {
       });
     return () => { sb.removeChannel(ch); };
   },
+  async driveRun(id, total, signal) {
+    // Must not exceed BATCH in supabase/functions/_shared/runs.ts.
+    const size = 15, parallel = 4;
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    // A batch can fail to start (cold worker, network); retry it with backoff.
+    const call = async (body: object): Promise<{ ok: boolean; ran: number }> => {
+      for (let attempt = 0; attempt < 3 && !signal.aborted; attempt++) {
+        try {
+          const r = await fn<{ ran: number }>("search-batch", { method: "POST", body: JSON.stringify({ run_id: id, ...body }), signal });
+          return { ok: true, ran: r.ran };
+        } catch (e) {
+          if ((e as DataError).code === "session_ended" || (e as DataError).code === "not_found") return { ok: false, ran: 0 };
+          await wait(1000 * 2 ** attempt);
+        }
+      }
+      return { ok: false, ran: 0 };
+    };
+    const offsets = Array.from({ length: Math.ceil(total / size) }, (_, i) => i * size);
+    let i = 0;
+    await Promise.all(Array.from({ length: Math.min(parallel, offsets.length) }, async () => {
+      while (i < offsets.length && !signal.aborted) await call({ offset: offsets[i++], limit: size });
+    }));
+    // Pick up anything a failed or cut-off batch left unreported, until nothing is left.
+    for (let pass = 0; pass < 6 && !signal.aborted; pass++) {
+      const r = await call({ remaining: true });
+      if (r.ok && r.ran === 0) break;
+    }
+  },
   async listRuns(limit = 50) {
     return check(await sb.from("search_runs").select(RUN_COLS).order("created_at", { ascending: false }).limit(limit), "load your history") as SearchRun[];
   },

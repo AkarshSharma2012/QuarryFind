@@ -134,3 +134,17 @@ describe("tools", () => {
     expect(a.likelyUtcOffset).toBe(0);
   });
 });
+
+import { readText } from "../supabase/functions/_shared/engine/http.ts";
+describe("readText", () => {
+  const streamOf = (parts: string[]) => new Response(new ReadableStream({ start(c) { for (const p of parts) c.enqueue(new TextEncoder().encode(p)); c.close(); } }));
+  it("finds a needle split across chunks and stops early", async () => {
+    const body = await readText(streamOf(["aaaa profile-ca", "rd here", "x".repeat(1000), "never read"]), 600_000, ["profile-card"]);
+    expect(body).toContain("profile-card");
+    expect(body).not.toContain("never read");
+  });
+  it("respects the byte cap", async () => {
+    const body = await readText(streamOf(["a".repeat(100), "b".repeat(100), "c".repeat(100)]), 150);
+    expect(body).not.toContain("c");
+  });
+});

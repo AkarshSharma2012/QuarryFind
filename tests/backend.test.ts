@@ -35,7 +35,14 @@ describe.skipIf(!SERVICE)("backend end to end", () => {
   it("runs a domain search to completion with results visible only through RLS", async () => {
     const res = await call("search-start", { method: "POST", body: JSON.stringify({ type: "domain", query: "example.com" }) });
     expect(res.status).toBe(200);
-    const { run_id } = await res.json();
+    const { run_id, modules_total, batch_size } = await res.json();
+    expect(batch_size).toBeGreaterThan(0);
+    // Drive it the way the results page does: slices, then a retry pass.
+    for (let off = 0; off < modules_total; off += batch_size) {
+      const b = await call("search-batch", { method: "POST", body: JSON.stringify({ run_id, offset: off, limit: batch_size }) });
+      expect(b.status).toBe(200);
+    }
+    await call("search-batch", { method: "POST", body: JSON.stringify({ run_id, remaining: true }) });
     let run: Record<string, unknown> | null = null;
     for (let i = 0; i < 60; i++) {
       run = (await user.from("search_runs").select("*").eq("id", run_id).single()).data;
@@ -82,6 +89,16 @@ describe.skipIf(!SERVICE)("backend end to end", () => {
     expect(text).toContain("event: run");
     expect(text).toMatch(/event: (done|reconnect)/);
   }, 160_000);
+
+  it("search-batch refuses anonymous callers and other users' runs", async () => {
+    const { run_id } = await (await call("search-start", { method: "POST", body: JSON.stringify({ type: "domain", query: "example.net" }) })).json();
+    expect((await call("search-batch", { method: "POST", body: JSON.stringify({ run_id, offset: 0 }) }, ANON)).status).toBe(401);
+    const email = `other${crypto.randomUUID().slice(0, 8)}@example.test`, password = crypto.randomUUID();
+    await admin.auth.admin.createUser({ email, password, email_confirm: true });
+    const other = createClient(URL_, ANON, { auth: { persistSession: false } });
+    const t = (await other.auth.signInWithPassword({ email, password })).data.session!.access_token;
+    expect((await call("search-batch", { method: "POST", body: JSON.stringify({ run_id, offset: 0 }) }, t)).status).toBe(404);
+  }, 60_000);
 
   it("server tools work anonymously, profile tools need an account", async () => {
     const ip = await (await call("tools", { method: "POST", body: JSON.stringify({ tool: "ip", input: "1.1.1.1" }) }, ANON)).json();

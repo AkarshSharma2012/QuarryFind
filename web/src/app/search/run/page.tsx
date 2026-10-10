@@ -40,6 +40,7 @@ function RunView({ id }: { id: string }) {
     let off = () => {};
     let poll: ReturnType<typeof setInterval> | undefined;
     let live = true;
+    const drive = new AbortController();
     // Live events can be dropped under bursts, so the database snapshot is the
     // source of truth: re-sync every 5 s while running and once at the end.
     const resync = () => data.getRun(id).then((s) => { if (s && live) apply(s); }).catch(() => {});
@@ -58,9 +59,11 @@ function RunView({ id }: { id: string }) {
           onError: setError,
         });
         poll = setInterval(resync, 5000);
+        // This page runs the batches; reopening a half-finished search resumes it.
+        data.driveRun(id, snap.run.modules_total, drive.signal).then(resync);
       }
     }).catch((e) => setError(e instanceof DataError ? e.message : "Couldn’t load this search."));
-    return () => { live = false; off(); clearInterval(poll); };
+    return () => { live = false; off(); clearInterval(poll); drive.abort(); };
     function apply(s: RunSnapshot) {
       setRun(s.run); setResults(s.results); setStatuses(s.statuses);
       if (s.run.status !== "running") clearInterval(poll);
@@ -135,6 +138,7 @@ function RunView({ id }: { id: string }) {
             <span className="flex items-center gap-2">
               {running ? "Checking sources…" : run.status === "failed" ? "Search stopped early" : "Search complete"}
               {!running && unavailableCount > 0 && <Badge tone="warning">Partial coverage</Badge>}
+              {running && <span className="text-xs text-text-subtle">Keep this page open until it finishes.</span>}
             </span>
             <span className="tabular-nums text-text-muted">{run.modules_completed} / {run.modules_total} sources</span>
           </div>

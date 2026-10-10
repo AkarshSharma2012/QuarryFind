@@ -38,6 +38,8 @@ export interface DataLayer {
   startSearch(type: SearchType, query: string, deep: boolean): Promise<string>;
   getRun(id: string): Promise<RunSnapshot | null>;
   subscribeRun(id: string, h: RunHandlers): () => void;
+  /** Runs the search's batches from this page (no-op where the server does it). Resolves when every batch was attempted. */
+  driveRun(id: string, total: number, signal: AbortSignal): Promise<void>;
   listRuns(limit?: number): Promise<SearchRun[]>;
   // cases
   listCases(): Promise<Case[]>;

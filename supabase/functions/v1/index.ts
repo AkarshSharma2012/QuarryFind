@@ -1,9 +1,12 @@
 // Public API v1. Routes (function name "v1" → paths start with /v1):
 //   POST /v1/searches  GET /v1/searches  GET /v1/searches/:id  GET /v1/searches/:id/stream
 //   GET /v1/me  GET /v1/health  GET /v1/capabilities  GET /v1/openapi.json
-import { normalise, type SearchType } from "../_shared/engine/index.ts";
+import { normalise } from "../_shared/engine/validate.ts";
+import type { SearchType } from "../_shared/engine/types.ts";
 import { admin, cors, err, json, startError, userFromApiKey } from "../_shared/server.ts";
-import { startRun } from "../_shared/runs.ts";
+import { driveRun, startRun } from "../_shared/runs.ts";
+
+declare const EdgeRuntime: { waitUntil(p: Promise<unknown>): void } | undefined;
 import { openapi } from "./openapi.ts";
 
 const STREAM_MS = 140_000;
@@ -96,6 +99,9 @@ Deno.serve(async (req) => {
     try { run = await startRun(userId, type, query, Boolean(b.deep), "api"); }
     catch (e) { const [s, c, m] = startError(String((e as Error).message)); return err(req, s, c, m); }
     const id = run.id as string;
+    // API callers have no page to drive batches, so this request drives them.
+    const driving = driveRun(id, run.modules_total as number).catch(() => {});
+    if (typeof EdgeRuntime !== "undefined") EdgeRuntime.waitUntil(driving);
     if (b.stream) return stream(req, userId, id);
     if (b.wait) {
       const until = Date.now() + 30_000;

@@ -72,6 +72,7 @@ export const localData: DataLayer = {
     es.onerror = () => { if (es.readyState === EventSource.CLOSED) h.onError?.("Lost the live connection."); };
     return () => es.close();
   },
+  async driveRun() { /* the dev API runs everything itself */ },
   async listRuns(limit = 50) { return api<SearchRun[]>(`/runs?limit=${limit}`); },
 
   async listCases() {

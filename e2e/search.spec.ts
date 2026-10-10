@@ -53,11 +53,12 @@ test.describe("F02-F06 searching", () => {
   });
 
   test("F01-H2 username search across every source finishes and accounts for each one", async ({ page }) => {
-    await search(page, "Username", "torvalds");
+    test.setTimeout(300_000); // ~20 batches; the local edge runtime cold-compiles every worker
+    await search(page, "Username", "torvalds", 280_000);
     const total = Number(await page.getByRole("progressbar", { name: "Sources checked" }).getAttribute("aria-valuemax"));
     // Wait for the final re-sync, then the three counters must add up to the total.
     await expect(async () => {
-      const t = await page.locator("main header").innerText();
+      const t = await page.locator("main header").first().innerText();
       const n = (label: string) => Number(t.match(new RegExp(`(\\d+)\\s*${label}`))?.[1] ?? -1);
       expect(n("Found") + n("No match") + n("Unavailable")).toBe(total);
       expect(n("Found")).toBeGreaterThan(10);

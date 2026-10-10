@@ -1,7 +1,8 @@
 // POST {type, query, deep} with the user's JWT → {run_id}
-import { normalise, type SearchType } from "../_shared/engine/index.ts";
+import { normalise } from "../_shared/engine/validate.ts";
+import type { SearchType } from "../_shared/engine/types.ts";
 import { cors, err, json, startError, userFromJwt } from "../_shared/server.ts";
-import { startRun } from "../_shared/runs.ts";
+import { BATCH, startRun } from "../_shared/runs.ts";
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors(req) });
@@ -17,7 +18,8 @@ Deno.serve(async (req) => {
 
   try {
     const run = await startRun(user.id, type, query, Boolean(b.deep), "web");
-    return json(req, 200, { run_id: run.id });
+    // The results page drives the batches (see search-batch).
+    return json(req, 200, { run_id: run.id, modules_total: run.modules_total, batch_size: BATCH });
   } catch (e) {
     const [s, c, m] = startError(String((e as Error).message));
     return err(req, s, c, m);

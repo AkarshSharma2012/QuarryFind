@@ -82,6 +82,25 @@ Actual: the nav still shows your email; the search fails with "Sign in to search
 Evidence: e2e F04-H1 failure screenshot (signed-in nav + "Sign in to search.").
 Status: fixed in 6d4bc2a (a 401 from an Edge Function clears the local session); guarded by e2e F01-E5 (written first and seen failing)
 
+### BUG-006: Searches hang when a batch is killed by the Edge Function CPU limit
+
+- Severity: S2 (core flow incomplete; the run sat at "Checking sources…" until a 10-minute reaper)
+- Flow / case: F01 / F01-H2
+- Screen: S07
+- Build: 6d4bc2a  Browser / device: Chromium, 1440px; local Supabase edge runtime
+
+Steps
+1. Run a username search (302 sources, batches of 60).
+
+Expected: the run completes; every source is counted.
+Actual: stuck at 269/302. The edge-runtime log shows "CPU time hard limit reached" and "early termination", so the killed batches never recorded their remaining modules.
+Evidence: e2e F01-H2 screenshot; `docker logs supabase_edge_runtime_osintset`.
+Suspected cause: 60 modules per invocation, each reading up to 500 KB of HTML, exceeds the 2 s CPU limit (production has the same limit).
+Status: fixed in 54fc50c:
+1. `sweep_stuck_runs()` (pg_cron every minute) closes runs older than 3 minutes. Unreported sources count as "didn't answer". Test written first (tests/rls.test.ts) and seen failing.
+2. Batches of 25.
+3. Body reads are streamed and stop as soon as the marker is found (cap 600 KB). All 310 module fixtures were re-run: 305 ok; the rest are site drift or timeouts, which the health job handles.
+
 ## Test-design issues found (not product bugs)
 
 - Concurrent Playwright runs (an earlier background run still going) shared users and output folders and clobbered each other. Only one run at a time from now on.

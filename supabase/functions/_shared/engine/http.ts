@@ -34,14 +34,21 @@ export async function readText(res: Response, cap = 200_000, stopAt: string[] = 
   if (!res.body) return "";
   const reader = res.body.getReader();
   const dec = new TextDecoder();
+  const needles = stopAt.filter(Boolean);
+  const overlap = Math.max(0, ...needles.map((n) => n.length)) - 1;
   let out = "", size = 0;
   try {
     while (size < cap) {
       const { done, value } = await reader.read();
       if (done) break;
       size += value.byteLength;
+      const start = Math.max(0, out.length - overlap);
       out += dec.decode(value, { stream: true });
-      if (stopAt.length && stopAt.some((n) => n && out.includes(n))) break;
+      // Only scan the new text (plus enough overlap for a needle split across chunks).
+      if (needles.length) {
+        const fresh = out.slice(start);
+        if (needles.some((n) => fresh.includes(n))) break;
+      }
     }
   } finally {
     reader.cancel().catch(() => {});
