@@ -63,9 +63,9 @@ HTTP headers and tech fingerprint for a URL,tools,could,no,yes,"new; server fetc
 Email header analyzer (paste raw headers),tools,could,no,yes,"new; client-side hop trace, SPF/DKIM/DMARC results parsed"
 Hash identifier and breach password check (k-anonymity),tools,could,no,yes,new; HIBP Pwned Passwords range API is free; breach-by-email API is paid -> not used
 Tools hub page listing every tool,tools,should,no,yes,new
-"""Why this counts"" evidence on each result",results,should,no,no,fix #1: false positives 41/3
+"""Why this counts"" evidence on each result",results,should,no,yes,fix #1: false positives 41/3
 Report a wrong result button feeding module health,results,should,no,no,fix #2
 Public source status page,engine,should,no,no,fix #3: stale checks 10/3
 Check my own accounts (footprint audit) mode,search,could,no,no,fix #4: thin evidence
-Sort results by most details,results,could,no,no,fix #5: thin
+Sort results by most details,results,could,no,yes,fix #5: thin
 Batch search several username variations,search,could,no,no,fix #6

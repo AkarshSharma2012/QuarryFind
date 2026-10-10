@@ -10,6 +10,7 @@ export interface ResultMetadata {
   bio?: string;
   stats?: { label: string; value: string | number }[];
   records?: { name: string; value: string }[];
+  evidence?: string;
   [k: string]: unknown;
 }
 

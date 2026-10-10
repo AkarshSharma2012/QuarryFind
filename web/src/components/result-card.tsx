@@ -85,6 +85,14 @@ export function ResultCard({ r, saved, saving, onSave, onSearchLead }: {
         </header>
 
         {m.bio && <p className="line-clamp-3 text-sm leading-relaxed text-text-muted">{m.bio}</p>}
+        {m.evidence && (
+          <details className="group text-xs text-text-subtle">
+            <summary className="inline-flex cursor-pointer list-none items-center gap-1 hover:text-text-muted [&::-webkit-details-marker]:hidden">
+              <span className="underline decoration-dotted underline-offset-2">Why this counts</span>
+            </summary>
+            <p className="mt-1 leading-relaxed">{m.evidence}</p>
+          </details>
+        )}
 
         {m.records && m.records.length > 0 && (
           <dl className="grid grid-cols-[minmax(0,auto)_1fr] gap-x-3 gap-y-1 font-mono text-xs">

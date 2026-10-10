@@ -78,9 +78,16 @@ export function siteModule(s: SiteDef): Module {
       if (s.missingText && body.includes(s.missingText)) return absent();
       if (s.existsText && !body.includes(s.existsText)) return absent("no profile marker");
       const url = render(s.url, u);
+      const evidence = s.existsText
+        ? "The profile page contains a marker that only appears on real profiles."
+        : s.missingText
+          ? "The page loaded without the site's \"user not found\" message."
+          : s.check
+            ? `${s.platform}'s public endpoint answered for this username; it answers 404 when a user doesn't exist.`
+            : `The profile URL answered normally; ${s.platform} answers 404 for usernames that don't exist.`;
       return {
         outcome: "hit",
-        findings: [{ type: "account", platform: s.platform, category: s.category, value: url, confidence: s.existsText || s.missingText || s.check ? 0.9 : 0.75, metadata: { url, handle: u } }],
+        findings: [{ type: "account", platform: s.platform, category: s.category, value: url, confidence: s.existsText || s.missingText || s.check ? 0.9 : 0.75, metadata: { url, handle: u, evidence } }],
       };
     },
   };

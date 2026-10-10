@@ -43,11 +43,12 @@ export const emailModules: Module[] = [
             metadata: {
               url: data.profile_url, avatar: data.avatar_url, display_name: clean(data.display_name), handle: data.profile_url?.split("/").pop(),
               bio: clean(data.description), location: clean(data.location), records: accounts, linked_accounts: accounts,
+              evidence: "Gravatar has a public profile for this email address (looked up by its hash).",
             },
           },
           ...accounts.map((a: { name: string; value: string }) => ({
             type: "account" as const, platform: a.name, category: "social" as const, value: a.value, confidence: 0.95,
-            metadata: { url: a.value, via: "Gravatar verified account" },
+            metadata: { url: a.value, via: "Gravatar verified account", evidence: "Listed as a verified account on the email's Gravatar profile." },
           })),
         ],
       };
@@ -63,7 +64,7 @@ export const emailModules: Module[] = [
       if (res.status === 404) return absent();
       if (res.status !== 200) return inconclusive(`HTTP ${res.status}`);
       const avatar = `https://seccdn.libravatar.org/avatar/${hash}?s=160`;
-      return { outcome: "hit", findings: [{ type: "account", platform: "Libravatar", category: "identity", value: avatar, confidence: 0.9, metadata: { avatar, url: avatar } }] };
+      return { outcome: "hit", findings: [{ type: "account", platform: "Libravatar", category: "identity", value: avatar, confidence: 0.9, metadata: { avatar, url: avatar, evidence: "Libravatar serves an avatar for this email's hash." } }] };
     },
   },
   {
@@ -81,7 +82,7 @@ export const emailModules: Module[] = [
       const repos = [...new Set(items.map((i) => i.repository?.full_name).filter(Boolean))].slice(0, 5);
       const findings = [...logins.values()].map((a) => ({
         type: "profile" as const, platform: "GitHub", category: "dev" as const, value: a.html_url, confidence: 0.95,
-        metadata: { url: a.html_url, avatar: a.avatar_url, handle: a.login, records: repos.map((r) => ({ name: "commits in", value: r })) },
+        metadata: { url: a.html_url, avatar: a.avatar_url, handle: a.login, records: repos.map((r) => ({ name: "commits in", value: r })), evidence: "Public commits on GitHub list this email as the author and are linked to this account." },
       }));
       if (!findings.length) {
         findings.push({ type: "profile", platform: "GitHub", category: "dev", value: items[0].html_url, confidence: 0.7, metadata: { url: items[0].html_url, avatar: undefined, handle: clean(items[0].commit?.author?.name) ?? "", records: repos.map((r) => ({ name: "commits in", value: r })) } });
@@ -98,7 +99,7 @@ export const emailModules: Module[] = [
       if (res.status === 404) return absent();
       if (res.status !== 200) return inconclusive(`HTTP ${res.status}`);
       const url = `https://keys.openpgp.org/search?q=${encodeURIComponent(email)}`;
-      return { outcome: "hit", findings: [{ type: "account", platform: "OpenPGP key", category: "identity", value: url, confidence: 1, metadata: { url, bio: "A public PGP key is published for this address." } }] };
+      return { outcome: "hit", findings: [{ type: "account", platform: "OpenPGP key", category: "identity", value: url, confidence: 1, metadata: { url, bio: "A public PGP key is published for this address.", evidence: "keys.openpgp.org has a verified key for this exact address." } }] };
     },
   },
   {

@@ -16,7 +16,13 @@ import { useToast } from "@/components/ui/toast";
 import { download, fileSlug, resultsCsv } from "@/lib/export";
 
 type Status = ModuleStatus & { platform?: string };
-type Sort = "confidence" | "platform" | "newest";
+type Sort = "confidence" | "details" | "platform" | "newest";
+
+// How much a source told us: fields, stats and records (fix #5).
+const richness = (r: SearchResult) => {
+  const m = r.metadata ?? {};
+  return ["display_name", "avatar", "bio", "location", "company", "blog", "email"].filter((k) => m[k]).length + (m.stats?.length ?? 0) + (m.records?.length ?? 0);
+};
 
 function RunView({ id }: { id: string }) {
   const router = useRouter();
@@ -90,7 +96,8 @@ function RunView({ id }: { id: string }) {
     const leads = xs.filter((r) => r.type === "lead");
     const rest = xs.filter((r) => r.type !== "lead");
     rest.sort((a, b) =>
-      sort === "platform" ? String(a.platform).localeCompare(String(b.platform))
+      sort === "details" ? richness(b) - richness(a) || b.confidence - a.confidence
+        : sort === "platform" ? String(a.platform).localeCompare(String(b.platform))
         : sort === "newest" ? b.seq - a.seq
           : b.confidence - a.confidence || (b.metadata?.avatar ? 1 : 0) - (a.metadata?.avatar ? 1 : 0));
     return [...rest, ...leads];
@@ -170,6 +177,7 @@ function RunView({ id }: { id: string }) {
               <label className="text-sm text-text-muted" htmlFor="sort">Sort</label>
               <select id="sort" value={sort} onChange={(e) => setSort(e.target.value as Sort)} className="h-8 rounded-sm border border-border-input bg-surface px-2 text-sm text-text">
                 <option value="confidence">Strongest first</option>
+                <option value="details">Most details</option>
                 <option value="platform">Platform A–Z</option>
                 <option value="newest">Newest first</option>
               </select>
@@ -206,7 +214,7 @@ function RunView({ id }: { id: string }) {
                           {url ? <a href={url} target="_blank" rel="noopener noreferrer" className="inline-flex max-w-full items-center gap-1 text-text hover:text-accent"><span className="truncate">{resultName(r)}</span><ExternalLink className="size-3 shrink-0 text-text-subtle" aria-hidden /></a> : <span className="text-text">{resultName(r)}</span>}
                         </td>
                         <td className="max-w-[320px] truncate px-4 py-2.5 text-text-subtle" title={details}>{details || "—"}</td>
-                        <td className="px-4 py-2.5"><Confidence r={r} /></td>
+                        <td className="px-4 py-2.5" title={r.metadata?.evidence}><Confidence r={r} />{r.metadata?.evidence && <span className="sr-only"> {r.metadata.evidence}</span>}</td>
                         <td className="px-4 py-2.5 text-right">
                           {r.type === "lead" ? (
                             <Button size="sm" variant="ghost" onClick={async () => { try { router.push(`/search/run/?id=${await data.startSearch("username", r.value!, false)}`); } catch (e) { toast((e as Error).message, "error"); } }}>Search</Button>

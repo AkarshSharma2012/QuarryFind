@@ -6,7 +6,8 @@ import type { CheckResult, Ctx, Finding, Module } from "./types.ts";
 type J = Record<string, any>; // deno-lint-ignore no-explicit-any
 
 function hit(f: Finding): CheckResult {
-  return { outcome: "hit", findings: [{ type: "profile", confidence: 1, ...f }] };
+  const metadata = { evidence: `${f.platform ?? "The site"}'s public API returned this profile for the exact username.`, ...(f.metadata ?? {}) };
+  return { outcome: "hit", findings: [{ type: "profile", confidence: 1, ...f, metadata }] };
 }
 
 function stat(label: string, value: unknown) {

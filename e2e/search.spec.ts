@@ -63,6 +63,13 @@ test.describe("F02-F06 searching", () => {
       expect(n("Found") + n("No match") + n("Unavailable")).toBe(total);
       expect(n("Found")).toBeGreaterThan(10);
     }).toPass({ timeout: 20_000 });
-    await expect(page.getByRole("article", { name: /GitHub: Linus Torvalds/ })).toBeVisible();
+    const gh = page.getByRole("article", { name: /GitHub: Linus Torvalds/ });
+    await expect(gh).toBeVisible();
+    // Fix #1: every result explains why it counts.
+    await gh.getByText("Why this counts").click();
+    await expect(gh.getByText(/public API returned this profile/)).toBeVisible();
+    // Fix #5: sort by most details puts a rich profile first.
+    await page.getByLabel("Sort").selectOption("details");
+    await expect(page.getByRole("article").first()).toContainText(/followers|repos|karma|games/i);
   });
 });

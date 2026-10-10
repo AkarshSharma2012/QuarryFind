@@ -53,7 +53,7 @@ export function wmnModule(s: WmnSite): Module {
       if (body && isChallenge(body)) return inconclusive("bot challenge page");
       if (res.status === s.e_code && body.includes(s.e_string)) {
         const url = fill(s.uri_pretty ?? s.uri_check, u);
-        return { outcome: "hit", findings: [{ type: "account", platform: s.name, category: CAT[s.cat] ?? "community", value: url, confidence: 0.85, metadata: { url, handle: u } }] };
+        return { outcome: "hit", findings: [{ type: "account", platform: s.name, category: CAT[s.cat] ?? "community", value: url, confidence: 0.85, metadata: { url, handle: u, evidence: `The site answered HTTP ${s.e_code} and the page contains the text that only real profiles show (check from the WhatsMyName dataset).` } }] };
       }
       if (res.status === s.m_code && (!s.m_string || body.includes(s.m_string))) return absent();
       return inconclusive(`unexpected answer (HTTP ${res.status})`);

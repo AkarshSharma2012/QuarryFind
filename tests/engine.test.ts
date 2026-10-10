@@ -72,6 +72,7 @@ describe("site modules", () => {
     const hit = await runModule(m2, "x", ctxWith(() => new Response("<div class=profile-card>")));
     expect(hit.outcome).toBe("hit");
     expect(hit.findings?.[0].value).toBe("https://t.example/x");
+    expect(hit.findings?.[0].metadata?.evidence).toMatch(/marker/); // fix #1: every hit says why it counts
   });
   it("encodes the username in the URL", async () => {
     let seen = "";
@@ -92,6 +93,7 @@ describe("rich modules", () => {
     expect(r.outcome).toBe("hit");
     expect(r.findings?.[0].metadata?.display_name).toBe("Jane");
     expect(r.findings?.[0].metadata?.stats).toContainEqual({ label: "Joined", value: 2015 });
+    expect(r.findings?.[0].metadata?.evidence).toMatch(/public API/);
   });
   it("GitHub 404 is absent, 403 is inconclusive", async () => {
     expect((await runModule(github, "x", ctxWith(() => json(404, {})))).outcome).toBe("absent");
