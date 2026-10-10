@@ -133,7 +133,7 @@ export function Footer() {
 export function Page({ children, narrow, className }: { children: ReactNode; narrow?: boolean; className?: string }) {
   return (
     <>
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:text-on-primary">Skip to content</a>
+      <a href="#main" className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-3 focus-visible:z-50 focus-visible:rounded-md focus-visible:bg-primary focus-visible:px-3 focus-visible:py-2 focus-visible:text-sm focus-visible:text-on-primary">Skip to content</a>
       <SiteNav />
       <main id="main" tabIndex={-1} className={clsx("mx-auto w-full px-4 py-10 outline-none sm:px-6", narrow ? "max-w-3xl" : "max-w-[1200px]", className)}>{children}</main>
       <Footer />
