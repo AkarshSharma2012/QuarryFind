@@ -12,7 +12,7 @@ No plans, no credits, no install.
 
 - **Username search.** 300+ sites: developer platforms, social networks, gaming, creators and communities. Where the source makes it public, you get the avatar, display name, bio, follower counts and join date, not just a link.
 - **Email search.** Public signals only: Gravatar and its verified accounts, Libravatar, public GitHub commit authors, published PGP keys, and the domain's mail setup. The part before the @ is offered as a username lead.
-- **Domain search.** WHOIS (RDAP), DNS records, mail security (SPF/DMARC and whether the domain is easy to spoof), subdomains from certificate transparency logs, Wayback Machine history, and the website's server, CDN, tech stack and security headers.
+- **Domain search.** WHOIS (RDAP), DNS records, mail security (SPF/DMARC and whether the domain is easy to spoof), subdomains from certificate transparency logs, Wayback Machine history, the website's server, CDN, tech stack and security headers, and its own security.txt and robots.txt (security contacts, hidden paths, blocked crawlers).
 - **Honest results.** Every source ends as *found*, *no match* or *didn't answer*. A blocked, rate-limited or timed-out source is never reported as "no account", and bot-check pages never count as a match. Every result has a **"Why this counts"** note explaining the signal that matched.
 - **Checked daily.** Each source is tested every day against an account that exists and a name that doesn't. Sources that get it wrong are switched off. The live state of every source is public at `/sources`, and users can **report a wrong result**.
 - **Cases.** Save findings into private cases with your notes. Search results are deleted after 6 hours; cases stay until you delete them.
