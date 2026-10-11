@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ToastProvider } from "@/components/ui/toast";
 import "./globals.css";
@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   title: { default: "QuarryFind: username, email and domain search", template: "%s · QuarryFind" },
   description: "Search a username, email address or domain across hundreds of public sources and see what each one returns, live.",
 };
+
+export const viewport: Viewport = { themeColor: "#0c0d10", colorScheme: "dark" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

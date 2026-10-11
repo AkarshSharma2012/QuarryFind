@@ -79,6 +79,19 @@ test.describe("visitor", () => {
     });
   }
 
+  test("an unknown address shows the 404 page", async ({ page }) => {
+    const res = await page.goto("no-such-page/");
+    expect(res?.status()).toBe(404);
+    await expect(page.getByRole("heading", { level: 1, name: "Page not found" })).toBeVisible();
+    await expect(page).toHaveTitle(/Page not found/);
+  });
+
+  test("sitemap, robots and manifest are published", async ({ request, baseURL }) => {
+    expect((await request.get(`${baseURL}sitemap.xml`)).status()).toBe(200);
+    expect(await (await request.get(`${baseURL}robots.txt`)).text()).toContain("Sitemap:");
+    expect((await (await request.get(`${baseURL}manifest.webmanifest`)).json()).name).toBe("QuarryFind");
+  });
+
   test("sign-in offers only the providers switched on in Supabase", async ({ page }) => {
     const settings = (await (await fetch(`${SB}/auth/v1/settings`, { headers: { apikey: ANON } })).json()) as { external: Record<string, boolean> };
     await page.goto("sign-in/");
