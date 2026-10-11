@@ -6,6 +6,7 @@ import { Bookmark, BookmarkCheck, ExternalLink, Flag, Lightbulb } from "lucide-r
 import type { SearchResult } from "@/lib/types";
 import { Card } from "@/components/ui/primitives";
 import { Button } from "@/components/ui/button";
+import { safeHref } from "@/lib/safe-href";
 
 function initials(s: string) {
   return s.replace(/[^a-z0-9 ]/gi, "").split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase() || "?";
@@ -27,7 +28,7 @@ export function Confidence({ r }: { r: Pick<SearchResult, "confidence" | "type">
   );
 }
 
-export const resultUrl = (r: SearchResult) => r.metadata?.url ?? (r.value?.startsWith("http") ? r.value : undefined);
+export const resultUrl = (r: SearchResult) => safeHref(r.metadata?.url) ?? safeHref(r.value);
 export const resultName = (r: SearchResult) => String(r.metadata?.display_name ?? r.metadata?.handle ?? r.value ?? r.platform ?? r.source);
 
 function fmtStat(v: string | number, label: string) {

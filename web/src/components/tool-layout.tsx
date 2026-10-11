@@ -8,6 +8,7 @@ import { toolBySlug } from "@/lib/tools";
 import { Page, RequireUser } from "@/components/shell";
 import { Button } from "@/components/ui/button";
 import { Badge, Card, EmptyState, Input, Skeleton } from "@/components/ui/primitives";
+import { safeHref } from "@/lib/safe-href";
 
 export function ToolShell({ slug, children }: { slug: string; children: ReactNode }) {
   const t = toolBySlug(slug)!;
@@ -37,7 +38,7 @@ export function RecordsTable({ records }: { records: Rec[] }) {
             <tr key={i} className="border-b border-border align-top last:border-0">
               <th scope="row" className="w-40 whitespace-nowrap px-4 py-2 font-normal text-text-subtle">{r.name}</th>
               <td className="break-all px-4 py-2 font-mono text-xs text-text">
-                {/^https?:\/\//.test(r.value) ? <a href={r.value} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{r.value}</a> : r.value}
+                {safeHref(r.value) ? <a href={safeHref(r.value)} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{r.value}</a> : r.value}
               </td>
             </tr>
           ))}
@@ -84,7 +85,7 @@ export function ServerTool({ slug, initial = "" }: { slug: string; initial?: str
               <p className="font-mono text-sm text-text">{f.value}</p>
               <div className="flex items-center gap-3">
                 {f.metadata.total && f.metadata.total > f.metadata.records.length && <Badge>{f.metadata.records.length} of {f.metadata.total} shown</Badge>}
-                {f.metadata.url && <a href={f.metadata.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm text-accent hover:underline">Source <ExternalLink className="size-3.5" aria-hidden /></a>}
+                {safeHref(f.metadata.url) && <a href={safeHref(f.metadata.url)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm text-accent hover:underline">Source <ExternalLink className="size-3.5" aria-hidden /></a>}
               </div>
             </div>
             <RecordsTable records={f.metadata.records} />

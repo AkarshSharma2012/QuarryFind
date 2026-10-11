@@ -4,6 +4,7 @@ import { ExternalLink } from "lucide-react";
 import { ProfileTool, Stat, KV } from "@/components/profile-tool";
 import { ActivityChart, type Activity } from "@/components/activity-chart";
 import { Badge, Card } from "@/components/ui/primitives";
+import { safeHref } from "@/lib/safe-href";
 
 interface RD {
   found: boolean; error?: string;
@@ -22,7 +23,7 @@ export default function RedditTool() {
           {r.profile.avatar && <img src={r.profile.avatar} alt="" className="size-20 rounded-md" referrerPolicy="no-referrer" />}
           <div className="flex min-w-0 flex-1 flex-col gap-3">
             <div className="flex flex-wrap items-center gap-2">
-              <a href={r.profile.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-mono text-lg text-accent hover:underline">u/{r.profile.name} <ExternalLink className="size-4" aria-hidden /></a>
+              <a href={safeHref(r.profile.url)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-mono text-lg text-accent hover:underline">u/{r.profile.name} <ExternalLink className="size-4" aria-hidden /></a>
               {r.profile.suspended && <Badge tone="danger">Suspended</Badge>}
               {r.profile.is_mod && <Badge tone="accent">Moderator</Badge>}
             </div>
@@ -42,7 +43,7 @@ export default function RedditTool() {
           <section aria-labelledby="h-recent">
             <h2 id="h-recent" className="mb-3 text-base">Recent public activity</h2>
             <ul className="flex flex-col gap-2">{r.recent.map((x) => (
-              <li key={x.url}><Card className="p-3 text-sm"><a href={x.url} target="_blank" rel="noopener noreferrer" className="text-text hover:text-accent">{x.title ?? "(no text)"}</a><p className="mt-1 text-xs text-text-subtle">{x.kind} in r/{x.subreddit}{x.created ? ` · ${new Date(x.created).toLocaleDateString()}` : ""}</p></Card></li>
+              <li key={x.url}><Card className="p-3 text-sm"><a href={safeHref(x.url)} target="_blank" rel="noopener noreferrer" className="text-text hover:text-accent">{x.title ?? "(no text)"}</a><p className="mt-1 text-xs text-text-subtle">{x.kind} in r/{x.subreddit}{x.created ? ` · ${new Date(x.created).toLocaleDateString()}` : ""}</p></Card></li>
             ))}</ul>
           </section>
         )}

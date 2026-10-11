@@ -4,6 +4,7 @@ import { ExternalLink, Star } from "lucide-react";
 import { ProfileTool, Stat, KV } from "@/components/profile-tool";
 import { ActivityChart, type Activity } from "@/components/activity-chart";
 import { Card } from "@/components/ui/primitives";
+import { safeHref } from "@/lib/safe-href";
 
 interface GH {
   found: boolean; error?: string;
@@ -26,7 +27,7 @@ export default function GithubTool() {
           <div className="flex min-w-0 flex-1 flex-col gap-3">
             <div>
               <h2 className="text-lg text-text">{r.profile.name ?? r.profile.login}</h2>
-              <a href={r.profile.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-mono text-sm text-accent hover:underline">@{r.profile.login} <ExternalLink className="size-3.5" aria-hidden /></a>
+              <a href={safeHref(r.profile.url)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-mono text-sm text-accent hover:underline">@{r.profile.login} <ExternalLink className="size-3.5" aria-hidden /></a>
             </div>
             {r.profile.bio && <p className="text-sm text-text-muted">{r.profile.bio}</p>}
             <div className="flex flex-wrap gap-6">
@@ -64,7 +65,7 @@ export default function GithubTool() {
             <ul className="grid gap-3 sm:grid-cols-2">
               {r.repos.map((x) => (
                 <li key={x.url}><Card className="flex h-full flex-col gap-1 p-4">
-                  <a href={x.url} target="_blank" rel="noopener noreferrer" className="truncate font-mono text-sm text-accent hover:underline">{x.name}</a>
+                  <a href={safeHref(x.url)} target="_blank" rel="noopener noreferrer" className="truncate font-mono text-sm text-accent hover:underline">{x.name}</a>
                   {x.description && <p className="line-clamp-2 text-sm text-text-muted">{x.description}</p>}
                   <p className="mt-auto flex items-center gap-3 pt-1 text-xs text-text-subtle">{x.language && <span>{x.language}</span>}<span className="inline-flex items-center gap-1"><Star className="size-3" aria-hidden />{x.stars}</span><span>pushed {d(x.pushed)}</span></p>
                 </Card></li>
