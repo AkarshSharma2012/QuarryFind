@@ -125,7 +125,7 @@ export function Footer() {
           </div>
         ))}
       </div>
-      <p className="mx-auto max-w-[1200px] px-4 pb-8 text-xs text-text-subtle">© {new Date().getFullYear()} {PRODUCT}. Use it lawfully and only for investigations you are allowed to run. Some site checks are derived from <a href="https://github.com/WebBreacher/WhatsMyName" className="underline hover:text-text" target="_blank" rel="noopener noreferrer">WhatsMyName</a> (CC BY-SA 4.0).</p>
+      <p className="mx-auto max-w-[1200px] px-4 pb-8 text-xs text-text-subtle">© {new Date().getFullYear()} {PRODUCT}. Use it lawfully and only for investigations you are allowed to run. Some site checks are adapted from <a href="https://github.com/WebBreacher/WhatsMyName" className="underline hover:text-text" target="_blank" rel="noopener noreferrer">WhatsMyName</a> © Micah Hoffman, used under <a href="https://creativecommons.org/licenses/by-sa/4.0/" className="underline hover:text-text" target="_blank" rel="noopener noreferrer license">CC BY-SA 4.0</a> (filtered and re-tested; the adapted list is under the same licence).</p>
     </footer>
   );
 }
