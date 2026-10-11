@@ -1,6 +1,6 @@
 // Username modules that read official / public JSON APIs and return profile
 // fields. Each one distinguishes a real absence signal from a blocked answer.
-import { absent, blocked, clean, getJson, inconclusive, year } from "./http.ts";
+import { absent, blocked, clean, get, getJson, inconclusive, year } from "./http.ts";
 import type { CheckResult, Ctx, Finding, Module } from "./types.ts";
 
 type J = Record<string, any>; // deno-lint-ignore no-explicit-any
@@ -35,6 +35,24 @@ function jsonModule(m: Omit<Module, "check" | "types"> & {
       return f ? hit({ platform: m.platform, category: m.category, ...f }) : absent();
     },
   };
+}
+
+// App-only OAuth token for Reddit (client credentials), cached until shortly before it expires.
+let reddit: { token: string; until: number } | null = null;
+async function redditToken(ctx: Ctx): Promise<string | null> {
+  const id = ctx.env.REDDIT_CLIENT_ID, secret = ctx.env.REDDIT_CLIENT_SECRET;
+  if (!id || !secret) return null;
+  if (reddit && reddit.until > Date.now()) return reddit.token;
+  try {
+    const res = await get(ctx, "https://www.reddit.com/api/v1/access_token", {
+      method: "POST", body: "grant_type=client_credentials",
+      headers: { authorization: `Basic ${btoa(`${id}:${secret}`)}`, "content-type": "application/x-www-form-urlencoded" },
+    });
+    const j = (await res.json()) as { access_token?: string; expires_in?: number };
+    if (!j.access_token) return null;
+    reddit = { token: j.access_token, until: Date.now() + ((j.expires_in ?? 3600) - 120) * 1000 };
+    return reddit.token;
+  } catch { return null; }
 }
 
 export const richModules: Module[] = [
@@ -254,7 +272,11 @@ export const richModules: Module[] = [
   {
     name: "reddit", platform: "Reddit", category: "community", types: ["username"],
     async check(u, ctx) {
-      const { status, data } = await getJson<J>(ctx, `https://www.reddit.com/user/${encodeURIComponent(u)}/about.json`);
+      // Reddit closed unauthenticated JSON in 2025; with an app's credentials use its official OAuth API.
+      const token = await redditToken(ctx);
+      const { status, data } = token
+        ? await getJson<J>(ctx, `https://oauth.reddit.com/user/${encodeURIComponent(u)}/about?raw_json=1`, { headers: { authorization: `Bearer ${token}` } })
+        : await getJson<J>(ctx, `https://www.reddit.com/user/${encodeURIComponent(u)}/about.json`);
       if (status === 404) return absent();
       if (status !== 200 || !data?.data) return inconclusive(`HTTP ${status}`);
       const x = data.data;

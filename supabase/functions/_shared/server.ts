@@ -61,6 +61,15 @@ export function startError(message: string): [number, string, string] {
   return [500, "server_error", "Couldn’t start the search."];
 }
 
+/** True when the request carries this project's service role key (server-to-server callers only). */
+export function isServiceKey(req: Request) {
+  const a = req.headers.get("authorization") ?? "";
+  return !!SERVICE_KEY && a.length === SERVICE_KEY.length + 7 && a === `Bearer ${SERVICE_KEY}`;
+}
+
 export function envRecord(): Record<string, string | undefined> {
-  return { GITHUB_TOKEN: Deno.env.get("GITHUB_TOKEN"), GRAVATAR_API_KEY: Deno.env.get("GRAVATAR_API_KEY") };
+  return {
+    GITHUB_TOKEN: Deno.env.get("GITHUB_TOKEN"), GRAVATAR_API_KEY: Deno.env.get("GRAVATAR_API_KEY"),
+    REDDIT_CLIENT_ID: Deno.env.get("REDDIT_CLIENT_ID"), REDDIT_CLIENT_SECRET: Deno.env.get("REDDIT_CLIENT_SECRET"),
+  };
 }

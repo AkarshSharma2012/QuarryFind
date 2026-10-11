@@ -428,3 +428,5 @@ verify_jwt = false
 verify_jwt = false
 [functions.v1]
 verify_jwt = false
+[functions.module-health]
+verify_jwt = false
