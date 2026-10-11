@@ -2,6 +2,7 @@
 // transparency subdomains, Wayback history, web server headers.
 import { absent, clean, getJson, Inconclusive, inconclusive } from "./http.ts";
 import { publicFetch } from "./public-fetch.ts";
+import { sitePolicies } from "./site-policies.ts";
 import { dohQuery, unquote } from "./dns.ts";
 import type { CheckResult, Ctx, Module } from "./types.ts";
 
@@ -122,4 +123,5 @@ export const domainModules: Module[] = [
   { name: "crtsh", platform: "Subdomains", category: "dns", types: ["domain"], check: (d, ctx) => subdomains(ctx, d, 100) },
   { name: "wayback", platform: "Wayback Machine", category: "archive", types: ["domain"], check: (d, ctx) => wayback(ctx, d) },
   { name: "http", platform: "Website", category: "web", types: ["domain"], check: (d, ctx) => httpProfile(ctx, d) },
+  { name: "site-policies", platform: "Site policies", category: "security", types: ["domain"], check: (d, ctx) => sitePolicies(ctx, d), fixtures: { positive: "github.com", negative: "example.com" } },
 ];

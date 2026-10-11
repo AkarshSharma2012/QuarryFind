@@ -2941,5 +2941,14 @@
       "domain"
     ],
     "deep": false
+  },
+  {
+    "name": "site-policies",
+    "platform": "Site policies",
+    "category": "security",
+    "types": [
+      "domain"
+    ],
+    "deep": false
   }
 ]
