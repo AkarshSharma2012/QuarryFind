@@ -4,6 +4,14 @@ Status: **site live on GitHub Pages** at https://akarshsharma2012.github.io/Osin
 
 > **Network note:** this machine's network blocks Postgres ports 5432/6543, so `supabase db push` and `db query` time out. Apply new migrations by pasting them into the dashboard SQL editor (and insert their version into `supabase_migrations.schema_migrations`), or run `db push` from another network. `functions deploy --use-api` and `secrets set` work (HTTPS).
 
+## Waiting on the user
+
+1. **Apply the abuse-limits migration.** Paste `supabase/migrations/20261011000000_abuse_limits.sql` into the SQL editor and run it, then run:
+   `insert into supabase_migrations.schema_migrations (version, name) values ('20261011000000', 'abuse_limits');`
+   It's tested locally and in CI; until it's applied, case/report size and count limits aren't enforced in production.
+2. **Optional: Reddit.** Reddit blocks anonymous lookups. Create a "script" app at reddit.com/prefs/apps, then `npx supabase secrets set REDDIT_CLIENT_ID=… REDDIT_CLIENT_SECRET=…` (the user pastes the values). The module switches to the official API by itself.
+3. **Optional: Resend** for sign-up emails (built-in mailer allows only a few an hour), **Sentry**, legal review of terms and privacy.
+
 ## 1. Preflight (2026-10-09)
 
 | check | result |
