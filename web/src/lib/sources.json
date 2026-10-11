@@ -171,6 +171,69 @@
     "deep": false
   },
   {
+    "name": "hexpm",
+    "platform": "Hex (Elixir packages)",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "nuget",
+    "platform": "NuGet (.NET packages)",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "launchpad",
+    "platform": "Launchpad",
+    "category": "dev",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "lemmy",
+    "platform": "Lemmy (lemmy.world)",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "fandom",
+    "platform": "Fandom",
+    "category": "community",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "liberapay",
+    "platform": "Liberapay",
+    "category": "commerce",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
+    "name": "wattpad",
+    "platform": "Wattpad",
+    "category": "creative",
+    "types": [
+      "username"
+    ],
+    "deep": false
+  },
+  {
     "name": "npm",
     "platform": "npm",
     "category": "dev",

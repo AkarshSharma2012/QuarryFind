@@ -5,17 +5,17 @@ import type { CheckResult, Ctx, Finding, Module } from "./types.ts";
 
 type J = Record<string, any>; // deno-lint-ignore no-explicit-any
 
-function hit(f: Finding): CheckResult {
+export function hit(f: Finding): CheckResult {
   const metadata = { evidence: `${f.platform ?? "The site"}'s public API returned this profile for the exact username.`, ...(f.metadata ?? {}) };
   return { outcome: "hit", findings: [{ type: "profile", confidence: 1, ...f, metadata }] };
 }
 
-function stat(label: string, value: unknown) {
+export function stat(label: string, value: unknown) {
   return value === undefined || value === null || value === "" ? [] : [{ label, value: value as string | number }];
 }
 
 /** JSON module helper: 404 (or `isMissing`) → absent; blocked → inconclusive. */
-function jsonModule(m: Omit<Module, "check" | "types"> & {
+export function jsonModule(m: Omit<Module, "check" | "types"> & {
   url: (u: string) => string;
   headers?: (ctx: Ctx) => Record<string, string>;
   isMissing?: (d: J, status: number) => boolean;

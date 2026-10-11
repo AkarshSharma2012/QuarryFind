@@ -1,6 +1,6 @@
 # QuarryFind
 
-**Free OSINT search for usernames, email addresses and domains.** Enter one identifier and QuarryFind checks **320 public sources** at once. It streams back every profile it finds, with the evidence for each match and an honest record of which sources didn't answer.
+**Free OSINT search for usernames, email addresses and domains.** Enter one identifier and QuarryFind checks **327 public sources** at once. It streams back every profile it finds, with the evidence for each match and an honest record of which sources didn't answer.
 
 No plans, no credits, no install.
 

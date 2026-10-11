@@ -10,7 +10,7 @@ const byType = (t: string) => SOURCES.filter((s) => s.types.includes(t));
 const USERNAME = byType("username");
 const CATEGORY_LABEL: Record<string, string> = {
   dev: "Developer", social: "Social", gaming: "Gaming", media: "Media", creative: "Creators", community: "Communities",
-  identity: "Identity", security: "Security",
+  identity: "Identity", security: "Security", commerce: "Funding & shops", archive: "Archives",
 };
 
 const PROBLEMS: [string, string][] = [
