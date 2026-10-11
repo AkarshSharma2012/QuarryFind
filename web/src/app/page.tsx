@@ -135,22 +135,24 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="h-sources" label="Coverage" title={`${SOURCES.length} sources, listed`} intro="Every count is generated from the code that runs your search. Open a category to see each source.">
+      <Section id="h-sources" label="Coverage" title={`${SOURCES.length} sources, listed`} intro="Every count is generated from the code that runs your search. The full list, with today’s status for each source, is on the sources page.">
         <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 xl:grid-cols-4">
           {[...categories.map((c) => [CATEGORY_LABEL[c] ?? c, USERNAME.filter((x) => x.category === c)] as const),
-            ["Email", byType("email")] as const, ["Domain", byType("domain")] as const].map(([label, list]) => (
-            <details key={label} className="group bg-surface p-5 open:bg-surface-2/40">
-              <summary className="flex cursor-pointer list-none items-baseline justify-between gap-3 [&::-webkit-details-marker]:hidden">
-                <span className="text-sm text-text">{label}</span>
-                <span className="tabular font-mono text-2xl text-text">{list.length}</span>
-              </summary>
-              <ul className="mt-4 max-h-64 overflow-y-auto pr-2 text-[13px] leading-6 text-text-muted">
-                {list.map((s) => <li key={s.name} className="flex justify-between gap-2"><span className="truncate">{s.platform}</span>{s.deep && <span className="font-mono text-[11px] text-text-subtle">deep</span>}</li>)}
-              </ul>
-              <span className="mt-3 block font-mono text-[11px] text-text-subtle group-open:hidden">show list</span>
-            </details>
-          ))}
+            ["Email", byType("email")] as const, ["Domain", byType("domain")] as const].map(([label, list]) => {
+            // Hand-written sources first: they return the richest profiles.
+            const examples = [...list].sort((a, b) => Number(a.name.startsWith("wmn-")) - Number(b.name.startsWith("wmn-"))).slice(0, 6).map((s) => s.platform);
+            return (
+              <div key={label} className="flex flex-col gap-3 bg-surface p-5">
+                <div className="flex items-baseline justify-between gap-3">
+                  <h3 className="text-sm font-normal text-text">{label}</h3>
+                  <span className="tabular font-mono text-2xl text-text">{list.length}</span>
+                </div>
+                <p className="text-[13px] leading-6 text-text-muted">{examples.join(", ")}{list.length > examples.length && <span className="text-text-subtle"> and {list.length - examples.length} more</span>}</p>
+              </div>
+            );
+          })}
         </div>
+        <p className="mt-4"><Link href="/sources/" className="inline-flex items-center gap-1 text-sm text-accent hover:underline">See every source and its status today <ArrowRight className="size-3.5" aria-hidden /></Link></p>
         <p className="mt-4 text-xs text-text-subtle">Includes {SOURCES.filter((s) => s.name.startsWith("wmn-")).length} sites derived from the <a className="underline hover:text-text" href="https://github.com/WebBreacher/WhatsMyName" target="_blank" rel="noopener noreferrer">WhatsMyName</a> project (CC BY-SA 4.0), each re-tested before inclusion.</p>
       </Section>
 

@@ -18,6 +18,10 @@ export const viewport: Viewport = { themeColor: "#0c0d10", colorScheme: "dark" }
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Every page talks to Supabase soon after load (session, status); open the connection early. */}
+        {process.env.NEXT_PUBLIC_SUPABASE_URL && <link rel="preconnect" href={process.env.NEXT_PUBLIC_SUPABASE_URL} crossOrigin="anonymous" />}
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ToastProvider>{children}</ToastProvider>
       </body>
