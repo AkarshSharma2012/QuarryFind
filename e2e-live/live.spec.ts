@@ -79,6 +79,17 @@ test.describe("visitor", () => {
     });
   }
 
+  test("source status loads and its table fits a phone @mobile", async ({ page }) => {
+    await page.goto("sources/");
+    const table = page.getByRole("region", { name: "Scrollable table" });
+    await expect(table.getByRole("row").nth(5)).toBeVisible();
+    const working = Number(await page.locator("dt", { hasText: "Working" }).locator("+ dd").innerText());
+    expect(working).toBeGreaterThan(200);
+    if ((page.viewportSize()?.width ?? 1440) < 640) {
+      expect(await table.evaluate((el) => el.scrollWidth <= el.clientWidth + 1)).toBe(true);
+    }
+  });
+
   test("an unknown address shows the 404 page", async ({ page }) => {
     const res = await page.goto("no-such-page/");
     expect(res?.status()).toBe(404);
