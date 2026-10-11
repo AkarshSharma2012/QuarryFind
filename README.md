@@ -1,5 +1,7 @@
 # QuarryFind
 
+[![CI](https://github.com/AkarshSharma2012/OsintSet/actions/workflows/ci.yml/badge.svg)](https://github.com/AkarshSharma2012/OsintSet/actions/workflows/ci.yml) [![Live smoke test](https://github.com/AkarshSharma2012/OsintSet/actions/workflows/live-smoke.yml/badge.svg)](https://github.com/AkarshSharma2012/OsintSet/actions/workflows/live-smoke.yml) [![Module health](https://github.com/AkarshSharma2012/OsintSet/actions/workflows/module-health.yml/badge.svg)](https://github.com/AkarshSharma2012/OsintSet/actions/workflows/module-health.yml)
+
 **Free OSINT search for usernames, email addresses and domains.** Enter one identifier and QuarryFind checks **327 public sources** at once. It streams back every profile it finds, with the evidence for each match and an honest record of which sources didn't answer.
 
 No plans, no credits, no install.
