@@ -61,10 +61,22 @@ export function startError(message: string): [number, string, string] {
   return [500, "server_error", "Couldn’t start the search."];
 }
 
-/** True when the request carries this project's service role key (server-to-server callers only). */
-export function isServiceKey(req: Request) {
-  const a = req.headers.get("authorization") ?? "";
-  return !!SERVICE_KEY && a.length === SERVICE_KEY.length + 7 && a === `Bearer ${SERVICE_KEY}`;
+/**
+ * True when the request carries a service-level key for this project (server-to-server
+ * callers only). Accepts the legacy service_role JWT or a newer secret key: anything
+ * the Auth admin API accepts. Verified keys are remembered for this worker's lifetime.
+ */
+const verifiedKeys = new Set<string>();
+export async function isServiceKey(req: Request): Promise<boolean> {
+  const key = (req.headers.get("authorization") ?? "").replace(/^Bearer\s+/i, "");
+  if (!key || key.length < 20) return false;
+  if (key === SERVICE_KEY) return true;
+  const h = await sha256Hex(key);
+  if (verifiedKeys.has(h)) return true;
+  const r = await fetch(`${SUPABASE_URL}/auth/v1/admin/users?per_page=1`, { headers: { apikey: key, authorization: `Bearer ${key}` } }).catch(() => null);
+  if (r?.ok) verifiedKeys.add(h);
+  await r?.body?.cancel();
+  return !!r?.ok;
 }
 
 export function envRecord(): Record<string, string | undefined> {

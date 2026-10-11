@@ -10,7 +10,7 @@ const WITH_FIXTURES = allModules.filter((m) => m.fixtures);
 
 Deno.serve(async (req) => {
   if (req.method !== "POST") return err(req, 405, "method_not_allowed", "Use POST.");
-  if (!isServiceKey(req)) return err(req, 401, "unauthorized", "Service role key required.");
+  if (!(await isServiceKey(req))) return err(req, 401, "unauthorized", "Service role key required.");
   const b = await req.json().catch(() => ({}));
   const offset = Math.max(0, Number(b?.offset) || 0);
   const limit = Math.min(12, Math.max(1, Number(b?.limit) || 10));
