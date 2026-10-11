@@ -41,8 +41,19 @@ async function fn<T>(name: string, init: RequestInit & { query?: string } = {}):
   return body as T;
 }
 
+// Database limits (migration 20261011000000_abuse_limits.sql) in plain words.
+const LIMITS: [RegExp, string, string][] = [
+  [/case_limit/, "limit_reached", "You have 200 cases, the most an account can keep. Delete one to make room."],
+  [/case_item_limit/, "limit_reached", "This case has 1,000 saved findings, the most a case can hold. Start a new case."],
+  [/report_limit/, "limit_reached", "You’ve sent 50 reports today. Thanks — try again tomorrow."],
+  [/check constraint/, "too_long", "That’s too long to save. Shorten the notes and try again."],
+];
+
 function check<T>(r: { data: T | null; error: { message: string } | null }, what: string): T {
-  if (r.error) throw new DataError("db_error", `Couldn’t ${what}.`);
+  if (r.error) {
+    const hit = LIMITS.find(([re]) => re.test(r.error!.message));
+    throw hit ? new DataError(hit[1], hit[2]) : new DataError("db_error", `Couldn’t ${what}.`);
+  }
   return r.data as T;
 }
 

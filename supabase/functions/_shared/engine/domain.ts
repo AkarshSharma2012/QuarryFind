@@ -1,6 +1,7 @@
 // Domain modules: RDAP (WHOIS), DNS over HTTPS, mail security, certificate
 // transparency subdomains, Wayback history, web server headers.
-import { absent, clean, get, getJson, inconclusive } from "./http.ts";
+import { absent, clean, getJson, Inconclusive, inconclusive } from "./http.ts";
+import { publicFetch } from "./public-fetch.ts";
 import { dohQuery, unquote } from "./dns.ts";
 import type { CheckResult, Ctx, Module } from "./types.ts";
 
@@ -96,20 +97,22 @@ const TECH: [RegExp, string][] = [
 
 export async function httpProfile(ctx: Ctx, url: string): Promise<CheckResult> {
   const target = /^https?:\/\//.test(url) ? url : `https://${url}`;
-  const res = await get(ctx, target, { browser: true });
+  let res: Response, finalUrl: string;
+  try { ({ res, finalUrl } = await publicFetch(ctx, target, { browser: true })); }
+  catch (e) { if (e instanceof Inconclusive) return inconclusive(e.message); throw e; }
   const html = (await res.text()).slice(0, 300_000);
   const h = res.headers;
   const title = clean(html.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1], 140);
   const gen = html.match(/<meta[^>]+name=["']generator["'][^>]+content=["']([^"']+)/i)?.[1];
   const tech = [...new Set([...TECH.filter(([re]) => re.test(html)).map(([, n]) => n), ...(gen ? [gen] : [])])];
   const records = [
-    { name: "Final URL", value: res.url || target }, { name: "Status", value: String(res.status) },
+    { name: "Final URL", value: finalUrl }, { name: "Status", value: String(res.status) },
     ...rec("Title", title), ...rec("Server", h.get("server")), ...rec("Powered by", h.get("x-powered-by")),
     ...rec("CDN", h.get("cf-ray") ? "Cloudflare" : h.get("x-vercel-id") ? "Vercel" : h.get("x-amz-cf-id") ? "CloudFront" : h.get("x-served-by")?.includes("cache") ? "Fastly" : undefined),
     ...tech.map((t) => ({ name: "Tech", value: t })),
     ...SEC_HEADERS.map((k) => ({ name: k, value: h.get(k) ? "present" : "missing" })),
   ];
-  return { outcome: "hit", findings: [{ type: "record", platform: "Website", category: "web", value: res.url || target, confidence: 1, metadata: { records, url: res.url || target } }] };
+  return { outcome: "hit", findings: [{ type: "record", platform: "Website", category: "web", value: finalUrl, confidence: 1, metadata: { records, url: finalUrl } }] };
 }
 
 export const domainModules: Module[] = [

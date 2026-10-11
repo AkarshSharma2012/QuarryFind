@@ -1,8 +1,7 @@
 // Single-platform deep lookups (GitHub, Reddit) and the server-side tool router.
 import { clean, getJson, year } from "./http.ts";
 import { dnsRecords, httpProfile, mailSecurity, rdapDomain, subdomains, wayback } from "./domain.ts";
-import { ipLookup, isIp, isPrivate } from "./ip.ts";
-import { dohQuery } from "./dns.ts";
+import { ipLookup, isIp } from "./ip.ts";
 import { normalise } from "./validate.ts";
 import type { CheckResult, Ctx } from "./types.ts";
 
@@ -124,11 +123,10 @@ export async function runTool(ctx: Ctx, tool: ToolName, input: string): Promise<
     case "headers": {
       const t = raw.replace(/^https?:\/\//, "");
       if (!/^[a-z0-9.-]+\.[a-z]{2,}(\/\S*)?$/i.test(t)) return { ok: false, error: "Enter a public website address." };
-      // SSRF guard: the host must resolve, and only to public addresses.
-      const host = t.split("/")[0];
-      const a = await dohQuery(ctx, host, "A");
-      if (!a || !a.length || a.some((r) => isPrivate(r.data))) return { ok: false, error: "That address doesn’t resolve to a public website." };
-      return wrap(await httpProfile(ctx, `https://${t}`));
+      // httpProfile refuses private addresses on every redirect hop (public-fetch.ts).
+      const r = await httpProfile(ctx, `https://${t}`);
+      return r.outcome === "inconclusive" && /private|resolve|scheme|redirect|invalid/.test(r.detail ?? "")
+        ? { ok: false, error: "That address doesn’t lead to a public website." } : wrap(r);
     }
     case "github": { const h = normalise("username", raw); return h ? { ok: true, result: await githubLookup(ctx, h) } : { ok: false, error: "Enter a GitHub username." }; }
     case "reddit": { const h = normalise("username", raw); return h ? { ok: true, result: await redditLookup(ctx, h) } : { ok: false, error: "Enter a Reddit username." }; }
