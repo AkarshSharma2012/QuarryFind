@@ -12,7 +12,7 @@
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
 - Stage reached: 11 replica-deploy: LIVE on GitHub Pages https://akarshsharma2012.github.io/OsintSet/ (user's go 2026-10-09; Pages workflow `.github/workflows/pages.yml`, base path /OsintSet). Preflight: 49/49 e2e, 47/47 vitest, parity 99.4, sweep clean, audit 0.
-- Next: backend CONNECTED and verified 2026-10-10 (project manovzhsjhgiexdowhgj). Live smoke workflow (.github/workflows/live-smoke.yml, e2e-live/) 29/29 incl. signed-in search + 3 concurrent users; module health 289/310 ok, 310 rows uploaded. OAuth buttons only show enabled providers. Open: Resend SMTP (built-in mailer rate-limited), Sentry, legal review. Ruled out: `supabase db push` from this network (ports 5432/6543 blocked; use dashboard SQL editor).
+- Next: OVERNIGHT RUN (user asleep, 2026-10-11). Done: health check moved to Supabase (module-health fn, 295/310), Reddit OAuth support, SSRF guard, abuse-limits migration (APPLIED LOCALLY ONLY; user must paste supabase/migrations/20261011000000_abuse_limits.sql in SQL editor). Next: 404/sitemap/robots/manifest, perf pass, >500-line files, more sources, morning report. Ruled out: `supabase db push` from this network (ports 5432/6543 blocked).
 
 ## How to run locally
 - e2e: `NEXT_DIST_DIR=.next-build npm --prefix web run build` then `npx playwright test` (serves web/.next-build on 4317). Only ONE Playwright run at a time.
