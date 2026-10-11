@@ -19,3 +19,20 @@ jobs:
         working-directory: web
       - run: npx tsc --noEmit && npm run lint && npm run build
         working-directory: web
+  # Migrations, row level security, abuse limits and the backend, against a throwaway local Supabase.
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci
+      - name: Start Supabase (applies every migration)
+        run: npx -y supabase@2.120.0 start -x studio,imgproxy,logflare,vector,mailpit,supavisor
+      - name: Database and backend tests
+        run: |
+          eval "$(npx -y supabase@2.120.0 status -o env | sed -n 's/^API_URL=/export SUPABASE_URL=/p; s/^ANON_KEY=/export SUPABASE_ANON_KEY=/p; s/^SERVICE_ROLE_KEY=/export SUPABASE_SERVICE_ROLE_KEY=/p')"
+          test -n "$SUPABASE_SERVICE_ROLE_KEY"
+          npx vitest run
