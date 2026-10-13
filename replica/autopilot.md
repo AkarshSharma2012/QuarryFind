@@ -12,7 +12,7 @@
 ## Run
 - Command: /autopilot fullreplica (through deploy; deploy still needs the user's go)
 - Stage reached: 11 replica-deploy: LIVE on GitHub Pages https://akarshsharma2012.github.io/OsintSet/ (user's go 2026-10-09; Pages workflow `.github/workflows/pages.yml`, base path /OsintSet). Preflight: 49/49 e2e, 47/47 vitest, parity 99.4, sweep clean, audit 0.
-- Next: overnight run finished 2026-10-11 07:00. Waiting on user: paste abuse-limits migration (deploy.md 'Waiting on the user'); optional Reddit app creds, Resend, Sentry, legal review. Live: 33/33 smoke, CI 70/70 incl. DB, health 301/317, 328 sources. Ruled out: `supabase db push` from this network (ports 5432/6543 blocked).
+- Next: nothing pending. Private site (2026-10-13): password screen = Supabase login for owner@quarryfind.example, sign-ups off (verified), abuse limits applied (verified by live test). CI: 70 unit/DB + 43 browser e2e vs local Supabase; live smoke 30/30. Ruled out: `supabase db push` from this network (ports 5432/6543 blocked).
 
 ## How to run locally
 - e2e: `NEXT_DIST_DIR=.next-build npm --prefix web run build` then `npx playwright test` (serves web/.next-build on 4317). Only ONE Playwright run at a time.
