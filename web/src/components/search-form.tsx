@@ -35,7 +35,7 @@ export function SearchForm({ initialType = "username", initialQuery = "", hero }
     const q = query.trim();
     if (!VALID[type].test(q)) { setError(`That doesn’t look like a ${c.label.toLowerCase()}.`); return; }
     setError(null);
-    if (!user) { router.push(`/sign-up/?next=${encodeURIComponent(`/search/?type=${type}&q=${encodeURIComponent(q)}`)}`); return; }
+    if (!user) return; // the password screen signs you in before anything else shows
     setBusy(true);
     try {
       const id = await data.startSearch(type, q, deep);

@@ -16,7 +16,7 @@ function Inner() {
   const user = useUser();
   const toast = useToast();
   const search = async (v: string) => {
-    if (!user) return router.push(`/sign-up/?next=${encodeURIComponent(`/search/?q=${v}`)}`);
+    if (!user) return;
     try { router.push(`/search/run/?id=${await data.startSearch("username", v, false)}`); } catch (e) { toast((e as Error).message, "error"); }
   };
   return (

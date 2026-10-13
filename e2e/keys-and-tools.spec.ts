@@ -26,6 +26,7 @@ test.describe("F08 API keys", () => {
 });
 
 test.describe("F07 tools", () => {
+  test.use({ storageState: asUser(3) });
   test("F07-H1 DNS tool returns records", async ({ page }) => {
     await page.goto("/tools/dns/");
     await page.getByRole("textbox", { name: "Domain" }).fill("example.com");
@@ -58,19 +59,5 @@ test.describe("F07 tools", () => {
     await expect(page.getByRole("cell", { name: /United Kingdom/ })).toBeVisible();
   });
 
-  test("F07-E1 GitHub tool needs an account", async ({ page }) => {
-    await page.goto("/tools/github/");
-    await expect(page.getByRole("heading", { name: /Sign in to use/ })).toBeVisible();
-  });
 
-  test("F09 settings: delete account needs typed confirmation", async ({ browser }) => {
-    const ctx = await browser.newContext({ storageState: asUser(3) });
-    const page = await ctx.newPage();
-    await page.goto("/settings/");
-    await page.getByRole("button", { name: "Delete account" }).click();
-    const d = page.getByRole("dialog", { name: "Delete your account?" });
-    await expect(d.getByRole("button", { name: "Delete forever" })).toBeDisabled();
-    await d.getByRole("button", { name: "Cancel" }).click();
-    await ctx.close();
-  });
 });

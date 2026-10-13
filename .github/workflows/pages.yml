@@ -28,8 +28,8 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
           # Origin only: Next adds the base path to metadata URLs itself.
           NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io
-          # Password screen: SHA-256 of the password (components/password-gate.tsx). Remove to open the site.
-          NEXT_PUBLIC_GATE_HASH: 073a13e7a0abf50d111ad4d32eb5b022aaf0ecbc934f84470573f1a763262f49
+          # The one account the password screen signs into (components/password-gate.tsx).
+          NEXT_PUBLIC_GATE_EMAIL: owner@quarryfind.example
           # Set these as repository variables (Settings → Secrets and variables → Actions → Variables)
           # once the Supabase project exists. Without them the site builds with search "not connected yet".
           NEXT_PUBLIC_BACKEND: ${{ vars.SUPABASE_URL && 'supabase' || '' }}

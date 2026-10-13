@@ -1,8 +1,9 @@
-import { test, expect, a11y } from "./helpers";
+import { test, expect, a11y, asUser } from "./helpers";
 
-const PAGES = ["/", "/sources/", "/tools/", "/docs/", "/docs/api/", "/how-it-works/", "/terms/", "/privacy/", "/about/", "/sign-in/", "/sign-up/"];
+const PAGES = ["/", "/sources/", "/tools/", "/docs/", "/docs/api/", "/how-it-works/", "/terms/", "/privacy/", "/about/"];
 
-test.describe("public pages", () => {
+test.describe("site pages (signed in, behind the password screen)", () => {
+  test.use({ storageState: asUser(0) });
   for (const path of PAGES) {
     test(`${path} renders with one h1 and passes axe @mobile`, async ({ page }) => {
       await page.goto(path);
@@ -13,12 +14,14 @@ test.describe("public pages", () => {
     });
   }
 
-  test("F01-E1 signed-out search sends you to sign up and keeps the query", async ({ page }) => {
-    await page.goto("/");
-    await page.getByRole("textbox").first().fill("sample_handle");
-    await page.getByRole("button", { name: "Search", exact: true }).click();
-    await expect(page).toHaveURL(/\/sign-up\/\?next=/);
-    expect(decodeURIComponent(page.url())).toContain("q=sample_handle");
+  test.describe("landing search", () => {
+    test.use({ storageState: asUser(4) });
+    test("F01-E1 searching from the landing page starts a run straight away", async ({ page }) => {
+      await page.goto("/");
+      await page.getByRole("textbox").first().fill("sample_handle");
+      await page.getByRole("button", { name: "Search", exact: true }).click();
+      await expect(page).toHaveURL(/\/search\/run\/\?id=/);
+    });
   });
 
   test("F01-E2 invalid input is caught before any request", async ({ page }) => {
@@ -29,15 +32,9 @@ test.describe("public pages", () => {
     await expect(page.getByText("That doesn’t look like a email address.")).toBeVisible();
   });
 
-  test("signed-out app pages ask you to sign in", async ({ page }) => {
-    for (const p of ["/search/", "/history/", "/cases/", "/settings/api-keys/"]) {
-      await page.goto(p);
-      await expect(page.getByRole("heading", { name: /Sign in to use/ })).toBeVisible();
-    }
-  });
-
   test("keyboard: skip link moves focus to main", async ({ page }) => {
     await page.goto("/");
+    await expect(page.getByRole("navigation", { name: "Main" })).toBeVisible(); // session restored, gate gone
     await page.keyboard.press("Tab");
     await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
     await page.keyboard.press("Enter");

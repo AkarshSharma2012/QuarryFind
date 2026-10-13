@@ -192,7 +192,7 @@ export default function Home() {
             <h2 className="text-xl font-semibold text-text">Investigate responsibly.</h2>
             <p className="mt-2 max-w-[60ch] text-sm leading-6 text-text-muted">Only look into people and organisations you have a legitimate reason to. A shared username is a lead, not an identity.</p>
           </div>
-          <LinkButton href="/sign-up/" size="lg">Create a free account</LinkButton>
+          <LinkButton href="/search/" size="lg">Start a search</LinkButton>
         </div>
       </section>
     </Page>

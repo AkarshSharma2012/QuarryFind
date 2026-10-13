@@ -14,6 +14,9 @@ function store(k: string, v: unknown) {
 const now = () => new Date().toISOString();
 const uid = () => crypto.randomUUID();
 
+// Local dev has no sign-in screen: you are always this user.
+const DEV_USER: User = { id: "local-user", email: "dev@localhost", name: "Dev user" };
+
 const listeners = new Set<(u: User | null) => void>();
 const emitAuth = (u: User | null) => listeners.forEach((l) => l(u));
 
@@ -40,7 +43,7 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
 export const localData: DataLayer = {
   mode: "local",
 
-  async getUser() { return load<User | null>("os.user", null); },
+  async getUser() { return load<User | null>("os.user", null) ?? DEV_USER; },
   onAuthChange(cb) { listeners.add(cb); return () => listeners.delete(cb); },
   async signInWithPassword(email, password) {
     const nc = notConnected(); if (nc) throw nc;
@@ -48,24 +51,11 @@ export const localData: DataLayer = {
     const u = { id: "local-user", email };
     store("os.user", u); emitAuth(u);
   },
-  async signUp(email, password) {
-    const nc = notConnected(); if (nc) throw nc;
-    if (password.length < 8) throw new DataError("weak_password", "Use at least 8 characters.");
-    const u = { id: "local-user", email };
-    store("os.user", u); emitAuth(u);
-    return { needsConfirmation: false };
-  },
-  async signInWithOAuth(provider) {
-    const nc = notConnected(); if (nc) throw nc;
-    const u = { id: "local-user", email: `dev@${provider}.local`, name: "Dev user" };
-    store("os.user", u); emitAuth(u);
-  },
-  async oauthProviders() { return notConnected() ? [] : ["github", "google"]; },
   async deleteAccount() {
     try { for (const k of ["os.user", "os.cases", "os.caseItems", "os.keys"]) localStorage.removeItem(k); } catch { /* ignore */ }
     emitAuth(null);
   },
-  async signOut() { try { localStorage.removeItem("os.user"); } catch { /* ignore */ } emitAuth(null); },
+  async signOut() { try { localStorage.removeItem("os.user"); } catch { /* ignore */ } emitAuth(DEV_USER); },
 
   async startSearch(type, query, deep) {
     const r = await api<{ run_id: string }>("/search-start", { method: "POST", body: JSON.stringify({ type, query, deep }) });

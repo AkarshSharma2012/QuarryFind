@@ -33,10 +33,6 @@ export interface DataLayer {
   getUser(): Promise<User | null>;
   onAuthChange(cb: (u: User | null) => void): () => void;
   signInWithPassword(email: string, password: string): Promise<void>;
-  signUp(email: string, password: string): Promise<{ needsConfirmation: boolean }>;
-  signInWithOAuth(provider: "github" | "google"): Promise<void>;
-  /** Sign-in providers switched on for this project; the form shows only these. */
-  oauthProviders(): Promise<("github" | "google")[]>;
   signOut(): Promise<void>;
   deleteAccount(): Promise<void>;
   // searches

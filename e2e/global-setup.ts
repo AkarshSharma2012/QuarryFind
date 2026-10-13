@@ -5,7 +5,8 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { randomBytes, randomUUID } from "node:crypto";
 
 export const BASE = "http://localhost:4317";
-// 0 search, 1 auth/next + RLS viewer, 2 cases, 3 keys, 4 sign-out, 5 revoked session
+const OWNER_EMAIL = "owner@quarryfind.example"; // password-gate.tsx default
+// 0 search + public pages, 1 RLS viewer, 2 cases, 3 keys, 4 (spare), 5 revoked session
 const USERS = 6;
 
 function loadEnv() {
@@ -45,4 +46,15 @@ export default async function globalSetup() {
     users.push({ email, password });
   }
   writeFileSync("e2e/.auth/users.json", JSON.stringify(users));
+
+  // The owner account the password screen signs into (password-gate.tsx), with a fresh password.
+  const admin = { apikey: key, authorization: `Bearer ${key}`, "content-type": "application/json" };
+  const ownerPassword = randomBytes(12).toString("base64url");
+  const list = await (await fetch(`${url}/auth/v1/admin/users?per_page=1000`, { headers: admin })).json() as { users: { id: string; email: string }[] };
+  const existing = list.users.find((u) => u.email === OWNER_EMAIL);
+  const res = existing
+    ? await fetch(`${url}/auth/v1/admin/users/${existing.id}`, { method: "PUT", headers: admin, body: JSON.stringify({ password: ownerPassword }) })
+    : await fetch(`${url}/auth/v1/admin/users`, { method: "POST", headers: admin, body: JSON.stringify({ email: OWNER_EMAIL, password: ownerPassword, email_confirm: true }) });
+  if (!res.ok) throw new Error(`could not set up the owner account: ${res.status}`);
+  writeFileSync("e2e/.auth/owner.json", JSON.stringify({ email: OWNER_EMAIL, password: ownerPassword }));
 }

@@ -1,59 +1,55 @@
 import { readFileSync } from "node:fs";
-import { test, expect, signIn, users, asUser } from "./helpers";
+import { test, expect, unlock, asUser, a11y } from "./helpers";
 
-test.describe("F01 auth", () => {
-  test("F01-N1 wrong password shows an error and stays on the page", async ({ page }) => {
-    await page.goto("/sign-in/");
-    await page.getByLabel("Email").fill(users()[0].email);
-    await page.getByLabel("Password").fill("definitely-wrong-password");
-    await page.getByRole("button", { name: "Sign in", exact: true }).click();
-    await expect(page.getByRole("alert").filter({ hasText: /\w/ })).toHaveText("Email or password is wrong.");
-    await expect(page).toHaveURL(/\/sign-in\//);
+const GATE = { name: "This site is private" };
+
+test.describe("F01 password screen (the only way in)", () => {
+  test("F01-G1 a visitor without a session sees only the password screen @mobile", async ({ page }) => {
+    for (const path of ["/", "/search/", "/cases/", "/tools/"]) {
+      await page.goto(path);
+      await expect(page.getByRole("heading", GATE)).toBeVisible();
+      await expect(page.getByRole("navigation", { name: "Main" })).toHaveCount(0);
+    }
+    await a11y(page);
   });
 
-  test("F01-H1 sign in, see the app nav, sign out", async ({ page }) => {
-    await signIn(page, 4); // signing out revokes every session of this user
+  test("F01-N1 a wrong password is refused", async ({ page }) => {
+    await unlock(page, "definitely-wrong-password");
+    await expect(page.getByText("That’s not the password.")).toBeVisible();
+    await expect(page.getByRole("heading", GATE)).toBeVisible();
+  });
+
+  test("F01-H1 the password opens the site, survives a reload, and signing out locks it again", async ({ page }) => {
+    await unlock(page);
     const nav = page.getByRole("navigation", { name: "Main" });
     await expect(nav.getByRole("link", { name: "History" })).toBeVisible();
-    await expect(nav.getByRole("link", { name: "Search" })).toHaveAttribute("aria-current", "page");
-    await page.getByRole("button", { name: "Sign out" }).click();
-    await expect(page).toHaveURL(/\/$/);
-    await expect(nav.getByRole("link", { name: "Sign in" })).toBeVisible();
+    await page.reload();
+    await expect(nav.getByRole("link", { name: "History" })).toBeVisible();
+    await expect(page.getByRole("link", { name: /sign up|create free account/i })).toHaveCount(0);
+    await page.getByRole("button", { name: "Sign out" }).first().click();
+    await expect(page.getByRole("heading", GATE)).toBeVisible();
   });
 
-  test("F01-E3 sign-in honours ?next=", async ({ page }) => {
-    const u = users()[1];
-    await page.goto("/sign-in/?next=%2Fcases%2F");
-    await page.getByLabel("Email").fill(u.email);
-    await page.getByLabel("Password").fill(u.password);
-    await page.getByRole("button", { name: "Sign in", exact: true }).click();
-    await expect(page).toHaveURL(/\/cases\/$/);
-  });
-
-  test("F01-E4 ?next= cannot redirect off-site", async ({ page }) => {
-    const u = users()[1];
-    await page.goto("/sign-in/?next=https%3A%2F%2Fevil.example%2F");
-    await page.getByLabel("Email").fill(u.email);
-    await page.getByLabel("Password").fill(u.password);
-    await page.getByRole("button", { name: "Sign in", exact: true }).click();
-    await expect(page).toHaveURL(/localhost:4317\/search\/$/);
+  test("F01-E2 the old sign-up and sign-in pages are gone", async ({ page }) => {
+    for (const path of ["/sign-up/", "/sign-in/"]) expect((await page.goto(path))?.status()).toBe(404);
   });
 
   test.describe("BUG-005 revoked session", () => {
     test.use({ storageState: asUser(5) });
-    test("F01-E5 a session revoked elsewhere returns you to the sign-in prompt", async ({ page, request }) => {
+    test("F01-E5 a session revoked elsewhere returns you to the password screen", async ({ page, request }) => {
       const state = JSON.parse(readFileSync(asUser(5), "utf8"));
       const session = JSON.parse(state.origins[0].localStorage[0].value);
+      await page.goto("/search/");
+      await expect(page.getByRole("navigation", { name: "Main" })).toBeVisible();
       // Sign out everywhere from "another device".
       const out = await request.post(`${process.env.SUPABASE_URL}/auth/v1/logout?scope=global`, {
         headers: { apikey: process.env.SUPABASE_ANON_KEY!, authorization: `Bearer ${session.access_token}` },
       });
       expect(out.status()).toBe(204);
-      await page.goto("/search/");
       await page.getByRole("radio", { name: "Domain" }).click();
       await page.getByRole("textbox").first().fill("example.com");
       await page.getByRole("button", { name: "Search", exact: true }).click();
-      await expect(page.getByRole("heading", { name: /Sign in to use/ })).toBeVisible();
+      await expect(page.getByRole("heading", GATE)).toBeVisible();
     });
   });
 });

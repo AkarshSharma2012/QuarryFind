@@ -10,7 +10,8 @@ Status: **site live on GitHub Pages** at https://akarshsharma2012.github.io/Osin
    `insert into supabase_migrations.schema_migrations (version, name) values ('20261011000000', 'abuse_limits');`
    It's tested locally and in CI; until it's applied, case/report size and count limits aren't enforced in production.
 2. **Optional: Reddit.** Reddit blocks anonymous lookups. Create a "script" app at reddit.com/prefs/apps, then `npx supabase secrets set REDDIT_CLIENT_ID=… REDDIT_CLIENT_SECRET=…` (the user pastes the values). The module switches to the official API by itself.
-3. **Optional: Resend** for sign-up emails (built-in mailer allows only a few an hour), **Sentry**, legal review of terms and privacy.
+3. **Owner account (private site, no sign-ups).** Authentication → Users → Add user → Create new user: email `owner@quarryfind.example`, your password, tick Auto Confirm. Then Authentication → Sign In / Providers → turn off "Allow new users to sign up". The password screen signs into this account.
+4. **Optional:** Sentry, legal review of terms and privacy.
 
 ## 1. Preflight (2026-10-09)
 
@@ -35,8 +36,6 @@ Raw output: `replica/preflight.log`.
 
 1. **Supabase** (supabase.com, free plan): create a project named `quarryfind` in the region nearest your users, and keep the database password somewhere safe. Send Claude the **project ref** (in the URL `supabase.com/dashboard/project/<ref>`). Then run `npx supabase login` in a terminal yourself; it opens a browser.
 2. **Hosting:** GitHub Pages, already on (no account needed). A custom domain is optional later; `quarryfind.com` was unregistered on 2026-10-09 and buying one needs your OK.
-3. **Resend** (free, optional until you have a domain): for branded sign-up emails. Without it Supabase's built-in mailer works but is rate-limited to a few emails an hour.
-4. Optional: a **GitHub OAuth app** (Settings → Developer settings → OAuth Apps) and **Google OAuth client** for "Continue with GitHub/Google". The callback URL is `https://<ref>.supabase.co/auth/v1/callback`.
 5. Optional: **Sentry** via the Student Pack, and a free **UptimeRobot** account.
 
 ## 3. What Claude runs once the project is linked
@@ -94,7 +93,7 @@ Then run the **Module health** workflow once by hand.
 - Uptime: UptimeRobot on `https://akarshsharma2012.github.io/OsintSet/` and `https://<ref>.supabase.co/functions/v1/v1/health`, alerting your email.
 - Analytics: none yet (GitHub Pages has no built-in analytics; a cookie-free one can be added later).
 - Errors: Sentry DSN, to wire in after the account exists (not yet in code).
-- Smoke test after deploy: sign up, run a domain search and a username search, save to a case, create and revoke an API key, report a result, delete the test account. Claude runs this on the live site; you repeat it on your phone.
+- Smoke test after deploy: the Live smoke test workflow (throwaway users with injected sessions; never the owner password).
 
 ## Free-tier limits to remember
 

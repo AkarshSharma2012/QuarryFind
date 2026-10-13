@@ -9,7 +9,7 @@ export default function Privacy() {
       <p><strong>Draft.</strong> Have this policy reviewed before launch.</p>
       <h2>What we keep about you</h2>
       <ul>
-        <li>Your account: email address, and the name and avatar your sign-in provider shares.</li>
+        <li>The single owner account the password screen signs into.</li>
         <li>Search history: the query, its type and when you ran it, for 90 days, then deleted automatically.</li>
         <li>Search findings: deleted automatically six hours after the search.</li>
         <li>Cases and notes you create, until you delete them.</li>
@@ -25,13 +25,11 @@ export default function Privacy() {
       <ul>
         <li><strong>Supabase</strong> (database, sign-in, server functions): your account, history and cases.</li>
         <li><strong>GitHub Pages</strong> (hosting): standard request logs, including IP addresses.</li>
-        <li><strong>Resend</strong> (sign-in and confirmation emails): your email address.</li>
         <li><strong>Sentry</strong> (error reports): technical details of errors, scrubbed of search queries.</li>
-        <li><strong>GitHub or Google</strong>, only if you choose to sign in with them.</li>
       </ul>
       <p>No advertising or tracking cookies are used, so there is no cookie banner. The only browser storage is your sign-in session and a few display preferences.</p>
       <h2>Deleting your data</h2>
-      <p>Deleting your account deletes your history, cases and API keys immediately.</p>
+      <p>History is deleted after 90 days and findings after six hours. Cases stay until you delete them.</p>
     </Prose>
   );
 }

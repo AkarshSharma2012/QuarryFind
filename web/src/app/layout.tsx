@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   openGraph: { siteName: "QuarryFind", type: "website" },
   title: { default: "QuarryFind: username, email and domain search", template: "%s · QuarryFind" },
   description: "Search a username, email address or domain across hundreds of public sources and see what each one returns, live.",
+  robots: { index: false, follow: false }, // private site
 };
 
 export const viewport: Viewport = { themeColor: "#0c0d10", colorScheme: "dark" };

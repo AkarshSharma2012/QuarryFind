@@ -1,22 +1,48 @@
 // Smoke tests against the deployed site, run by .github/workflows/live-smoke.yml
-// after every deploy and once a day. They act like real visitors: browse, use a
-// tool, sign in, search. Signed-in tests create throwaway users through the
-// admin API (needs the SUPABASE_SERVICE_ROLE_KEY secret) and delete them after.
+// after every deploy and once a day. The whole site sits behind the password
+// screen (one owner account; components/password-gate.tsx). Tests never use the
+// owner's password: they create throwaway users through the admin API (needs the
+// SUPABASE_SERVICE_ROLE_KEY secret), put each one's session in the browser the
+// way a returning visitor has it, and delete the users afterwards.
 import { expect, test as base, type Browser, type BrowserContext, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const SB = process.env.SUPABASE_URL ?? "";
 const ANON = process.env.SUPABASE_ANON_KEY ?? "";
 const SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
+const STORAGE_KEY = SB ? `sb-${new URL(SB).hostname.split(".")[0]}-auth-token` : "";
+const GATE = { name: "This site is private" };
 
-// The site sits behind a password screen (components/password-gate.tsx). Tests unlock it the way
-// a returning visitor is unlocked: the stored hash. The hash is public in the site bundle anyway.
-const GATE = "073a13e7a0abf50d111ad4d32eb5b022aaf0ecbc934f84470573f1a763262f49";
-const unlock = (ctx: BrowserContext) => ctx.addInitScript((h) => { try { localStorage.setItem("qf.gate", h); } catch { /* ignore */ } }, GATE);
+// ── throwaway users ─────────────────────────────────────────────────────────
+type TestUser = { id: string; email: string; session: string };
+const admin = (path: string, init: RequestInit = {}) =>
+  fetch(`${SB}/auth/v1/admin/${path}`, { ...init, headers: { apikey: SERVICE, Authorization: `Bearer ${SERVICE}`, "Content-Type": "application/json" } });
 
-/** Fails a test on console errors or any 5xx from the site or the backend. */
-const test = base.extend<{ guard: void }>({
-  context: async ({ context }, use) => { await unlock(context); await use(context); },
+async function createUser(tag: string): Promise<TestUser> {
+  const email = `qf-smoke-${tag}-${Date.now()}@example.com`;
+  const password = `Smoke-${crypto.randomUUID()}`;
+  const r = await admin("users", { method: "POST", body: JSON.stringify({ email, password, email_confirm: true }) });
+  expect(r.status, await r.clone().text()).toBe(200);
+  const id = ((await r.json()) as { id: string }).id;
+  const tok = await fetch(`${SB}/auth/v1/token?grant_type=password`, { method: "POST", headers: { apikey: ANON, "content-type": "application/json" }, body: JSON.stringify({ email, password }) });
+  expect(tok.status, await tok.clone().text()).toBe(200);
+  return { id, email, session: await tok.text() };
+}
+const removeUser = async (u: TestUser) => { await admin(`users/${u.id}`, { method: "DELETE" }); };
+
+/** Starts the browser already signed in as `u`, as after passing the password screen. */
+const signedIn = (ctx: BrowserContext, u: TestUser) =>
+  ctx.addInitScript(([k, v]) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } }, [STORAGE_KEY, u.session] as const);
+async function contextFor(browser: Browser, u: TestUser) { const ctx = await browser.newContext(); await signedIn(ctx, u); return ctx; }
+
+/** Fails a test on console errors or any 5xx from the site or the backend; pages start signed in. */
+const test = base.extend<{ guard: void }, { visitor: TestUser | null }>({
+  visitor: [async ({}, use) => {
+    const u = SERVICE ? await createUser("visitor") : null;
+    await use(u);
+    if (u) await removeUser(u);
+  }, { scope: "worker" }],
+  context: async ({ context, visitor }, use) => { if (visitor) await signedIn(context, visitor); await use(context); },
   guard: [async ({ page }, use) => {
     const problems: string[] = [];
     page.on("console", (m) => {
@@ -40,28 +66,6 @@ async function a11y(page: Page) {
   expect(serious.map((v) => `${v.id}: ${v.nodes.slice(0, 3).map((n) => n.target.join(" ")).join(" | ")}`)).toEqual([]);
 }
 
-// ── throwaway users ─────────────────────────────────────────────────────────
-type TestUser = { id: string; email: string; password: string };
-const admin = (path: string, init: RequestInit = {}) =>
-  fetch(`${SB}/auth/v1/admin/${path}`, { ...init, headers: { apikey: SERVICE, Authorization: `Bearer ${SERVICE}`, "Content-Type": "application/json" } });
-
-async function createUser(tag: string): Promise<TestUser> {
-  const email = `qf-smoke-${tag}-${Date.now()}@example.com`;
-  const password = `Smoke-${crypto.randomUUID()}`;
-  const r = await admin("users", { method: "POST", body: JSON.stringify({ email, password, email_confirm: true }) });
-  expect(r.status, await r.clone().text()).toBe(200);
-  return { id: ((await r.json()) as { id: string }).id, email, password };
-}
-const removeUser = async (u: TestUser) => { await admin(`users/${u.id}`, { method: "DELETE" }); }; // 404 after UI deletion is fine
-
-async function signIn(page: Page, u: TestUser) {
-  await page.goto("sign-in/");
-  await page.getByLabel("Email").fill(u.email);
-  await page.getByLabel("Password").fill(u.password);
-  await page.getByRole("button", { name: "Sign in", exact: true }).click();
-  await expect(page).toHaveURL(/\/search\/$/);
-}
-
 async function search(page: Page, type: "Username" | "Email" | "Domain", query: string, timeout = 240_000) {
   await page.goto("search/");
   await page.getByRole("radio", { name: type }).click();
@@ -71,14 +75,48 @@ async function search(page: Page, type: "Username" | "Email" | "Domain", query: 
   await expect(page.getByText(/Search complete|Search stopped early/)).toBeVisible({ timeout });
 }
 
-// ── anonymous visitors ──────────────────────────────────────────────────────
-const PAGES = ["", "tools/", "sources/", "docs/", "docs/api/", "how-it-works/", "about/", "privacy/", "terms/", "sign-in/", "sign-up/"];
+// ── the password screen ─────────────────────────────────────────────────────
+test.describe("password screen", () => {
+  test("a new visitor sees only the password screen, and a wrong password doesn't open it @mobile", async ({ browser }) => {
+    const ctx = await browser.newContext();
+    const page = await ctx.newPage();
+    for (const p of ["", "search/", "tools/"]) {
+      await page.goto(p);
+      await expect(page.getByRole("heading", GATE)).toBeVisible();
+      await expect(page.getByRole("navigation", { name: "Main" })).toHaveCount(0);
+    }
+    await page.getByLabel("Password").fill("not-the-password");
+    await page.getByRole("button", { name: "Enter" }).click();
+    await expect(page.getByText("That’s not the password.")).toBeVisible();
+    await expect(page.getByRole("heading", GATE)).toBeVisible();
+    await a11y(page);
+    await ctx.close();
+  });
 
-test.describe("visitor", () => {
+  test("the old sign-up and sign-in pages are gone, and nothing is indexed", async ({ request, baseURL }) => {
+    for (const p of ["sign-up/", "sign-in/"]) expect((await request.get(`${baseURL}${p}`)).status()).toBe(404);
+    expect(await (await request.get(`${baseURL}robots.txt`)).text()).toMatch(/Disallow: \/\s*$/m);
+    expect((await (await request.get(`${baseURL}manifest.webmanifest`)).json()).name).toBe("QuarryFind");
+  });
+
+  test("API health reports the database is up", async () => {
+    const r = await fetch(`${SB}/functions/v1/v1/health`);
+    expect(r.status).toBe(200);
+    expect(await r.json()).toMatchObject({ status: "ok", database: "ok" });
+  });
+});
+
+// ── signed in (behind the password screen) ──────────────────────────────────
+const PAGES = ["", "tools/", "sources/", "docs/", "docs/api/", "how-it-works/", "about/", "privacy/", "terms/"];
+
+test.describe("signed in", () => {
+  test.skip(!SERVICE, "Add the SUPABASE_SERVICE_ROLE_KEY repository secret to run signed-in tests");
+
   for (const p of PAGES) {
     test(`/${p} loads with one h1, no overflow and no serious a11y issues @mobile`, async ({ page }) => {
       const res = await page.goto(p);
       expect(res?.status()).toBe(200);
+      await expect(page.getByRole("navigation", { name: "Main" })).toBeVisible();
       await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
       await a11y(page);
@@ -103,20 +141,6 @@ test.describe("visitor", () => {
     await expect(page).toHaveTitle(/Page not found/);
   });
 
-  test("sitemap, robots and manifest are published", async ({ request, baseURL }) => {
-    expect((await request.get(`${baseURL}sitemap.xml`)).status()).toBe(200);
-    expect(await (await request.get(`${baseURL}robots.txt`)).text()).toContain("Sitemap:");
-    expect((await (await request.get(`${baseURL}manifest.webmanifest`)).json()).name).toBe("QuarryFind");
-  });
-
-  test("sign-in offers only the providers switched on in Supabase", async ({ page }) => {
-    const settings = (await (await fetch(`${SB}/auth/v1/settings`, { headers: { apikey: ANON } })).json()) as { external: Record<string, boolean> };
-    await page.goto("sign-in/");
-    await expect(page.getByLabel("Email")).toBeVisible();
-    await expect(page.getByRole("button", { name: "Continue with GitHub" })).toHaveCount(settings.external.github ? 1 : 0);
-    await expect(page.getByRole("button", { name: "Continue with Google" })).toHaveCount(settings.external.google ? 1 : 0);
-  });
-
   test("browser-only tools work", async ({ page }) => {
     await page.goto("tools/variations/");
     await page.getByRole("textbox", { name: "Name or handle" }).fill("Jane Doe");
@@ -126,75 +150,33 @@ test.describe("visitor", () => {
     await expect(page.getByText("MD5", { exact: true })).toBeVisible();
   });
 
-  test("a new visitor sees the password screen, and a wrong password doesn't open it @mobile", async ({ browser }) => {
-    const ctx = await browser.newContext();
-    const page = await ctx.newPage();
-    await page.goto("");
-    await expect(page.getByRole("heading", { name: "This site is private" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Search" })).toHaveCount(0);
-    await page.getByLabel("Password").fill("not-the-password");
-    await page.getByRole("button", { name: "Enter" }).click();
-    await expect(page.getByText("That’s not the password.")).toBeVisible();
-    await expect(page.getByRole("heading", { name: "This site is private" })).toBeVisible();
-    await ctx.close();
-  });
-
-  test("search asks a signed-out visitor to create an account", async ({ page }) => {
-    await page.goto("");
-    await page.getByRole("textbox").first().fill("torvalds");
-    await page.getByRole("button", { name: "Search", exact: true }).click();
-    await expect(page).toHaveURL(/\/sign-up\/\?next=/);
-  });
-
-  test("API health reports the database is up", async () => {
-    const r = await fetch(`${SB}/functions/v1/v1/health`);
-    expect(r.status).toBe(200);
-    expect(await r.json()).toMatchObject({ status: "ok", database: "ok" });
-  });
-
-  test("traffic: 6 visitors browse at once", async ({ browser }) => {
-    const visit = async (b: Browser, start: number) => {
-      const ctx = await b.newContext();
-      await unlock(ctx);
-      const page = await ctx.newPage();
-      for (let i = 0; i < 4; i++) {
-        const res = await page.goto(PAGES[(start + i) % PAGES.length]);
-        expect(res?.status()).toBe(200);
-      }
-      await ctx.close();
-    };
-    await Promise.all(Array.from({ length: 6 }, (_, i) => visit(browser, i * 2)));
-  });
-});
-
-// ── signed-in users ─────────────────────────────────────────────────────────
-test.describe("signed-in user", () => {
-  test.skip(!SERVICE, "Add the SUPABASE_SERVICE_ROLE_KEY repository secret to run signed-in tests");
-
-  test("signs in, finds Linus Torvalds' GitHub, then deletes the account", async ({ page }) => {
+  test("finds Linus Torvalds' GitHub and keeps it in history", async ({ browser }) => {
     test.setTimeout(360_000);
     const u = await createUser("main");
+    const ctx = await contextFor(browser, u);
     try {
-      await signIn(page, u);
+      const page = await ctx.newPage();
       await search(page, "Username", "torvalds");
       const gh = page.getByRole("article", { name: /GitHub: Linus Torvalds/ });
       await expect(gh).toBeVisible();
       await gh.getByText("Why this counts").click();
       await expect(gh.getByText(/public API returned this profile/)).toBeVisible();
-
       await page.goto("history/");
       await expect(page.getByRole("link", { name: "torvalds" }).first()).toBeVisible();
-
-      await page.goto("settings/");
-      await page.getByRole("button", { name: "Delete account" }).click();
-      const d = page.getByRole("dialog", { name: "Delete your account?" });
-      await d.getByRole("textbox").fill("delete");
-      await d.getByRole("button", { name: "Delete forever" }).click();
-      await expect(page).toHaveURL(/\/OsintSet\/$/);
-      expect((await admin(`users/${u.id}`)).status).toBe(404);
     } finally {
+      await ctx.close();
       await removeUser(u);
     }
+  });
+
+  test("traffic: 6 visitors browse at once", async ({ browser, visitor }) => {
+    const visit = async (start: number) => {
+      const ctx = await contextFor(browser, visitor!);
+      const page = await ctx.newPage();
+      for (let i = 0; i < 4; i++) expect((await page.goto(PAGES[(start + i) % PAGES.length]))?.status()).toBe(200);
+      await ctx.close();
+    };
+    await Promise.all(Array.from({ length: 6 }, (_, i) => visit(i * 2)));
   });
 
   test("traffic: 3 users search at the same time", async ({ browser }) => {
@@ -203,13 +185,10 @@ test.describe("signed-in user", () => {
     const users = await Promise.all(jobs.map(([tag]) => createUser(tag)));
     try {
       await Promise.all(jobs.map(async ([, type, q], i) => {
-        const ctx = await browser.newContext();
-        await unlock(ctx);
+        const ctx = await contextFor(browser, users[i]);
         const page = await ctx.newPage();
-        await signIn(page, users[i]);
         await search(page, type, q);
-        const total = Number(await page.getByRole("progressbar", { name: "Sources checked" }).getAttribute("aria-valuemax"));
-        expect(total).toBeGreaterThan(0);
+        expect(Number(await page.getByRole("progressbar", { name: "Sources checked" }).getAttribute("aria-valuemax"))).toBeGreaterThan(0);
         await ctx.close();
       }));
     } finally {

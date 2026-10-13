@@ -70,12 +70,7 @@ export function SiteNav() {
                 <LogOut className="size-4" aria-hidden /> Sign out
               </button>
             </>
-          ) : (
-            <>
-              <LinkButton href="/sign-in/" variant="ghost" size="sm">Sign in</LinkButton>
-              <LinkButton href="/sign-up/" size="sm">Create free account</LinkButton>
-            </>
-          )}
+          ) : null}
         </div>
         <button type="button" className="ml-auto rounded-sm p-2 text-text-muted md:hidden" aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen(!open)}>
           {open ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
@@ -89,10 +84,8 @@ export function SiteNav() {
               <li key={l.href}><Link href={l.href} onClick={() => setOpen(false)} className="block rounded-sm px-2 py-2 text-text-muted hover:text-text">{l.label}</Link></li>
             ))}
             <li className="mt-2 border-t border-border pt-2">
-              {user ? (
+              {user && (
                 <><Link href="/settings/" onClick={() => setOpen(false)} className="block px-2 py-2 text-text-muted">Settings</Link><button type="button" onClick={async () => { await data.signOut(); setOpen(false); router.push("/"); }} className="px-2 py-2 text-text-muted">Sign out</button></>
-              ) : (
-                <div className="flex gap-2"><LinkButton href="/sign-in/" variant="secondary" size="sm">Sign in</LinkButton><LinkButton href="/sign-up/" size="sm">Create free account</LinkButton></div>
               )}
             </li>
           </ul>
@@ -141,23 +134,11 @@ export function Page({ children, narrow, className }: { children: ReactNode; nar
   );
 }
 
-/** Renders children only for signed-in users; otherwise a sign-in prompt. */
-export function RequireUser({ children, what = "this page" }: { children: ReactNode; what?: string }) {
+/** Renders children once the signed-in user is known. Signed out, the password screen
+ *  (password-gate.tsx) covers the whole site, so there's nothing else to show here. */
+export function RequireUser({ children }: { children: ReactNode; what?: string }) {
   const user = useUser();
-  const path = usePathname();
-  if (user === undefined) return <div className="flex flex-col gap-3"><Skeleton className="h-10 w-1/3" /><Skeleton className="h-40" /></div>;
-  if (!user) {
-    return (
-      <div className="mx-auto flex max-w-md flex-col items-center gap-3 py-16 text-center">
-        <h1 className="text-xl">Sign in to use {what}</h1>
-        <p className="text-sm text-text-muted">Accounts are free. They keep your history and cases private to you, and let us slow down abuse.</p>
-        <div className="mt-2 flex gap-2">
-          <LinkButton href={`/sign-in/?next=${encodeURIComponent(path ?? "/search/")}`}>Sign in</LinkButton>
-          <LinkButton href={`/sign-up/?next=${encodeURIComponent(path ?? "/search/")}`} variant="secondary">Create free account</LinkButton>
-        </div>
-      </div>
-    );
-  }
+  if (!user) return <div className="flex flex-col gap-3"><Skeleton className="h-10 w-1/3" /><Skeleton className="h-40" /></div>;
   return <>{children}</>;
 }
 

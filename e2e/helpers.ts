@@ -30,14 +30,14 @@ export { expect };
 /** Storage state for a pre-signed-in test user (see global-setup). */
 export const asUser = (i: number) => `e2e/.auth/user${i}.json`;
 
-/** Signs in through the real form (only the auth specs need this). */
-export async function signIn(page: Page, who = 0) {
-  const u = users()[who];
-  await page.goto("/sign-in/");
-  await page.getByLabel("Email").fill(u.email);
-  await page.getByLabel("Password").fill(u.password);
-  await page.getByRole("button", { name: "Sign in", exact: true }).click();
-  await expect(page).toHaveURL(/\/search\/$/);
+/** The owner account behind the password screen (see global-setup). */
+export const owner = (): { email: string; password: string } => JSON.parse(readFileSync("e2e/.auth/owner.json", "utf8"));
+
+/** Signs in through the password screen (only the auth specs need this). */
+export async function unlock(page: Page, password = owner().password) {
+  await page.goto("/");
+  await page.getByLabel("Password").fill(password);
+  await page.getByRole("button", { name: "Enter" }).click();
 }
 
 export async function a11y(page: Page) {
