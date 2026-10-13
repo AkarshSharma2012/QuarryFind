@@ -2,15 +2,21 @@
 // after every deploy and once a day. They act like real visitors: browse, use a
 // tool, sign in, search. Signed-in tests create throwaway users through the
 // admin API (needs the SUPABASE_SERVICE_ROLE_KEY secret) and delete them after.
-import { expect, test as base, type Browser, type Page } from "@playwright/test";
+import { expect, test as base, type Browser, type BrowserContext, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const SB = process.env.SUPABASE_URL ?? "";
 const ANON = process.env.SUPABASE_ANON_KEY ?? "";
 const SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
 
+// The site sits behind a password screen (components/password-gate.tsx). Tests unlock it the way
+// a returning visitor is unlocked: the stored hash. The hash is public in the site bundle anyway.
+const GATE = "073a13e7a0abf50d111ad4d32eb5b022aaf0ecbc934f84470573f1a763262f49";
+const unlock = (ctx: BrowserContext) => ctx.addInitScript((h) => { try { localStorage.setItem("qf.gate", h); } catch { /* ignore */ } }, GATE);
+
 /** Fails a test on console errors or any 5xx from the site or the backend. */
 const test = base.extend<{ guard: void }>({
+  context: async ({ context }, use) => { await unlock(context); await use(context); },
   guard: [async ({ page }, use) => {
     const problems: string[] = [];
     page.on("console", (m) => {
@@ -120,6 +126,19 @@ test.describe("visitor", () => {
     await expect(page.getByText("MD5", { exact: true })).toBeVisible();
   });
 
+  test("a new visitor sees the password screen, and a wrong password doesn't open it @mobile", async ({ browser }) => {
+    const ctx = await browser.newContext();
+    const page = await ctx.newPage();
+    await page.goto("");
+    await expect(page.getByRole("heading", { name: "This site is private" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Search" })).toHaveCount(0);
+    await page.getByLabel("Password").fill("not-the-password");
+    await page.getByRole("button", { name: "Enter" }).click();
+    await expect(page.getByText("That’s not the password.")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "This site is private" })).toBeVisible();
+    await ctx.close();
+  });
+
   test("search asks a signed-out visitor to create an account", async ({ page }) => {
     await page.goto("");
     await page.getByRole("textbox").first().fill("torvalds");
@@ -136,6 +155,7 @@ test.describe("visitor", () => {
   test("traffic: 6 visitors browse at once", async ({ browser }) => {
     const visit = async (b: Browser, start: number) => {
       const ctx = await b.newContext();
+      await unlock(ctx);
       const page = await ctx.newPage();
       for (let i = 0; i < 4; i++) {
         const res = await page.goto(PAGES[(start + i) % PAGES.length]);
@@ -184,6 +204,7 @@ test.describe("signed-in user", () => {
     try {
       await Promise.all(jobs.map(async ([, type, q], i) => {
         const ctx = await browser.newContext();
+        await unlock(ctx);
         const page = await ctx.newPage();
         await signIn(page, users[i]);
         await search(page, type, q);

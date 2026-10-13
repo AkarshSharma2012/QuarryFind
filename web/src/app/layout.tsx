@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ToastProvider } from "@/components/ui/toast";
 import { contentSecurityPolicy } from "@/lib/csp";
+import { PasswordGate } from "@/components/password-gate";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -25,7 +26,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {process.env.NEXT_PUBLIC_SUPABASE_URL && <link rel="preconnect" href={process.env.NEXT_PUBLIC_SUPABASE_URL} crossOrigin="anonymous" />}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider><PasswordGate>{children}</PasswordGate></ToastProvider>
       </body>
     </html>
   );
