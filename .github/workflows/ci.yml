@@ -19,16 +19,26 @@ jobs:
         working-directory: web
       - run: npx tsc --noEmit && npm run lint && npm run build
         working-directory: web
-  # Migrations, row level security, abuse limits and the backend, against a throwaway local Supabase.
+  # Migrations, row level security, abuse limits, the backend and the whole site in a browser,
+  # against a throwaway local Supabase.
   database:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 24
       - run: npm ci
+      - name: Settings for the local server functions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            echo "ALLOWED_ORIGINS=http://localhost:4317"
+            echo "INTERNAL_SECRET=$(openssl rand -hex 24)"
+            echo "GITHUB_TOKEN=$GH_TOKEN"
+          } > supabase/functions/.env
       - name: Start Supabase (applies every migration)
         run: npx -y supabase@2.120.0 start -x studio,imgproxy,logflare,vector,mailpit,supavisor
       - name: Database and backend tests
@@ -36,3 +46,19 @@ jobs:
           eval "$(npx -y supabase@2.120.0 status -o env | sed -n 's/^API_URL=/export SUPABASE_URL=/p; s/^ANON_KEY=/export SUPABASE_ANON_KEY=/p; s/^SERVICE_ROLE_KEY=/export SUPABASE_SERVICE_ROLE_KEY=/p')"
           test -n "$SUPABASE_SERVICE_ROLE_KEY"
           npx vitest run
+      - name: Build the site against the local Supabase
+        run: |
+          eval "$(npx -y supabase@2.120.0 status -o env | sed -n 's/^API_URL=/export NEXT_PUBLIC_SUPABASE_URL=/p; s/^ANON_KEY=/export NEXT_PUBLIC_SUPABASE_ANON_KEY=/p')"
+          cd web && npm ci
+          NEXT_PUBLIC_BACKEND=supabase NEXT_PUBLIC_API_BASE="$NEXT_PUBLIC_SUPABASE_URL/functions/v1" NEXT_DIST_DIR=.next-build npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Browser end-to-end tests (desktop and mobile, accessibility, console and 5xx guard)
+        run: |
+          eval "$(npx -y supabase@2.120.0 status -o env | sed -n 's/^API_URL=/export SUPABASE_URL=/p; s/^ANON_KEY=/export SUPABASE_ANON_KEY=/p; s/^SERVICE_ROLE_KEY=/export SUPABASE_SERVICE_ROLE_KEY=/p')"
+          npx playwright test --reporter=line
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-report
+          path: test-results
+          retention-days: 7

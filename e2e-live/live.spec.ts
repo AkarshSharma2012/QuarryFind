@@ -169,6 +169,22 @@ test.describe("signed in", () => {
     }
   });
 
+  test("database limits are enforced (abuse-limits migration)", async () => {
+    const u = await createUser("limits");
+    try {
+      const token = (JSON.parse(u.session) as { access_token: string }).access_token;
+      const rest = (path: string, body: unknown) => fetch(`${SB}/rest/v1/${path}`, {
+        method: "POST", headers: { apikey: ANON, authorization: `Bearer ${token}`, "content-type": "application/json", prefer: "return=minimal" }, body: JSON.stringify(body),
+      });
+      expect((await rest("cases", { name: "ok", user_id: u.id, notes: "n".repeat(100) })).status).toBe(201);
+      const tooLong = await rest("cases", { name: "too long", user_id: u.id, notes: "n".repeat(20_001) });
+      expect(tooLong.status).toBe(400);
+      expect(await tooLong.text()).toMatch(/cases_notes_len/);
+    } finally {
+      await removeUser(u);
+    }
+  });
+
   test("traffic: 6 visitors browse at once", async ({ browser, visitor }) => {
     const visit = async (start: number) => {
       const ctx = await contextFor(browser, visitor!);
