@@ -6,7 +6,7 @@
 
 No plans, no credits, no install.
 
-**Live:** https://akarshsharma2012.github.io/OsintSet/ (the in-browser tools work now; search switches on once the backend is connected, see `replica/deploy.md`).
+**Live (private):** https://akarshsharma2012.github.io/OsintSet/ sits behind a password screen. It signs into the one owner account (Supabase Auth, sign-ups switched off), so nobody else can use it.
 
 ![Landing page](docs/screenshots/landing.png)
 
@@ -20,7 +20,8 @@ No plans, no credits, no install.
 - **Cases.** Save findings into private cases with your notes. Search results are deleted after 6 hours; cases stay until you delete them.
 - **History and export.** Re-open any search from the last 90 days, and download findings as CSV (with spreadsheet-formula protection) or JSON.
 - **15 free tools.** GitHub and Reddit profiles (activity charts and a timezone guess), IP lookup, DNS, WHOIS, subdomain finder, email security check, archive history, website headers and tech, photo EXIF/GPS reader, username variations, search dork builder, phone number parser, email header analyzer, and hash identifier with a breached-password check. Six of them run entirely in your browser.
-- **Free API.** Every account can create API keys. Searches can be async, synchronous (`wait`) or streamed over Server-Sent Events, and there's an OpenAPI spec.
+- **Private by design.** One owner account behind a password screen; no sign-ups, and search engines are told not to index it.
+- **API.** Create API keys in Settings. Searches can be async, synchronous (`wait`) or streamed over Server-Sent Events, and there's an OpenAPI spec.
 
 ## Screenshots
 
@@ -104,6 +105,8 @@ Open http://localhost:3000. Leave `NEXT_PUBLIC_BACKEND` unset in `web/.env.local
 
    Migrations are applied by `supabase start`. The Edge Functions are served automatically at `http://127.0.0.1:55321/functions/v1/`.
 
+   The password screen signs into `owner@quarryfind.example` (or `NEXT_PUBLIC_GATE_EMAIL`). Create that user in Supabase Studio (Authentication → Users, auto-confirm) with the password you want. The e2e setup creates it for you with a random password.
+
 4. Optional: fill the source status page.
 
    ```bash
@@ -119,7 +122,7 @@ Open http://localhost:3000. Leave `NEXT_PUBLIC_BACKEND` unset in `web/.env.local
 | End-to-end (Playwright, desktop + mobile, axe) | build with `NEXT_DIST_DIR=.next-build npm --prefix web run build`, then `npx playwright test` |
 | Live check of every source | `npm run fixtures` |
 
-Current state: 46+ end-to-end tests and 47 unit/integration tests passing.
+CI runs all of these against a throwaway local Supabase on every push, and a live smoke test checks the deployed site after every deploy and daily.
 
 ## API
 
@@ -136,7 +139,7 @@ Create a key under **Settings → API keys**. The full reference is at `/docs/ap
 ```
 web/                       Next.js app (static export): pages, components, data layer
 supabase/migrations/       schema, row level security, pg_cron jobs
-supabase/functions/        search-start, search-batch, tools, api-keys, account, v1 (+ _shared/engine)
+supabase/functions/        search-start, search-batch, tools, api-keys, account, v1, module-health (+ _shared/engine)
 scripts/                   dev API, fixtures, WhatsMyName import, sources list, screenshots, tokens
 tests/  e2e/               Vitest unit/integration, Playwright end-to-end
 replica/                   product research, architecture, test plan, bug log, parity report
